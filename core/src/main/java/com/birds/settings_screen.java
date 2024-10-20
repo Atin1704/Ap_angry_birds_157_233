@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class settings_screen implements Screen {
@@ -55,6 +56,7 @@ public class settings_screen implements Screen {
 
     }
 
+
     private void input() {
         if (Gdx.input.isTouched()) {
             // Get the touch position in screen coordinates and convert it to world coordinates
@@ -66,12 +68,18 @@ public class settings_screen implements Screen {
             float exitIconWidth = viewport.getWorldWidth() / 8;   // Width of the Exit icon
             float exitIconHeight = viewport.getWorldHeight() / 12; // Height of the Exit icon
 
-
             // Check if the user touched within the Exit icon's bounds
             if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
                 && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
-                // Exit icon was clicked
-                game_runner.setScreen(new main_screen(game_runner,assetManager));
+                Gdx.app.log("Exit Icon", "Exit icon clicked in settings screen");
+
+                // Add a 0.5 second delay before switching back to the main screen
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        game_runner.setScreen(new main_screen(game_runner, assetManager));
+                    }
+                }, 0.25f);  // Delay of 0.5 seconds (500ms)
             }
         }
     }
