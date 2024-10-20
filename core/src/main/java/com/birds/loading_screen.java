@@ -129,6 +129,7 @@ public class loading_screen implements Screen {
         assetManager.load("Level_2.png", Texture.class);
         assetManager.load("Level_3.png", Texture.class);
         assetManager.load("Saved_game_icon.png", Texture.class);
+        assetManager.load("Exit_icon.png", Texture.class);
 
         // Set the starting time
         startTime = TimeUtils.millis();
