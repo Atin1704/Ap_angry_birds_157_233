@@ -17,7 +17,7 @@ public class main_screen implements Screen {
 
     public main_screen(Main main,AssetManager assetManager) {
         this.game_runner = main;
-        this.assetManager = new AssetManager();
+        this.assetManager = assetManager;
         this.spriteBatch=main.batch;
         viewport = new FitViewport(100, 100);
 
