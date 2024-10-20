@@ -106,7 +106,7 @@ public class loading_screen implements Screen {
     // Loading bar control variables
     private float loadingBarWidth;
     private float maxLoadingBarWidth;
-    private final float totalLoadingTime = 5.0f; // 7 seconds for the loading bar
+    private final float totalLoadingTime = 7.0f; // 7 seconds for the loading bar
     private long startTime; // Time when the loading starts
 
     public loading_screen(Main main) {
@@ -124,8 +124,10 @@ public class loading_screen implements Screen {
     public void show() {
         // Load assets
         assetManager.load("main_screen_bg.png", Texture.class);
-        assetManager.load("loading_bar.png", Texture.class); // Example of another asset
-
+        assetManager.load("Settings_icon.png", Texture.class);
+        assetManager.load("Level_1.png", Texture.class);
+        assetManager.load("Level_2.png", Texture.class);
+        assetManager.load("Level_3.png", Texture.class);
         // Set the starting time
         startTime = TimeUtils.millis();
     }

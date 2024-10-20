@@ -11,6 +11,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class main_screen implements Screen {
     private final AssetManager assetManager;
     private Texture background_image;
+    private Texture Settings_icon;
+    private Texture Level1;
+    private Texture Level2;
+    private Texture Level3;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -26,7 +30,10 @@ public class main_screen implements Screen {
     @Override
     public void show() {
         background_image = assetManager.get("main_screen_bg.png", Texture.class);
-
+        Settings_icon = assetManager.get("Settings_icon.png", Texture.class);
+        Level1 = assetManager.get("Level_1.png", Texture.class);
+        Level2 = assetManager.get("Level_2.png", Texture.class);
+        Level3 = assetManager.get("Level_3.png", Texture.class);
     }
 
     @Override
@@ -40,6 +47,10 @@ public class main_screen implements Screen {
 
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
+        spriteBatch.draw(Settings_icon, 5, 91, worldWidth/12, worldHeight/15);
+        spriteBatch.draw(Level1, 37,50 , worldWidth/3, worldHeight/8);
+        spriteBatch.draw(Level2, 37, 35, worldWidth/3, worldHeight/8);
+        spriteBatch.draw(Level3, 37, 20, worldWidth/3, worldHeight/8);
 
         spriteBatch.end();
 
