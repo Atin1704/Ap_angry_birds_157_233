@@ -8,20 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class main_screen implements Screen {
+public class settings_screen implements Screen {
     private final AssetManager assetManager;
     private Texture background_image;
-    private Texture Settings_icon;
-    private Texture Level1;
-    private Texture Level2;
-    private Texture Level3;
-    private Texture Saved_game;
     private Texture exit_icon;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
 
-    public main_screen(Main main,AssetManager assetManager) {
+    public settings_screen(Main main,AssetManager assetManager) {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch=main.batch;
@@ -32,11 +27,6 @@ public class main_screen implements Screen {
     @Override
     public void show() {
         background_image = assetManager.get("main_screen_bg.png", Texture.class);
-        Settings_icon = assetManager.get("Settings_icon.png", Texture.class);
-        Level1 = assetManager.get("Level_1.png", Texture.class);
-        Level2 = assetManager.get("Level_2.png", Texture.class);
-        Level3 = assetManager.get("Level_3.png", Texture.class);
-        Saved_game = assetManager.get("Saved_game_icon.png", Texture.class);
         exit_icon = assetManager.get("Exit_icon.png", Texture.class);
     }
 
@@ -51,11 +41,6 @@ public class main_screen implements Screen {
 
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        spriteBatch.draw(Settings_icon, 10, 3, worldWidth/10, worldHeight/12);
-        spriteBatch.draw(Level1, 33,41 , worldWidth/3, worldHeight/10);
-        spriteBatch.draw(Level2, 33, 28, worldWidth/3, worldHeight/10);
-        spriteBatch.draw(Level3, 33, 15, worldWidth/3, worldHeight/10);
-        spriteBatch.draw(Saved_game, 33, 54, worldWidth/3, worldHeight/10);
         spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
 
         spriteBatch.end();
