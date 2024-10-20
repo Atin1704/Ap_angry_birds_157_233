@@ -8,18 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-/** First screen of the application. Displayed after the application is created. */
-public class loading_screen implements Screen {
+public class main_screen implements Screen {
     private final AssetManager assetManager;
     private Texture background_image;
-    private Texture loading;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
-    public loading_screen(Main main) {
+
+    public main_screen(Main main,AssetManager assetManager) {
         this.game_runner = main;
-        background_image = new Texture("loading_screen.png");
-        loading = new Texture("loading_bar.png");
         this.assetManager = new AssetManager();
         this.spriteBatch=main.batch;
         viewport = new FitViewport(100, 100);
@@ -28,12 +25,12 @@ public class loading_screen implements Screen {
 
     @Override
     public void show() {
-        assetManager.load("main_screen_bg.png", Texture.class);
+        background_image = assetManager.get("main_screen_bg.png", Texture.class);
 
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float v) {
         ScreenUtils.clear(Color.BLACK);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
@@ -41,11 +38,11 @@ public class loading_screen implements Screen {
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
 
-        spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        spriteBatch.draw(loading, 40, 20, worldWidth/2, worldHeight/2);
 
+        spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
 
         spriteBatch.end();
+
     }
 
     @Override
@@ -56,19 +53,20 @@ public class loading_screen implements Screen {
 
     }
 
+
     @Override
     public void pause() {
-        // Invoked when your application is paused.
+
     }
 
     @Override
     public void resume() {
-        // Invoked when your application is resumed after pause.
+
     }
 
     @Override
     public void hide() {
-        // This method is called when another screen replaces this one.
+
     }
 
     @Override
