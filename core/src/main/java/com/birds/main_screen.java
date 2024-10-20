@@ -20,6 +20,7 @@ public class main_screen implements Screen {
     private Texture Level3;
     private Texture Saved_game;
     private Texture exit_icon;
+    private Texture angry_bird;
     private final Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -42,6 +43,7 @@ public class main_screen implements Screen {
         Level3 = assetManager.get("Level_3.png", Texture.class);
         Saved_game = assetManager.get("Saved_game_icon.png", Texture.class);
         exit_icon = assetManager.get("Exit_icon.png", Texture.class);
+        angry_bird = assetManager.get("Angry_Birds.png", Texture.class);
     }
 
     @Override
@@ -62,6 +64,7 @@ public class main_screen implements Screen {
         spriteBatch.draw(Level3, 33, 15, worldWidth/3, worldHeight/10);
         spriteBatch.draw(Saved_game, 33, 54, worldWidth/3, worldHeight/10);
         spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
+        spriteBatch.draw(angry_bird,15, 72, 65, worldHeight/5);
 
         spriteBatch.end();
 
