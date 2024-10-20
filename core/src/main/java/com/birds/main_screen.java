@@ -20,7 +20,7 @@ public class main_screen implements Screen {
     private Texture Level3;
     private Texture Saved_game;
     private Texture exit_icon;
-    private Main game_runner;
+    private final Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
 
@@ -88,7 +88,7 @@ public class main_screen implements Screen {
             if (touchPos.x >= settingsIconX && touchPos.x <= (settingsIconX + settingsIconWidth)
                 && touchPos.y >= settingsIconY && touchPos.y <= (settingsIconY + settingsIconHeight)) {
                 // Settings icon was clicked
-                System.out.println("Settings icon clicked");
+
                 game_runner.setScreen(new settings_screen(game_runner, assetManager)); // Switch to the Settings screen
             }
 
@@ -96,7 +96,7 @@ public class main_screen implements Screen {
             if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
                 && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
                 // Exit icon was clicked
-                System.out.println("Exit icon clicked");
+
                 Gdx.app.exit(); // Exit the game
             }
         }
