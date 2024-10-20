@@ -13,6 +13,7 @@ public class loading_screen implements Screen {
     private final AssetManager assetManager;
     private Texture background_image;
     private Texture loading;
+    private Texture loading_green;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -20,6 +21,7 @@ public class loading_screen implements Screen {
         this.game_runner = main;
         background_image = new Texture("loading_screen.png");
         loading = new Texture("loading_bar.png");
+        loading_green = new Texture("loading_bar_green.png");
         this.assetManager = new AssetManager();
         this.spriteBatch=main.batch;
         viewport = new FitViewport(100, 100);
@@ -42,7 +44,8 @@ public class loading_screen implements Screen {
         float worldHeight = viewport.getWorldHeight();
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        spriteBatch.draw(loading, 40, 20, worldWidth/2, worldHeight/2);
+        spriteBatch.draw(loading, 28, 5, worldWidth/2, worldHeight/19);
+        spriteBatch.draw(loading_green, 28, 5, worldWidth/5, worldHeight/19);
 
 
         spriteBatch.end();
