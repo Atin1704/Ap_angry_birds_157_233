@@ -71,9 +71,9 @@ public class settings_screen implements Screen {
             // Check if the user touched within the Exit icon's bounds
             if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
                 && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
-                Gdx.app.log("Exit Icon", "Exit icon clicked in settings screen");
 
-                // Add a 0.5 second delay before switching back to the main screen
+
+
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
