@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -103,6 +104,7 @@ public class loading_screen implements Screen {
     private final SpriteBatch spriteBatch;
     private FitViewport viewport;
 
+
     // Loading bar control variables
     private float loadingBarWidth;
     private float maxLoadingBarWidth;
@@ -118,6 +120,7 @@ public class loading_screen implements Screen {
         this.spriteBatch = main.batch;
         viewport = new FitViewport(100, 100);
         loadingBarWidth = 0; // Initialize the width of the loading bar
+
     }
 
     @Override
@@ -137,6 +140,7 @@ public class loading_screen implements Screen {
 
     @Override
     public void render(float delta) {
+
         ScreenUtils.clear(Color.BLACK);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
@@ -169,6 +173,8 @@ public class loading_screen implements Screen {
             game_runner.setScreen(new main_screen(game_runner, assetManager)); // Proceed to the main screen
         }
     }
+
+
 
     @Override
     public void resize(int width, int height) {
