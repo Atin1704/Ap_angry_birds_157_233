@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /** First screen of the application. Displayed after the application is created. */
@@ -93,8 +94,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 
 
-
-
 public class loading_screen implements Screen {
     private final AssetManager assetManager;
     private Texture background_image;
@@ -104,8 +103,11 @@ public class loading_screen implements Screen {
     private final SpriteBatch spriteBatch;
     private FitViewport viewport;
 
-    // Width of the green loading bar
+    // Loading bar control variables
     private float loadingBarWidth;
+    private float maxLoadingBarWidth;
+    private final float totalLoadingTime = 5.0f; // 7 seconds for the loading bar
+    private long startTime; // Time when the loading starts
 
     public loading_screen(Main main) {
         this.game_runner = main;
@@ -120,9 +122,12 @@ public class loading_screen implements Screen {
 
     @Override
     public void show() {
-        // Load assets; add more if needed
+        // Load assets
         assetManager.load("main_screen_bg.png", Texture.class);
-        assetManager.load("loading_bar.png", Texture.class); // Example of another asset to load
+        assetManager.load("loading_bar.png", Texture.class); // Example of another asset
+
+        // Set the starting time
+        startTime = TimeUtils.millis();
     }
 
     @Override
@@ -133,24 +138,30 @@ public class loading_screen implements Screen {
 
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
+        maxLoadingBarWidth = worldWidth / 2; // Maximum width of the loading bar
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
         spriteBatch.draw(loading, 28, 5, worldWidth / 2, worldHeight / 19);
 
-        // Update loading bar width based on asset loading progress
-        float progress = assetManager.getProgress();
-        loadingBarWidth = progress * (worldWidth / 5);
+        // Calculate how much time has passed
+        float elapsedTime = (TimeUtils.timeSinceMillis(startTime)) / 1000f;
+
+        // Update loading bar width based on elapsed time
+        if (elapsedTime < totalLoadingTime) {
+            loadingBarWidth = (elapsedTime / totalLoadingTime) * maxLoadingBarWidth;
+        } else {
+            loadingBarWidth = maxLoadingBarWidth;
+        }
 
         // Draw the green loading bar
         spriteBatch.draw(loading_green, 28, 5, loadingBarWidth, worldHeight / 19);
 
         spriteBatch.end();
 
-        // Check if all assets are loaded
-        if (assetManager.update()) {
-            // When all assets are loaded, proceed
-            assetManager.finishLoading(); // Ensure all assets are loaded before proceeding
-            game_runner.setScreen(new main_screen(game_runner, assetManager)); // Pass the AssetManager
+        // After 7 seconds or when assets are loaded, switch to the main screen
+        if (elapsedTime >= totalLoadingTime && assetManager.update()) {
+            assetManager.finishLoading(); // Ensure all assets are fully loaded
+            game_runner.setScreen(new main_screen(game_runner, assetManager)); // Proceed to the main screen
         }
     }
 
@@ -170,7 +181,6 @@ public class loading_screen implements Screen {
 
     @Override
     public void dispose() {
-        // Dispose of the textures to free up resources
         background_image.dispose();
         loading.dispose();
         loading_green.dispose();
