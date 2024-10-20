@@ -48,9 +48,9 @@ public class main_screen implements Screen {
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
         spriteBatch.draw(Settings_icon, 5, 91, worldWidth/12, worldHeight/15);
-        spriteBatch.draw(Level1, 37,50 , worldWidth/3, worldHeight/8);
-        spriteBatch.draw(Level2, 37, 35, worldWidth/3, worldHeight/8);
-        spriteBatch.draw(Level3, 37, 20, worldWidth/3, worldHeight/8);
+        spriteBatch.draw(Level1, 37,50 , worldWidth/4, worldHeight/8);
+        spriteBatch.draw(Level2, 37, 35, worldWidth/4, worldHeight/8);
+        spriteBatch.draw(Level3, 37, 20, worldWidth/4, worldHeight/8);
 
         spriteBatch.end();
 
