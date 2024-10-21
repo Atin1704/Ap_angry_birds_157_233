@@ -135,6 +135,12 @@ public class loading_screen implements Screen {
         assetManager.load("Exit_icon.png", Texture.class);
         assetManager.load("Angry_Birds.png", Texture.class);
         assetManager.load("Settings_bg.png", Texture.class);
+        assetManager.load("Saved_game_1_icon.png", Texture.class);
+        assetManager.load("Saved_game_2_icon.png", Texture.class);
+        assetManager.load("Saved_game_3_icon.png", Texture.class);
+        assetManager.load("Saved_game_top.png", Texture.class);
+
+
 
         // Set the starting time
         startTime = TimeUtils.millis();

@@ -87,11 +87,15 @@ public class main_screen implements Screen {
             float exitIconWidth = viewport.getWorldWidth() / 8;   // Width of the Exit icon
             float exitIconHeight = viewport.getWorldHeight() / 12; // Height of the Exit icon
 
+            float savedGameIconX = 33f;   // X position for Saved game icon
+            float savedGameIconY = 54f;   // Y position for Saved game icon
+            float savedGameIconWidth = viewport.getWorldWidth() / 3;  // Width of the Saved game icon
+            float savedGameIconHeight = viewport.getWorldHeight() / 10; // Height of the Saved game icon
+
             // Check if the user touched within the Settings icon's bounds
             if (touchPos.x >= settingsIconX && touchPos.x <= (settingsIconX + settingsIconWidth)
                 && touchPos.y >= settingsIconY && touchPos.y <= (settingsIconY + settingsIconHeight)) {
                 // Settings icon was clicked
-
                 game_runner.setScreen(new settings_screen(game_runner, assetManager)); // Switch to the Settings screen
             }
 
@@ -99,8 +103,14 @@ public class main_screen implements Screen {
             if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
                 && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
                 // Exit icon was clicked
-
                 Gdx.app.exit(); // Exit the game
+            }
+
+            // Check if the user touched within the Saved game icon's bounds
+            if (touchPos.x >= savedGameIconX && touchPos.x <= (savedGameIconX + savedGameIconWidth)
+                && touchPos.y >= savedGameIconY && touchPos.y <= (savedGameIconY + savedGameIconHeight)) {
+                // Saved game icon was clicked
+                game_runner.setScreen(new saved_game_screen(game_runner, assetManager)); // Switch to the Saved game screen
             }
         }
     }

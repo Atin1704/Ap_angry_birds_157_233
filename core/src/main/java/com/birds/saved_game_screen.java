@@ -22,6 +22,7 @@ public class saved_game_screen implements Screen {
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
     Vector2 touchPos;
+    private Texture exit_icon;
 
     public saved_game_screen(Main main,AssetManager assetManager) {
         this.game_runner = main;
@@ -34,11 +35,12 @@ public class saved_game_screen implements Screen {
 
     @Override
     public void show() {
-        background_image = assetManager.get("main_screen_bg.png", Texture.class);
+        background_image = assetManager.get("Settings_bg.png", Texture.class);
         saved_top = assetManager.get("Saved_game_top.png", Texture.class);
         saved_1 = assetManager.get("Saved_game_1_icon.png", Texture.class);
         saved_2 = assetManager.get("Saved_game_2_icon.png", Texture.class);
         saved_3 = assetManager.get("Saved_game_3_icon.png", Texture.class);
+        exit_icon = assetManager.get("Exit_icon.png", Texture.class);
 
     }
 
@@ -54,6 +56,11 @@ public class saved_game_screen implements Screen {
 
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
+        spriteBatch.draw(saved_top,15 , 70, 70, 80);
+        spriteBatch.draw(saved_1, 33,41 , worldWidth/3, worldHeight/10);
+        spriteBatch.draw(saved_2, 33, 28, worldWidth/3, worldHeight/10);
+        spriteBatch.draw(saved_3, 33, 15, worldWidth/3, worldHeight/10);
+        spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
 
 
 
