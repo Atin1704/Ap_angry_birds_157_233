@@ -27,10 +27,13 @@ public class settings_screen implements Screen {
     FitViewport viewport;
     Vector2 touchPos;
 
-    public settings_screen(Main main,AssetManager assetManager) {
+    private boolean isDragging = false; // Track if the user is dragging the volume bar
+    private float volumePercentage = 0.5f; // Volume percentage (initially 50%)
+
+    public settings_screen(Main main, AssetManager assetManager) {
         this.game_runner = main;
         this.assetManager = assetManager;
-        this.spriteBatch=main.batch;
+        this.spriteBatch = main.batch;
         viewport = new FitViewport(100, 100);
         touchPos = new Vector2();
     }
@@ -58,22 +61,28 @@ public class settings_screen implements Screen {
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
 
-
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
-        spriteBatch.draw(angry_bird,15, 72, 65, worldHeight/5);
-        spriteBatch.draw(Credits,33, 38, worldWidth/3, worldHeight/9);
-        spriteBatch.draw(Notification,33, 20, worldWidth/3, worldHeight/9);
-        spriteBatch.draw(Username,33, 56, worldWidth/3, worldHeight/9);
-        spriteBatch.draw(volume_bar,20, 30, worldWidth/22, 30);
-        spriteBatch.draw(volume_bar_green,20, 30, worldWidth/22, 10);
-        spriteBatch.draw(Volume_icon,19, 29, 6, worldHeight/14);
+        spriteBatch.draw(exit_icon, 80, 3, worldWidth / 8, worldHeight / 12);
+        spriteBatch.draw(angry_bird, 15, 72, 65, worldHeight / 5);
+        spriteBatch.draw(Credits, 33, 38, worldWidth / 3, worldHeight / 9);
+        spriteBatch.draw(Notification, 33, 20, worldWidth / 3, worldHeight / 9);
+        spriteBatch.draw(Username, 33, 56, worldWidth / 3, worldHeight / 9);
 
+        // Draw volume bar
+        float volumeBarX = 20;
+        float volumeBarY = 25; // Adjusted to fit vertical growth
+        float volumeBarWidth = worldWidth / 22;
+        float volumeBarHeight = 40; // Increased height for vertical adjustment
+        spriteBatch.draw(volume_bar, volumeBarX, volumeBarY, volumeBarWidth, volumeBarHeight);
+
+        // Draw green volume bar (its height based on volume percentage)
+        float volumeGreenHeight = volumePercentage * volumeBarHeight;
+        spriteBatch.draw(volume_bar_green, volumeBarX, volumeBarY, volumeBarWidth, volumeGreenHeight);
+
+        spriteBatch.draw(Volume_icon, 19, 23, 6, worldHeight / 14); // Adjusted the position of the volume icon
 
         spriteBatch.end();
-
     }
-
 
     private void input() {
         if (Gdx.input.isTouched()) {
@@ -90,44 +99,55 @@ public class settings_screen implements Screen {
             if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
                 && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
 
-
-
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
                         game_runner.setScreen(new main_screen(game_runner, assetManager));
                     }
-                }, 0.25f);  // Delay of 0.5 seconds (500ms)
+                }, 0.25f);  // Delay of 0.25 seconds
             }
+
+            // Check if the user touched within the volume bar's bounds
+            float volumeBarX = 20;
+            float volumeBarY = 10;  // Adjusted Y for the vertical bar
+            float volumeBarWidth = viewport.getWorldWidth() / 22;
+            float volumeBarHeight = 40;  // Increased height for vertical volume control
+
+            if (touchPos.x >= volumeBarX && touchPos.x <= (volumeBarX + volumeBarWidth)
+                && touchPos.y >= volumeBarY && touchPos.y <= (volumeBarY + volumeBarHeight)) {
+                isDragging = true;
+            }
+        } else {
+            isDragging = false;
+        }
+
+        // If the user is dragging the volume bar, update the volume percentage
+        if (isDragging) {
+            float volumeBarY = 10;
+            float volumeBarHeight = 40;
+            float mouseY = touchPos.y - volumeBarY;
+            volumePercentage = Math.max(0, Math.min(1, mouseY / volumeBarHeight)); // Clamp between 0 and 1
         }
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-        //true basically means centering it, adding black bars to the side;
-        // Resize your screen here. The parameters represent the new window size.
-
     }
-
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }
