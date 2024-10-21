@@ -36,7 +36,7 @@ public class saved_game_screen implements Screen {
     @Override
     public void show() {
         background_image = assetManager.get("Settings_bg.png", Texture.class);
-        saved_top = assetManager.get("Saved_game_icon.png", Texture.class);
+        saved_top = assetManager.get("Saved_game_top.png", Texture.class);
         saved_1 = assetManager.get("Saved_game_1_icon.png", Texture.class);
         saved_2 = assetManager.get("Saved_game_2_icon.png", Texture.class);
         saved_3 = assetManager.get("Saved_game_3_icon.png", Texture.class);
