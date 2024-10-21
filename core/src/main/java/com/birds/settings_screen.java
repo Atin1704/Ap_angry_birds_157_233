@@ -62,12 +62,12 @@ public class settings_screen implements Screen {
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
         spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
         spriteBatch.draw(angry_bird,15, 72, 65, worldHeight/5);
-        spriteBatch.draw(Volume_icon,20, 20, 30, worldHeight/12);
         spriteBatch.draw(Credits,33, 38, worldWidth/3, worldHeight/9);
         spriteBatch.draw(Notification,33, 20, worldWidth/3, worldHeight/9);
         spriteBatch.draw(Username,33, 56, worldWidth/3, worldHeight/9);
-        spriteBatch.draw(volume_bar,20, 30, worldWidth/20, 70);
-        spriteBatch.draw(volume_bar_green,20, 30, worldWidth/20, 40);
+        spriteBatch.draw(volume_bar,20, 30, worldWidth/22, 30);
+        spriteBatch.draw(volume_bar_green,20, 30, worldWidth/22, 10);
+        spriteBatch.draw(Volume_icon,19, 29, 6, worldHeight/14);
 
 
         spriteBatch.end();
