@@ -31,7 +31,7 @@ public class settings_screen implements Screen {
 
     @Override
     public void show() {
-        background_image = assetManager.get("main_screen_bg.png", Texture.class);
+        background_image = assetManager.get("Settings_bg.png", Texture.class);
         exit_icon = assetManager.get("Exit_icon.png", Texture.class);
         angry_bird = assetManager.get("Angry_Birds.png", Texture.class);
     }
