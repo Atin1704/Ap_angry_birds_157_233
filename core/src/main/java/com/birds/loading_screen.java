@@ -140,8 +140,10 @@ public class loading_screen implements Screen {
         assetManager.load("Saved_game_3_icon.png", Texture.class);
         assetManager.load("Volume_icon.png", Texture.class);
         assetManager.load("Username.png", Texture.class);
-        assetManager.load("Volume.png", Texture.class);
+        assetManager.load("Credits.png", Texture.class);
         assetManager.load("Notification.png", Texture.class);
+        assetManager.load("volume_bar.png", Texture.class);
+        assetManager.load("volume_bar_green.png", Texture.class);
 
 
 

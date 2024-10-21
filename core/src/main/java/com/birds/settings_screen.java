@@ -17,9 +17,11 @@ public class settings_screen implements Screen {
     private Texture exit_icon;
     private Texture angry_bird;
     private Texture Volume_icon;
-    private Texture Volume;
+    private Texture Credits;
     private Texture Username;
     private Texture Notification;
+    private Texture volume_bar;
+    private Texture volume_bar_green;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -39,9 +41,11 @@ public class settings_screen implements Screen {
         exit_icon = assetManager.get("Exit_icon.png", Texture.class);
         angry_bird = assetManager.get("Angry_Birds.png", Texture.class);
         Volume_icon = assetManager.get("Volume_icon.png", Texture.class);
-        Volume = assetManager.get("Volume.png", Texture.class);
+        Credits = assetManager.get("Credits.png", Texture.class);
         Username = assetManager.get("Username.png", Texture.class);
         Notification = assetManager.get("Notification.png", Texture.class);
+        volume_bar = assetManager.get("volume_bar.png", Texture.class);
+        volume_bar_green = assetManager.get("volume_bar_green.png", Texture.class);
     }
 
     @Override
@@ -58,10 +62,12 @@ public class settings_screen implements Screen {
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
         spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
         spriteBatch.draw(angry_bird,15, 72, 65, worldHeight/5);
-        spriteBatch.draw(Volume_icon,23, 30, 25, worldHeight/12);
-        spriteBatch.draw(Volume,33, 40, worldWidth/3, worldHeight/10);
-        spriteBatch.draw(Notification,33, 15, worldWidth/3, worldHeight/10);
-        spriteBatch.draw(Username,33, 55, worldWidth/3, worldHeight/10);
+        spriteBatch.draw(Volume_icon,20, 20, 30, worldHeight/12);
+        spriteBatch.draw(Credits,33, 38, worldWidth/3, worldHeight/9);
+        spriteBatch.draw(Notification,33, 20, worldWidth/3, worldHeight/9);
+        spriteBatch.draw(Username,33, 56, worldWidth/3, worldHeight/9);
+        spriteBatch.draw(volume_bar,20, 30, worldWidth/20, 70);
+        spriteBatch.draw(volume_bar_green,20, 30, worldWidth/20, 40);
 
 
         spriteBatch.end();
