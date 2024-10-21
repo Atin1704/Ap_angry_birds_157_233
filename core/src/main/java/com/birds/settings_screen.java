@@ -16,6 +16,10 @@ public class settings_screen implements Screen {
     private Texture background_image;
     private Texture exit_icon;
     private Texture angry_bird;
+    private Texture Volume_icon;
+    private Texture Volume;
+    private Texture Username;
+    private Texture Notification;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -34,6 +38,10 @@ public class settings_screen implements Screen {
         background_image = assetManager.get("Settings_bg.png", Texture.class);
         exit_icon = assetManager.get("Exit_icon.png", Texture.class);
         angry_bird = assetManager.get("Angry_Birds.png", Texture.class);
+        Volume_icon = assetManager.get("Volume_icon.png", Texture.class);
+        Volume = assetManager.get("Volume.png", Texture.class);
+        Username = assetManager.get("Username.png", Texture.class);
+        Notification = assetManager.get("Notification.png", Texture.class);
     }
 
     @Override
@@ -50,6 +58,10 @@ public class settings_screen implements Screen {
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
         spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
         spriteBatch.draw(angry_bird,15, 72, 65, worldHeight/5);
+        spriteBatch.draw(Volume_icon,23, 30, 25, worldHeight/12);
+        spriteBatch.draw(Volume,33, 40, worldWidth/3, worldHeight/10);
+        spriteBatch.draw(Notification,33, 15, worldWidth/3, worldHeight/10);
+        spriteBatch.draw(Username,33, 55, worldWidth/3, worldHeight/10);
 
 
         spriteBatch.end();
