@@ -56,10 +56,10 @@ public class saved_game_screen implements Screen {
 
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        spriteBatch.draw(saved_top,15 , 70, 70, 80);
-        spriteBatch.draw(saved_1, 33,41 , worldWidth/3, worldHeight/10);
-        spriteBatch.draw(saved_2, 33, 28, worldWidth/3, worldHeight/10);
-        spriteBatch.draw(saved_3, 33, 15, worldWidth/3, worldHeight/10);
+        spriteBatch.draw(saved_top,15 , 73, 60, 20);
+        spriteBatch.draw(saved_1, 33,52 , 40, 17);
+        spriteBatch.draw(saved_2, 33, 33, 40, 17);
+        spriteBatch.draw(saved_3, 33, 15, 40, 17);
         spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
 
 
