@@ -1,6 +1,7 @@
 package com.birds;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -16,6 +17,8 @@ public class Main extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont();
         this.setScreen(new loading_screen(this));
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+
     }
 
     public void render() {
