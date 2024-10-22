@@ -76,7 +76,7 @@ public class main_screen implements Screen {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos); // Converts screen coordinates to the viewport's world coordinates (100x100 system)
 
-            // Define the coordinates and sizes for the Settings and Exit icons in the 100x100 world
+            // Define the coordinates and sizes for the Settings, Exit, Saved Game, and Level 1 icons
             float settingsIconX = 10f;    // X position for Settings icon
             float settingsIconY = 3f;     // Y position for Settings icon
             float settingsIconWidth = viewport.getWorldWidth() / 10; // Width of the Settings icon
@@ -91,6 +91,11 @@ public class main_screen implements Screen {
             float savedGameIconY = 54f;   // Y position for Saved game icon
             float savedGameIconWidth = viewport.getWorldWidth() / 3;  // Width of the Saved game icon
             float savedGameIconHeight = viewport.getWorldHeight() / 10; // Height of the Saved game icon
+
+            float level1X = 33f;   // X position for Level 1 icon
+            float level1Y = 41f;   // Y position for Level 1 icon
+            float level1Width = viewport.getWorldWidth() / 3;   // Width of the Level 1 icon
+            float level1Height = viewport.getWorldHeight() / 10; // Height of the Level 1 icon
 
             // Check if the user touched within the Settings icon's bounds
             if (touchPos.x >= settingsIconX && touchPos.x <= (settingsIconX + settingsIconWidth)
@@ -111,6 +116,13 @@ public class main_screen implements Screen {
                 && touchPos.y >= savedGameIconY && touchPos.y <= (savedGameIconY + savedGameIconHeight)) {
                 // Saved game icon was clicked
                 game_runner.setScreen(new saved_game_screen(game_runner, assetManager)); // Switch to the Saved game screen
+            }
+
+            // Check if the user touched within the Level 1 icon's bounds
+            if (touchPos.x >= level1X && touchPos.x <= (level1X + level1Width)
+                && touchPos.y >= level1Y && touchPos.y <= (level1Y + level1Height)) {
+                // Level 1 icon was clicked
+                game_runner.setScreen(new level_1_screen(game_runner, assetManager)); // Switch to the Level 1 screen
             }
         }
     }
