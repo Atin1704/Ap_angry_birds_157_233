@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class level_1_screen implements Screen {
@@ -28,7 +29,7 @@ public class level_1_screen implements Screen {
 
     private Main game_runner;
     private final SpriteBatch spriteBatch;
-    FitViewport viewport;
+    ExtendViewport viewport;
     Vector2 touchPos;
 
 
@@ -36,14 +37,14 @@ public class level_1_screen implements Screen {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch=main.batch;
-        viewport = new FitViewport(1200, 1000);
+        viewport = new ExtendViewport(1200,1000);
         touchPos = new Vector2();
 
     }
 
     @Override
     public void show() {
-        background_image = assetManager.get("Level1_bg.png", Texture.class);
+        background_image = assetManager.get("Level2_bg.png", Texture.class);
         red_bird = assetManager.get("Red_bird.png", Texture.class);
         black_bird = assetManager.get("Black_bird.png", Texture.class);
         yellow_bird = assetManager.get("Yellow_bird.png", Texture.class);
@@ -77,7 +78,16 @@ public class level_1_screen implements Screen {
         spriteBatch.draw(red_bird, 162,240,35,35);
         spriteBatch.draw(yellow_bird, 95,140,35,35);
         spriteBatch.draw(black_bird, 40,140,45,45);
-        spriteBatch.draw(wood_block)
+        spriteBatch.draw(wood_block, 600,140,80,80);
+        spriteBatch.draw(glass_block, 680,140,80,80);
+        spriteBatch.draw(stone_block, 760,140,80,80);
+        spriteBatch.draw(glass_block, 640,220,80,80);
+        spriteBatch.draw(wood_block, 720,220,80,80);
+        spriteBatch.draw(normal_pig,660,240,40,40);
+//        spriteBatch.draw(glass_block, 640,220,80,80);
+//        spriteBatch.draw(glass_block, 640,220,80,80);
+//        spriteBatch.draw(glass_block, 640,220,80,80);
+
 
 
 
