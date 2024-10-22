@@ -150,6 +150,20 @@ public class loading_screen implements Screen {
         assetManager.load("rotate_button.png", Texture.class);
         assetManager.load("save_button.png", Texture.class);
         assetManager.load("home_button.png", Texture.class);
+        assetManager.load("Red_bird.png", Texture.class);
+        assetManager.load("Yellow_bird.png", Texture.class);
+        assetManager.load("Black_bird.png", Texture.class);
+        assetManager.load("Old_pig.png", Texture.class);
+        assetManager.load("Normal_pig.png", Texture.class);
+        assetManager.load("King_pig.png", Texture.class);
+        assetManager.load("Glass_block.png", Texture.class);
+        assetManager.load("Wooden_block.png", Texture.class);
+        assetManager.load("Stone_block.png", Texture.class);
+        assetManager.load("Pause_icon.png", Texture.class);
+        assetManager.load("Level1_bg.png", Texture.class);
+        assetManager.load("Level2_bg.png", Texture.class);
+
+
 
 
 
