@@ -21,6 +21,8 @@ public class pause_screen implements Screen {
     private Texture rotate_button;
     private Texture settings_button;
     private Texture save_button;
+    private Texture home_button;
+
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -45,8 +47,9 @@ public class pause_screen implements Screen {
         pause_menu = assetManager.get("Pause_Menu.png", Texture.class);
         settings_button = assetManager.get("settings_button.png", Texture.class);
         play_button= assetManager.get("play_button.png", Texture.class);
-        rotate_button = assetManager.get("", Texture.class);
-        save_button = assetManager.get("Exit_icon.png", Texture.class);
+        rotate_button = assetManager.get("rotate_button.png", Texture.class);
+        save_button = assetManager.get("save_button.png", Texture.class);
+        home_button = assetManager.get("home_button.png", Texture.class);
 
 
     }
@@ -80,7 +83,7 @@ public class pause_screen implements Screen {
 //        spriteBatch.draw(rotate_button, 33,41 , worldWidth/3, worldHeight/10);
 //        spriteBatch.draw(save_button, 33,28 , worldWidth/3, worldHeight/10);
 //        spriteBatch.draw(settings_button, 33,15 , worldWidth/3, worldHeight/10);
-//        //spriteBatch.draw(exit_button, 80, 3, worldWidth/8, worldHeight/12);  this has to be decided;;;
+//        //spriteBatch.draw(home_button, 80, 3, worldWidth/8, worldHeight/12);  this has to be decided;;;
 
 
 
