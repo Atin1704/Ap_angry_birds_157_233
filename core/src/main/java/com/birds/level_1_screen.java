@@ -43,18 +43,18 @@ public class level_1_screen implements Screen {
 
     @Override
     public void show() {
-        background_image = assetManager.get("", Texture.class);
-        red_bird = assetManager.get("", Texture.class);
-        black_bird = assetManager.get("", Texture.class);
-        yellow_bird = assetManager.get("", Texture.class);
-        stone_block = assetManager.get("", Texture.class);
-        glass_block = assetManager.get("", Texture.class);
-        wood_block = assetManager.get("", Texture.class);
-        king_pig = assetManager.get("", Texture.class);
-        normal_pig = assetManager.get("", Texture.class);
-        old_pig = assetManager.get("", Texture.class);
-        slingshot = assetManager.get("", Texture.class);
-        pause_button = assetManager.get("", Texture.class);
+        background_image = assetManager.get("Level1_bg.png", Texture.class);
+        red_bird = assetManager.get("Red_bird.png", Texture.class);
+        black_bird = assetManager.get("Black_bird.png", Texture.class);
+        yellow_bird = assetManager.get("Yellow_bird.png", Texture.class);
+        stone_block = assetManager.get("Stone_block.png", Texture.class);
+        glass_block = assetManager.get("Glass_block.png", Texture.class);
+        wood_block = assetManager.get("Wooden_block.png", Texture.class);
+        king_pig = assetManager.get("King_pig.png", Texture.class);
+        normal_pig = assetManager.get("Normal_pig.png", Texture.class);
+        old_pig = assetManager.get("Old_pig.png", Texture.class);
+        slingshot = assetManager.get("Slingshot.png", Texture.class);
+        pause_button = assetManager.get("Pause_icon.png", Texture.class);
 
 
 
@@ -72,12 +72,12 @@ public class level_1_screen implements Screen {
         float worldHeight = viewport.getWorldHeight();
 
 
-//        spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-//        spriteBatch.draw(saved_top,23 , 64, 60, 20);
-//        spriteBatch.draw(saved_1, 33,41 , worldWidth/3, worldHeight/10);
-//        spriteBatch.draw(saved_2, 33,28 , worldWidth/3, worldHeight/10);
-//        spriteBatch.draw(saved_3, 33,15 , worldWidth/3, worldHeight/10);
-//        spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
+        spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
+        spriteBatch.draw(slingshot,140,140,60,150);
+        spriteBatch.draw(red_bird, 162,240,35,35);
+        spriteBatch.draw(yellow_bird, 95,140,35,35);
+        spriteBatch.draw(black_bird, 40,140,45,45);
+        spriteBatch.draw(wood_block)
 
 
 
