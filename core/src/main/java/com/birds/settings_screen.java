@@ -22,6 +22,7 @@ public class settings_screen implements Screen {
     private Texture Notification;
     private Texture volume_bar;
     private Texture volume_bar_green;
+    private Texture volume_bar_wood;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -49,6 +50,7 @@ public class settings_screen implements Screen {
         Notification = assetManager.get("Notification.png", Texture.class);
         volume_bar = assetManager.get("volume_bar.png", Texture.class);
         volume_bar_green = assetManager.get("volume_bar_green.png", Texture.class);
+        volume_bar_wood = assetManager.get("vertical_wooden_bar.png", Texture.class);
     }
 
     @Override
@@ -73,7 +75,9 @@ public class settings_screen implements Screen {
         float volumeBarY = 25; // Adjusted to fit vertical growth
         float volumeBarWidth = worldWidth / 22;
         float volumeBarHeight = 40; // Increased height for vertical adjustment
-        spriteBatch.draw(volume_bar, volumeBarX, volumeBarY, volumeBarWidth, volumeBarHeight);
+        spriteBatch.draw(volume_bar_wood, volumeBarX, volumeBarY, volumeBarWidth, volumeBarHeight);
+//        spriteBatch.draw(volume_bar, volumeBarX, volumeBarY, volumeBarWidth, volumeBarHeight);
+
 
         // Draw green volume bar (its height based on volume percentage)
         float volumeGreenHeight = volumePercentage * volumeBarHeight;

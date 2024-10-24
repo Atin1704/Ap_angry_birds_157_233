@@ -163,6 +163,8 @@ public class loading_screen implements Screen {
         assetManager.load("Level1_bg.png", Texture.class);
         assetManager.load("Level2_bg.png", Texture.class);
         assetManager.load("Slingshot.png", Texture.class);
+        assetManager.load("vertical_wooden_bar.png", Texture.class);
+
 
 
 
