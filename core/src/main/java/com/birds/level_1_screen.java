@@ -75,20 +75,20 @@ public class level_1_screen implements Screen {
 
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        spriteBatch.draw(slingshot,140,140,60,150);
-        spriteBatch.draw(red_bird, 162,240,35,35);
-        spriteBatch.draw(yellow_bird, 95,140,35,35);
-        spriteBatch.draw(black_bird, 40,140,45,45);
-        spriteBatch.draw(wood_block, 600,140,80,80);
-        spriteBatch.draw(glass_block, 680,140,80,80);
-        spriteBatch.draw(stone_block, 760,140,80,80);
-        spriteBatch.draw(glass_block, 640,220,80,80);
-        spriteBatch.draw(wood_block, 720,220,80,80);
-        spriteBatch.draw(normal_pig,660,240,40,40);
+        spriteBatch.draw(slingshot,180,220,75,250);
+        spriteBatch.draw(red_bird, 210,400,45,45);
+        spriteBatch.draw(yellow_bird, 110,220,45,45);
+        spriteBatch.draw(black_bird, 25,220,60,60);
+        spriteBatch.draw(wood_block, 700,220,100,100);
+        spriteBatch.draw(glass_block, 800,220,100,100);
+        spriteBatch.draw(stone_block, 900,220,100,100);
+        spriteBatch.draw(glass_block, 750,320,100,100);
+        spriteBatch.draw(wood_block, 850,320,100,100);
+        spriteBatch.draw(normal_pig,775,325,50,50);
 //        spriteBatch.draw(glass_block, 640,220,80,80);
 //        spriteBatch.draw(glass_block, 640,220,80,80);
 //        spriteBatch.draw(glass_block, 640,220,80,80);
-        spriteBatch.draw(pause_button,1100,920,45,45);
+        spriteBatch.draw(pause_button,1080,910,65,65);
 
 
 

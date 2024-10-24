@@ -82,12 +82,12 @@ public class pause_screen implements Screen {
 
 
         }
-        spriteBatch.draw(pause_menu,200 , 100,worldWidth-200, worldHeight-100);
-        spriteBatch.draw(play_button,475,700,50,50 );
-        spriteBatch.draw(rotate_button,475,640,50,50 );
-        spriteBatch.draw(settings_button,475,590,50,50 );
-        spriteBatch.draw(save_button,475,540,50,50 );
-        spriteBatch.draw(home_button,475,490,50,50 );
+        spriteBatch.draw(pause_menu,100 , 50,worldWidth-200, worldHeight-100);
+        spriteBatch.draw(play_button,435,670,100,100 );
+        spriteBatch.draw(rotate_button,435,550,100,100 );
+        spriteBatch.draw(settings_button,435,430,100,100 );
+        spriteBatch.draw(save_button,435,310,100,100 );
+        spriteBatch.draw(home_button,435,190,100,100 );
 
 
 
