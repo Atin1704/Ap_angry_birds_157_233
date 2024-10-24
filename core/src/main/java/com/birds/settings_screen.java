@@ -27,16 +27,18 @@ public class settings_screen implements Screen {
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
     Vector2 touchPos;
+    boolean checker;
 
     private boolean isDragging = false; // Track if the user is dragging the volume bar
     private float volumePercentage = 0.5f; // Volume percentage (initially 50%)
 
-    public settings_screen(Main main, AssetManager assetManager) {
+    public settings_screen(Main main, AssetManager assetManager,boolean checker) {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch = main.batch;
         viewport = new FitViewport(100, 100);
         touchPos = new Vector2();
+        this.checker = checker;
     }
 
     @Override
@@ -106,7 +108,11 @@ public class settings_screen implements Screen {
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-                        game_runner.setScreen(new main_screen(game_runner, assetManager));
+                        if(checker){
+                            game_runner.setScreen(new pause_screen(game_runner, assetManager,1));}
+                        else{
+                            game_runner.setScreen(new main_screen(game_runner, assetManager));
+                        }
                     }
                 }, 0.25f);  // Delay of 0.25 seconds
             }

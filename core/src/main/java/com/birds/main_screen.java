@@ -101,7 +101,7 @@ public class main_screen implements Screen {
             if (touchPos.x >= settingsIconX && touchPos.x <= (settingsIconX + settingsIconWidth)
                 && touchPos.y >= settingsIconY && touchPos.y <= (settingsIconY + settingsIconHeight)) {
                 // Settings icon was clicked
-                game_runner.setScreen(new settings_screen(game_runner, assetManager)); // Switch to the Settings screen
+                game_runner.setScreen(new settings_screen(game_runner, assetManager,false)); // Switch to the Settings screen
             }
 
             // Check if the user touched within the Exit icon's bounds

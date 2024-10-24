@@ -74,6 +74,50 @@ public class Victory_Screen implements Screen {
     }
 
     private void input() {
+        if (Gdx.input.isTouched()) {
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(touchPos);
+
+            // Coordinates for the restart button
+            float restartButtonX = 350f;
+            float restartButtonY = 520f;
+            float restartButtonWidth = 300f;
+            float restartButtonHeight = 150f;
+
+            // Coordinates for the back to main menu button
+            float mainMenuButtonX = 350f;
+            float mainMenuButtonY = 300f;
+            float mainMenuButtonWidth = 300f;
+            float mainMenuButtonHeight = 150f;
+
+            // Check if the restart button is touched
+            if (touchPos.x >= restartButtonX && touchPos.x <= (restartButtonX + restartButtonWidth)
+                && touchPos.y >= restartButtonY && touchPos.y <= (restartButtonY + restartButtonHeight)) {
+
+                // Restart the current level (based on the level variable)
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (level == 1) {
+                            game_runner.setScreen(new level_1_screen(game_runner, assetManager));
+                        }
+                        // Add more levels as needed with else-if or switch cases
+                    }
+                }, 0.25f);  // Delay of 0.25 seconds
+            }
+
+            // Check if the main menu button is touched
+            if (touchPos.x >= mainMenuButtonX && touchPos.x <= (mainMenuButtonX + mainMenuButtonWidth)
+                && touchPos.y >= mainMenuButtonY && touchPos.y <= (mainMenuButtonY + mainMenuButtonHeight)) {
+
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        game_runner.setScreen(new main_screen(game_runner, assetManager));
+                    }
+                }, 0.25f);  // Delay of 0.25 seconds
+            }
+        }
     }
 
 

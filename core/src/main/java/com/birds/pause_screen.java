@@ -59,7 +59,7 @@ public class pause_screen implements Screen {
 
     @Override
     public void render(float v) {
-//      input();
+        input();
         ScreenUtils.clear(Color.BLACK);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
@@ -96,33 +96,110 @@ public class pause_screen implements Screen {
 
     }
 
-//needs to be completed ,depends highly on how we implement screens
-//    private void input() {
-//        if (Gdx.input.isTouched()) {
-//            // Get the touch position in screen coordinates and convert it to world coordinates
-//            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-//            viewport.unproject(touchPos); // Converts screen coordinates to the viewport's world coordinates (100x100 system)
-//
-//            float exitIconX = 80f;        // X position for Exit icon
-//            float exitIconY = 3f;         // Y position for Exit icon
-//            float exitIconWidth = viewport.getWorldWidth() / 8;   // Width of the Exit icon
-//            float exitIconHeight = viewport.getWorldHeight() / 12; // Height of the Exit icon
-//
-//            // Check if the user touched within the Exit icon's bounds
-//            if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
-//                && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
-//
-//
-//
-//                Timer.schedule(new Timer.Task() {
-//                    @Override
-//                    public void run() {
-//                        game_runner.setScreen(new main_screen(game_runner, assetManager));
-//                    }
-//                }, 0.25f);  // Delay of 0.5 seconds (500ms)
-//            }
-//        }
-//    }
+
+    private void input() {
+        if (Gdx.input.isTouched()) {
+            // Get the touch position in screen coordinates and convert it to world coordinates
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(touchPos); // Converts screen coordinates to the viewport's world coordinates (1000x1000 system)
+
+            // Define button bounds
+            float playButtonX = 435f;
+            float playButtonY = 670f;
+            float playButtonWidth = 100f;
+            float playButtonHeight = 100f;
+
+            float rotateButtonX = 435f;
+            float rotateButtonY = 550f;
+            float rotateButtonWidth = 100f;
+            float rotateButtonHeight = 100f;
+
+            float settingsButtonX = 435f;
+            float settingsButtonY = 430f;
+            float settingsButtonWidth = 100f;
+            float settingsButtonHeight = 100f;
+
+            float saveButtonX = 435f;
+            float saveButtonY = 310f;
+            float saveButtonWidth = 100f;
+            float saveButtonHeight = 100f;
+
+            float homeButtonX = 435f;
+            float homeButtonY = 190f;
+            float homeButtonWidth = 100f;
+            float homeButtonHeight = 100f;
+
+            // Play button touch detection
+            if (touchPos.x >= playButtonX && touchPos.x <= (playButtonX + playButtonWidth)
+                && touchPos.y >= playButtonY && touchPos.y <= (playButtonY + playButtonHeight)) {
+                // Handle play button action (resume game)
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if(level==1){
+                            game_runner.setScreen(new level_1_screen(game_runner, assetManager));
+                        }
+                    }
+                }, 0.25f);  // Delay of 0.25 seconds
+            }
+
+            // Rotate button touch detection
+            if (touchPos.x >= rotateButtonX && touchPos.x <= (rotateButtonX + rotateButtonWidth)
+                && touchPos.y >= rotateButtonY && touchPos.y <= (rotateButtonY + rotateButtonHeight)) {
+                // Handle rotate button action (rotate the game)
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if(level==1){
+                            game_runner.setScreen(new level_1_screen(game_runner, assetManager));
+                        }
+
+                    }
+                }, 0.25f);
+            }
+
+            // Settings button touch detection
+            if (touchPos.x >= settingsButtonX && touchPos.x <= (settingsButtonX + settingsButtonWidth)
+                && touchPos.y >= settingsButtonY && touchPos.y <= (settingsButtonY + settingsButtonHeight)) {
+                // Handle settings button action
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        // Call method to open settings screen
+                         Example: game_runner.setScreen(new settings_screen(game_runner, assetManager,true));
+                    }
+                }, 0.25f);
+            }
+
+            // Save button touch detection
+            if (touchPos.x >= saveButtonX && touchPos.x <= (saveButtonX + saveButtonWidth)
+                && touchPos.y >= saveButtonY && touchPos.y <= (saveButtonY + saveButtonHeight)) {
+                // Handle save button action
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+
+                        game_runner.setScreen(new saved_game_screen(game_runner, assetManager));
+
+                    }
+                }, 0.25f);
+            }
+
+            // Home button touch detection
+            if (touchPos.x >= homeButtonX && touchPos.x <= (homeButtonX + homeButtonWidth)
+                && touchPos.y >= homeButtonY && touchPos.y <= (homeButtonY + homeButtonHeight)) {
+                // Handle home button action (return to main menu)
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if(level==1){
+                            game_runner.setScreen(new main_screen(game_runner, assetManager));
+                        }
+                    }
+                }, 0.25f);
+            }
+        }
+    }
 
     @Override
     public void resize(int width, int height) {
