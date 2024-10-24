@@ -54,10 +54,10 @@ public class Defeat_Screen implements Screen {
         float worldHeight = viewport.getWorldHeight();
 
         spriteBatch.draw(background_image,0,0,worldWidth,worldHeight);
-        spriteBatch.draw(laughing_pig,100,200,350,400);
+        spriteBatch.draw(laughing_pig,50,0,400,400);
         spriteBatch.draw(lost_message,250,750,500,200);
-        spriteBatch.draw(restart_message,450,600,200,75);
-        spriteBatch.draw(main_message,450,500,200,75);
+        spriteBatch.draw(restart_message,350,520,300,150);
+        spriteBatch.draw(main_message,350,300,300,150);
 
 
 
