@@ -165,8 +165,14 @@ public class loading_screen implements Screen {
         assetManager.load("Slingshot.png", Texture.class);
         assetManager.load("vertical_wooden_bar.png", Texture.class);
         assetManager.load("Level1_bg_dimmed.png", Texture.class);
-
-
+        assetManager.load("Won_message.png", Texture.class);
+        assetManager.load("Lost_message.png", Texture.class);
+        assetManager.load("Backtomain_message.png", Texture.class);
+        assetManager.load("Restart_message.png", Texture.class);
+        assetManager.load("lostgame_bg.png", Texture.class);
+        assetManager.load("wingame_bg.png", Texture.class);
+        assetManager.load("laughing_pig.png", Texture.class);
+        assetManager.load("happy_birds.png", Texture.class);
 
 
 
