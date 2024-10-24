@@ -1,6 +1,7 @@
 package com.birds;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -9,8 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class level_1_screen implements Screen {
@@ -33,14 +32,12 @@ public class level_1_screen implements Screen {
     StretchViewport viewport;
     Vector2 touchPos;
 
-
-    public level_1_screen(Main main,AssetManager assetManager) {
+    public level_1_screen(Main main, AssetManager assetManager) {
         this.game_runner = main;
         this.assetManager = assetManager;
-        this.spriteBatch=main.batch;
-        viewport = new StretchViewport(1200,1000);
+        this.spriteBatch = main.batch;
+        viewport = new StretchViewport(1200, 1000);
         touchPos = new Vector2();
-
     }
 
     @Override
@@ -57,10 +54,6 @@ public class level_1_screen implements Screen {
         old_pig = assetManager.get("Old_pig.png", Texture.class);
         slingshot = assetManager.get("Slingshot.png", Texture.class);
         pause_button = assetManager.get("Pause_icon.png", Texture.class);
-
-
-
-
     }
 
     @Override
@@ -73,67 +66,55 @@ public class level_1_screen implements Screen {
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
 
-
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        spriteBatch.draw(slingshot,180,220,75,250);
-        spriteBatch.draw(red_bird, 210,400,45,45);
-        spriteBatch.draw(yellow_bird, 110,220,45,45);
-        spriteBatch.draw(black_bird, 25,220,60,60);
-        spriteBatch.draw(wood_block, 700,220,100,100);
-        spriteBatch.draw(glass_block, 800,220,100,100);
-        spriteBatch.draw(stone_block, 900,220,100,100);
-        spriteBatch.draw(glass_block, 750,320,100,100);
-        spriteBatch.draw(wood_block, 850,320,100,100);
-        spriteBatch.draw(normal_pig,775,325,50,50);
-//        spriteBatch.draw(glass_block, 640,220,80,80);
-//        spriteBatch.draw(glass_block, 640,220,80,80);
-//        spriteBatch.draw(glass_block, 640,220,80,80);
-        spriteBatch.draw(pause_button,1080,910,65,65);
-
-
-
+        spriteBatch.draw(slingshot, 180, 220, 75, 250);
+        spriteBatch.draw(red_bird, 210, 400, 45, 45);
+        spriteBatch.draw(yellow_bird, 110, 220, 45, 45);
+        spriteBatch.draw(black_bird, 25, 220, 60, 60);
+        spriteBatch.draw(wood_block, 700, 220, 100, 100);
+        spriteBatch.draw(glass_block, 800, 220, 100, 100);
+        spriteBatch.draw(stone_block, 900, 220, 100, 100);
+        spriteBatch.draw(glass_block, 750, 320, 100, 100);
+        spriteBatch.draw(wood_block, 850, 320, 100, 100);
+        spriteBatch.draw(normal_pig, 775, 325, 50, 50);
+        spriteBatch.draw(pause_button, 1080, 910, 65, 65);
 
         spriteBatch.end();
-
     }
 
-
     private void input() {
+        // Handle touch input for pause button
+        if (Gdx.input.isTouched()) {
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(touchPos);
 
-            if (Gdx.input.isTouched()) {
-                // Get the touch position in screen coordinates and convert it to world coordinates
-                touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-                viewport.unproject(touchPos); // Converts screen coordinates to the viewport's world coordinates
+            float pauseButtonX = 1100f;
+            float pauseButtonY = 920f;
+            float pauseButtonWidth = 45f;
+            float pauseButtonHeight = 45f;
 
+            if (touchPos.x >= pauseButtonX && touchPos.x <= (pauseButtonX + pauseButtonWidth)
+                && touchPos.y >= pauseButtonY && touchPos.y <= (pauseButtonY + pauseButtonHeight)) {
 
-                // Handle Pause Button touch
-                float pauseButtonX = 1100f;   // X position for Pause button
-                float pauseButtonY = 920f;    // Y position for Pause button
-                float pauseButtonWidth = 45f; // Width of Pause button
-                float pauseButtonHeight = 45f; // Height of Pause button
-
-                if (touchPos.x >= pauseButtonX && touchPos.x <= (pauseButtonX + pauseButtonWidth)
-                    && touchPos.y >= pauseButtonY && touchPos.y <= (pauseButtonY + pauseButtonHeight)) {
-
-                    Timer.schedule(new Timer.Task() {
-                        @Override
-                        public void run() {
-                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1)); // Pass the current level (1)
-                        }
-                    }, 0.25f);  // Delay of 0.25 seconds
-                }
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
+                    }
+                }, 0.25f);  // Delay of 0.25 seconds
             }
         }
 
+        // Handle "Enter" key press for victory screen
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            game_runner.setScreen(new Victory_Screen(game_runner, assetManager));
+        }
+    }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-        //true basically means centering it, adding black bars to the side;
-        // Resize your screen here. The parameters represent the new window size.
-
     }
-
 
     @Override
     public void pause() {
@@ -154,5 +135,4 @@ public class level_1_screen implements Screen {
     public void dispose() {
 
     }
-
 }
