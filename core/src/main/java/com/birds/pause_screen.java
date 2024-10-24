@@ -59,7 +59,7 @@ public class pause_screen implements Screen {
 
     @Override
     public void render(float v) {
-//        input();
+//      input();
         ScreenUtils.clear(Color.BLACK);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
