@@ -22,7 +22,7 @@ public class Victory_Screen implements Screen {
     private boolean isDragging = false; // Track if the user is dragging the volume bar
     private float volumePercentage = 0.5f; // Volume percentage (initially 50%)
 
-    public Victory_Screen(Main main, AssetManager assetManager) {
+    public Victory_Screen(Main main, AssetManager assetManager,int level) {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch = main.batch;

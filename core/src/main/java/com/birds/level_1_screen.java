@@ -107,8 +107,12 @@ public class level_1_screen implements Screen {
 
         // Handle "Enter" key press for victory screen
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            game_runner.setScreen(new Victory_Screen(game_runner, assetManager));
+            game_runner.setScreen(new Victory_Screen(game_runner, assetManager,1));
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
+            game_runner.setScreen(new Defeat_Screen(game_runner, assetManager,1));
+        }
+
     }
 
     @Override
