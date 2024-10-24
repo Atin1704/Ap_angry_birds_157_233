@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class pause_screen implements Screen {
@@ -26,7 +27,7 @@ public class pause_screen implements Screen {
 
     private Main game_runner;
     private final SpriteBatch spriteBatch;
-    FitViewport viewport;
+    ExtendViewport viewport;
     Vector2 touchPos;
     private int level;
 
@@ -34,7 +35,7 @@ public class pause_screen implements Screen {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch=main.batch;
-        viewport = new FitViewport(100, 100);
+        viewport = new ExtendViewport(1000, 1000);
         touchPos = new Vector2();
         this.level = level;
 
@@ -42,9 +43,9 @@ public class pause_screen implements Screen {
 
     @Override
     public void show() {
-        background_image_1 = assetManager.get("", Texture.class);
-        background_image_2 = assetManager.get("//needs to be filled//level2 bg", Texture.class);
-        background_image_3 = assetManager.get("//needs to be filled//level 3 bg", Texture.class);
+        background_image_1 = assetManager.get("Level1_bg_dimmed.png", Texture.class);
+//        background_image_2 = assetManager.get("//needs to be filled//level2 bg", Texture.class);
+//        background_image_3 = assetManager.get("//needs to be filled//level 3 bg", Texture.class);
         pause_menu = assetManager.get("Pause_Menu.png", Texture.class);
         settings_button = assetManager.get("settings_button.png", Texture.class);
         play_button= assetManager.get("play_button.png", Texture.class);
@@ -65,7 +66,7 @@ public class pause_screen implements Screen {
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
 
-        switch (level) {
+        switch (level){
             case 1:
                 spriteBatch.draw(background_image_1, 0, 0, worldWidth, worldHeight);
                 break;
@@ -75,16 +76,18 @@ public class pause_screen implements Screen {
             case 3:
                 spriteBatch.draw(background_image_3, 0, 0, worldWidth, worldHeight);
                 break;
+            default:
+                break;
 
 
         }
+        spriteBatch.draw(pause_menu,200 , 100,worldWidth-200, worldHeight-100);
+        spriteBatch.draw(play_button,475,700,50,50 );
+        spriteBatch.draw(rotate_button,475,640,50,50 );
+        spriteBatch.draw(settings_button,475,590,50,50 );
+        spriteBatch.draw(save_button,475,540,50,50 );
+        spriteBatch.draw(home_button,475,490,50,50 );
 
-//        spriteBatch.draw(pause_menu, 0, 0, worldWidth, worldHeight);
-//        spriteBatch.draw(play_button,23 , 64, 60, 20);
-//        spriteBatch.draw(rotate_button, 33,41 , worldWidth/3, worldHeight/10);
-//        spriteBatch.draw(save_button, 33,28 , worldWidth/3, worldHeight/10);
-//        spriteBatch.draw(settings_button, 33,15 , worldWidth/3, worldHeight/10);
-//        //spriteBatch.draw(home_button, 80, 3, worldWidth/8, worldHeight/12);  this has to be decided;;;
 
 
 

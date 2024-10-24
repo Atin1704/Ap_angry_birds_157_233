@@ -87,6 +87,7 @@ public class level_1_screen implements Screen {
 //        spriteBatch.draw(glass_block, 640,220,80,80);
 //        spriteBatch.draw(glass_block, 640,220,80,80);
 //        spriteBatch.draw(glass_block, 640,220,80,80);
+        spriteBatch.draw(pause_button,1100,920,45,45);
 
 
 
@@ -97,31 +98,32 @@ public class level_1_screen implements Screen {
 
 
     private void input() {
-        if (Gdx.input.isTouched()) {
-            // Get the touch position in screen coordinates and convert it to world coordinates
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-            viewport.unproject(touchPos); // Converts screen coordinates to the viewport's world coordinates (100x100 system)
 
-            float exitIconX = 80f;        // X position for Exit icon
-            float exitIconY = 3f;         // Y position for Exit icon
-            float exitIconWidth = viewport.getWorldWidth() / 8;   // Width of the Exit icon
-            float exitIconHeight = viewport.getWorldHeight() / 12; // Height of the Exit icon
-
-            // Check if the user touched within the Exit icon's bounds
-            if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
-                && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
+            if (Gdx.input.isTouched()) {
+                // Get the touch position in screen coordinates and convert it to world coordinates
+                touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+                viewport.unproject(touchPos); // Converts screen coordinates to the viewport's world coordinates
 
 
+                // Handle Pause Button touch
+                float pauseButtonX = 1100f;   // X position for Pause button
+                float pauseButtonY = 920f;    // Y position for Pause button
+                float pauseButtonWidth = 45f; // Width of Pause button
+                float pauseButtonHeight = 45f; // Height of Pause button
 
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        game_runner.setScreen(new main_screen(game_runner, assetManager));
-                    }
-                }, 0.25f);  // Delay of 0.5 seconds (500ms)
+                if (touchPos.x >= pauseButtonX && touchPos.x <= (pauseButtonX + pauseButtonWidth)
+                    && touchPos.y >= pauseButtonY && touchPos.y <= (pauseButtonY + pauseButtonHeight)) {
+
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1)); // Pass the current level (1)
+                        }
+                    }, 0.25f);  // Delay of 0.25 seconds
+                }
             }
         }
-    }
+
 
     @Override
     public void resize(int width, int height) {
