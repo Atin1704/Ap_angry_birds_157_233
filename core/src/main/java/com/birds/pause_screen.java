@@ -23,6 +23,7 @@ public class pause_screen implements Screen {
     private Texture save_button;
     private Texture home_button;
 
+
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -41,7 +42,7 @@ public class pause_screen implements Screen {
 
     @Override
     public void show() {
-        background_image_1 = assetManager.get("//needs to be filled//level1 bg", Texture.class);
+        background_image_1 = assetManager.get("", Texture.class);
         background_image_2 = assetManager.get("//needs to be filled//level2 bg", Texture.class);
         background_image_3 = assetManager.get("//needs to be filled//level 3 bg", Texture.class);
         pause_menu = assetManager.get("Pause_Menu.png", Texture.class);
