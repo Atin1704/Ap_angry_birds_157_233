@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class level_1_screen implements Screen {
     private final AssetManager assetManager;
@@ -29,7 +30,7 @@ public class level_1_screen implements Screen {
 
     private Main game_runner;
     private final SpriteBatch spriteBatch;
-    ExtendViewport viewport;
+    StretchViewport viewport;
     Vector2 touchPos;
 
 
@@ -37,7 +38,7 @@ public class level_1_screen implements Screen {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch=main.batch;
-        viewport = new ExtendViewport(1200,1000);
+        viewport = new StretchViewport(1200,1000);
         touchPos = new Vector2();
 
     }
