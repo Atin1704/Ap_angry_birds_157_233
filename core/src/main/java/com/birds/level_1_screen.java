@@ -104,16 +104,27 @@ public class level_1_screen implements Screen {
 
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        rb_1.getbatch().draw(rb_1.getimage(),260,400,50,50);
         slingshot.getbatch().draw(slingshot.getimage(),230,220,75,250);
+        rb_1.getbatch().draw(rb_1.getimage(),260,400,50,50);
         yb_1.getbatch().draw(yb_1.getimage(),105,220,55,55);
         rb_2.getbatch().draw(rb_2.getimage(),170,220,50,50);
         bb_1.getbatch().draw(bb_1.getimage(),20,220,65,80);
-        sb_1.getbatch().draw(sb_1.getStick_h(),700,220, 50, 20);
-        sb_2.getbatch().draw(sb_2.getStick_h(),750,220, 50, 20);
-        sb_3.getbatch().draw(sb_3.getStick_h(),870,220, 50, 20);
-        sb_4.getbatch().draw(sb_4.getStick_h(),920,220, 50, 20);
-        wb_1.getbatch().draw(wb_1.getStick_h(),720,240, 60, 20);
+        sb_1.getbatch().draw(sb_1.getStick_h(),700,220, 80, 45);
+        sb_2.getbatch().draw(sb_2.getStick_h(),780,220, 80, 45);
+        sb_3.getbatch().draw(sb_3.getStick_h(),960,220, 80, 45);
+        sb_4.getbatch().draw(sb_4.getStick_h(),1040,220, 80, 45);
+        wb_1.getbatch().draw(wb_1.getStick_h(),725,265, 110, 45);
+        wb_2.getbatch().draw(wb_2.getStick_h(),835,265, 150, 25);
+        wb_3.getbatch().draw(wb_3.getStick_h(),985,265, 110, 45);
+        sb_5.getbatch().draw(sb_5.getStick_v(),755,310, 50, 110);
+        sb_6.getbatch().draw(sb_6.getStick_v(),1015,310, 50, 110);
+        wb_4.getbatch().draw(wb_4.getFull_box(),725,310, 110, 110);
+        wb_5.getbatch().draw(wb_5.getFull_box(),985,310, 110, 110);
+        wb_6.getbatch().draw(wb_6.getFull_box(),700,420, 150, 130);
+        wb_7.getbatch().draw(wb_7.getFull_box(),960,420, 150, 130);
+        gb_1.getbatch().draw(gb_1.getFull_box(),720,550,110,110);
+        gb_2.getbatch().draw(gb_2.getFull_box(),980,550,110,110);
+
 //        spriteBatch.draw(wood_block, 700, 220, 100, 100);
 //        spriteBatch.draw(glass_block, 800, 220, 100, 100);
 //        spriteBatch.draw(stone_block, 900, 220, 100, 100);
