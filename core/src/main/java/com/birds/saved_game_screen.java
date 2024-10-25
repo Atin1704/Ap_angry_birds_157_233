@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class saved_game_screen implements Screen {
     private final AssetManager assetManager;
@@ -20,7 +21,7 @@ public class saved_game_screen implements Screen {
     private Texture saved_3;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
-    FitViewport viewport;
+    StretchViewport viewport;
     Vector2 touchPos;
     private Texture exit_icon;
 
@@ -28,7 +29,7 @@ public class saved_game_screen implements Screen {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch=main.batch;
-        viewport = new FitViewport(100, 100);
+        viewport = new StretchViewport(100, 100);
         touchPos = new Vector2();
 
     }

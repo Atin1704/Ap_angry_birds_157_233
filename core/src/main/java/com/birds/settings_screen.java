@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class settings_screen implements Screen {
     private final AssetManager assetManager;
@@ -28,7 +29,7 @@ public class settings_screen implements Screen {
     private Texture volume_bar_wood;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
-    FitViewport viewport;
+    StretchViewport viewport;
     Vector2 touchPos;
     boolean checker;
 
@@ -39,7 +40,7 @@ public class settings_screen implements Screen {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch = main.batch;
-        viewport = new FitViewport(100, 100);
+        viewport = new StretchViewport(100, 100);
         touchPos = new Vector2();
         this.checker = checker;
     }

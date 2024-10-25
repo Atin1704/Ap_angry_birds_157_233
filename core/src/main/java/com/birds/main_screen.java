@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class main_screen implements Screen {
     Vector2 touchPos;
@@ -23,13 +24,13 @@ public class main_screen implements Screen {
     private Texture angry_bird;
     private final Main game_runner;
     private final SpriteBatch spriteBatch;
-    FitViewport viewport;
+    StretchViewport viewport;
 
     public main_screen(Main main,AssetManager assetManager) {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch=main.batch;
-        viewport = new FitViewport(100, 100);
+        viewport = new StretchViewport(100, 100);
         touchPos = new Vector2();
 
     }
