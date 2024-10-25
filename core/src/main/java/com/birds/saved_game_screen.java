@@ -1,6 +1,7 @@
 package com.birds;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -71,6 +72,10 @@ public class saved_game_screen implements Screen {
 
 
     private void input() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+
+        }
         if (Gdx.input.isTouched()) {
             // Get the touch position in screen coordinates and convert it to world coordinates
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());

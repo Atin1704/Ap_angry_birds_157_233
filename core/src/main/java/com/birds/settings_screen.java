@@ -1,6 +1,7 @@
 package com.birds;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -17,7 +18,7 @@ public class settings_screen implements Screen {
     private final AssetManager assetManager;
     private Texture background_image;
     private Texture exit_icon;
-    private Texture angry_bird;
+    private Texture Settings_top;
     private Texture Volume_icon;
     private Texture Credits;
     private Texture Username;
@@ -49,7 +50,7 @@ public class settings_screen implements Screen {
     public void show() {
         background_image = assetManager.get("Settings_bg.png", Texture.class);
         exit_icon = assetManager.get("Exit_icon.png", Texture.class);
-        angry_bird = assetManager.get("Angry_Birds.png", Texture.class);
+        Settings_top = assetManager.get("Settings_top.png", Texture.class);
         Volume_icon = assetManager.get("Volume_icon.png", Texture.class);
         Credits = assetManager.get("Credits.png", Texture.class);
         Username = assetManager.get("Username.png", Texture.class);
@@ -61,9 +62,7 @@ public class settings_screen implements Screen {
         volume_bar_wood = assetManager.get("vertical_wooden_bar.png", Texture.class);
     }
 
-    private float notificationAlpha = 1f; // Starts fully opaque
-    private boolean fadeIn = false;       // Direction of the fade effect
-    private boolean fadeTransition = false; // Only activate fade upon touch
+    private boolean isNotificationTransitioning = false; // To manage notification transition
 
     @Override
     public void render(float v) {
@@ -77,17 +76,15 @@ public class settings_screen implements Screen {
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
         spriteBatch.draw(exit_icon, 80, 3, worldWidth / 8, worldHeight / 12);
-        spriteBatch.draw(angry_bird, 15, 72, 65, worldHeight / 5);
+        spriteBatch.draw(Settings_top, 15, 77, 68, worldHeight / 5);
         spriteBatch.draw(Credits, 33, 38, worldWidth / 3, worldHeight / 9);
 
-        // Draw Notification icon with fade effect only if transition is triggered
-        spriteBatch.setColor(1, 1, 1, notificationAlpha); // Apply alpha transparency
-        if (!Notif_status) {
-            spriteBatch.draw(Notification_off, 33, 20, worldWidth / 3, worldHeight / 9);
-        } else {
+        // Draw Notification icon based on its current state
+        if (Notif_status) {
             spriteBatch.draw(Notification_on, 33, 20, worldWidth / 3, worldHeight / 9);
+        } else {
+            spriteBatch.draw(Notification_off, 33, 20, worldWidth / 3, worldHeight / 9);
         }
-        spriteBatch.setColor(1, 1, 1, 1); // Reset color to opaque
 
         spriteBatch.draw(Username, 33, 56, worldWidth / 3, worldHeight / 9);
 
@@ -105,34 +102,22 @@ public class settings_screen implements Screen {
         spriteBatch.draw(Volume_icon, 19, 23, 6, worldHeight / 14);
 
         spriteBatch.end();
-
-        // Adjust notificationAlpha for a fade effect only when transition is active
-        if (fadeTransition) {
-            if (fadeIn) {
-                notificationAlpha += 0.05f; // Increase alpha to make it fade in
-                if (notificationAlpha >= 1f) {
-                    fadeIn = false;
-                    fadeTransition = false; // Stop transition after reaching full opacity
-                }
-            } else {
-                notificationAlpha -= 0.05f; // Decrease alpha for fade out
-                if (notificationAlpha <= 0f) {
-                    fadeIn = true;
-                }
-            }
-        }
     }
 
     private long lastNotificationToggleTime = 0; // Track the last toggle time as long
     private static final float NOTIFICATION_TOGGLE_COOLDOWN = 0.3f; // 0.3 seconds cooldown
 
     private void input() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+
+        }
         if (Gdx.input.isTouched()) {
             // Get the touch position and convert it to world coordinates
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos);
 
-            // Check if the user is touching the exit icon
+            // Check if the user touched the exit icon
             float exitIconX = 80f;
             float exitIconY = 3f;
             float exitIconWidth = viewport.getWorldWidth() / 8;
@@ -165,9 +150,8 @@ public class settings_screen implements Screen {
                 // Only toggle if enough time has passed since the last toggle
                 if (TimeUtils.timeSinceMillis(lastNotificationToggleTime) > NOTIFICATION_TOGGLE_COOLDOWN * 1000) {
                     lastNotificationToggleTime = TimeUtils.millis(); // Update the last toggle time
-                    Notif_status = !Notif_status;
-                    fadeTransition = true; // Trigger fade effect on touch
-                    fadeIn = !Notif_status; // Set fade direction based on new status
+                    Notif_status = !Notif_status; // Toggle the notification status
+                    isNotificationTransitioning = true; // Start the transition
                 }
             }
 
@@ -195,6 +179,8 @@ public class settings_screen implements Screen {
             // Gradually approach the new value for smoothness
             volumePercentage += (newVolumePercentage - volumePercentage) * 0.2f;
         }
+
+
     }
 
     @Override

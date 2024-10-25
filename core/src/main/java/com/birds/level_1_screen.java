@@ -89,6 +89,10 @@ public class level_1_screen implements Screen {
     }
 
     private void input() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+
+        }
         // Handle touch input for pause button
         if (Gdx.input.isTouched()) {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());

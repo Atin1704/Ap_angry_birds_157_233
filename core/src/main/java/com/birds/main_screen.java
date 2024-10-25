@@ -1,6 +1,7 @@
 package com.birds;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -125,6 +126,12 @@ public class main_screen implements Screen {
                 // Level 1 icon was clicked
                 game_runner.setScreen(new level_1_screen(game_runner, assetManager)); // Switch to the Level 1 screen
             }
+
+
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+
         }
     }
 

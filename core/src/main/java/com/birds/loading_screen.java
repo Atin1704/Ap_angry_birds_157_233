@@ -174,7 +174,7 @@ public class loading_screen implements Screen {
         assetManager.load("wingame_bg.png", Texture.class);
         assetManager.load("happy_birds.png", Texture.class);
         assetManager.load("laughing_pig.png", Texture.class);
-
+        assetManager.load("Settings_top.png", Texture.class);
 
 
 
