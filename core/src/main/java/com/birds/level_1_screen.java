@@ -120,8 +120,8 @@ public class level_1_screen implements Screen {
         wb_1.getbatch().draw(wb_1.getStick_h(),725,265, 110, 45);
         wb_2.getbatch().draw(wb_2.getStick_h(),835,265, 150, 25);
         wb_3.getbatch().draw(wb_3.getStick_h(),985,265, 110, 45);
-        sb_5.getbatch().draw(sb_5.getStick_v(),755,310, 50, 110);
-        sb_6.getbatch().draw(sb_6.getStick_v(),1015,310, 50, 110);
+        sb_5.getbatch().draw(sb_5.getStick_v(),767,310, 25, 110);
+        sb_6.getbatch().draw(sb_6.getStick_v(),1027,310, 25, 110);
         wb_4.getbatch().draw(wb_4.getFull_box(),725,310, 110, 110);
         wb_5.getbatch().draw(wb_5.getFull_box(),985,310, 110, 110);
         wb_6.getbatch().draw(wb_6.getFull_box(),700,420, 150, 130);
