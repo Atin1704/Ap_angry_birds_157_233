@@ -76,21 +76,21 @@ public class settings_screen implements Screen {
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
         spriteBatch.draw(exit_icon, 80, 3, worldWidth / 8, worldHeight / 12);
-        spriteBatch.draw(Settings_top, 15, 77, 68, worldHeight / 5);
-        spriteBatch.draw(Credits, 33, 38, worldWidth / 3, worldHeight / 9);
+        spriteBatch.draw(Settings_top, 23, 64, 50, 20);
+        spriteBatch.draw(Credits, 36, 32, 25, worldHeight / 9);
 
         // Draw Notification icon based on its current state
         if (Notif_status) {
-            spriteBatch.draw(Notification_on, 33, 20, worldWidth / 3, worldHeight / 9);
+            spriteBatch.draw(Notification_on, 36, 14, 25, worldHeight / 9);
         } else {
-            spriteBatch.draw(Notification_off, 33, 20, worldWidth / 3, worldHeight / 9);
+            spriteBatch.draw(Notification_off, 36, 14, 25, worldHeight / 9);
         }
 
-        spriteBatch.draw(Username, 33, 56, worldWidth / 3, worldHeight / 9);
+        spriteBatch.draw(Username, 36, 50, 25, worldHeight / 9);
 
         // Volume bar rendering remains unchanged
-        float volumeBarX = 20;
-        float volumeBarY = 25;
+        float volumeBarX = 16;
+        float volumeBarY = 20;
         float volumeBarWidth = worldWidth / 22;
         float volumeBarHeight = 40;
         spriteBatch.draw(volume_bar_wood, volumeBarX, volumeBarY, volumeBarWidth, volumeBarHeight);
@@ -99,7 +99,7 @@ public class settings_screen implements Screen {
         float volumeGreenHeight = volumePercentage * volumeBarHeight;
         spriteBatch.draw(volume_bar_green, volumeBarX, volumeBarY, volumeBarWidth, volumeGreenHeight);
 
-        spriteBatch.draw(Volume_icon, 19, 23, 6, worldHeight / 14);
+        spriteBatch.draw(Volume_icon, 15, 21, 6, worldHeight / 14);
 
         spriteBatch.end();
     }
@@ -139,9 +139,9 @@ public class settings_screen implements Screen {
             }
 
             // Check if the user touched the notification icon with cooldown
-            float notifX = 33;
-            float notifY = 20;
-            float notifWidth = viewport.getWorldWidth() / 3;
+            float notifX = 36;
+            float notifY = 14;
+            float notifWidth = 25;
             float notifHeight = viewport.getWorldHeight() / 9;
 
             if (touchPos.x >= notifX && touchPos.x <= (notifX + notifWidth)
@@ -156,8 +156,8 @@ public class settings_screen implements Screen {
             }
 
             // Check if the user is touching the volume bar
-            float volumeBarX = 20;
-            float volumeBarY = 25;  // Adjusted to the top of the bar
+            float volumeBarX = 16;
+            float volumeBarY = 20;  // Adjusted to the top of the bar
             float volumeBarWidth = viewport.getWorldWidth() / 22;
             float volumeBarHeight = 40;
 
@@ -171,7 +171,7 @@ public class settings_screen implements Screen {
 
         // Smooth volume dragging adjustment
         if (isDragging) {
-            float volumeBarY = 25;
+            float volumeBarY = 20;
             float volumeBarHeight = 40;
             float mouseY = touchPos.y - volumeBarY;
             float newVolumePercentage = Math.max(0, Math.min(1, mouseY / volumeBarHeight));

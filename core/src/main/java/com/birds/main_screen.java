@@ -61,12 +61,12 @@ public class main_screen implements Screen {
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
         spriteBatch.draw(Settings_icon, 10, 3, worldWidth/10, worldHeight/12);
-        spriteBatch.draw(Level1, 33,41 , worldWidth/3, worldHeight/10);
-        spriteBatch.draw(Level2, 33, 28, worldWidth/3, worldHeight/10);
-        spriteBatch.draw(Level3, 33, 15, worldWidth/3, worldHeight/10);
-        spriteBatch.draw(Saved_game, 33, 54, worldWidth/3, worldHeight/10);
+        spriteBatch.draw(Level1, 36,41 , 25, worldHeight/10);
+        spriteBatch.draw(Level2, 36, 28, 25, worldHeight/10);
+        spriteBatch.draw(Level3, 36, 15, 25, worldHeight/10);
+        spriteBatch.draw(Saved_game, 36, 54, 25, worldHeight/10);
         spriteBatch.draw(exit_icon, 80, 3, worldWidth/8, worldHeight/12);
-        spriteBatch.draw(angry_bird,15, 72, 65, worldHeight/5);
+        spriteBatch.draw(angry_bird,19, 72, 65, worldHeight/5);
 
         spriteBatch.end();
 
@@ -89,14 +89,14 @@ public class main_screen implements Screen {
             float exitIconWidth = viewport.getWorldWidth() / 8;   // Width of the Exit icon
             float exitIconHeight = viewport.getWorldHeight() / 12; // Height of the Exit icon
 
-            float savedGameIconX = 33f;   // X position for Saved game icon
+            float savedGameIconX = 35f;   // X position for Saved game icon
             float savedGameIconY = 54f;   // Y position for Saved game icon
-            float savedGameIconWidth = viewport.getWorldWidth() / 3;  // Width of the Saved game icon
+            float savedGameIconWidth = 30f;  // Width of the Saved game icon
             float savedGameIconHeight = viewport.getWorldHeight() / 10; // Height of the Saved game icon
 
-            float level1X = 33f;   // X position for Level 1 icon
+            float level1X = 36f;   // X position for Level 1 icon
             float level1Y = 41f;   // Y position for Level 1 icon
-            float level1Width = viewport.getWorldWidth() / 3;   // Width of the Level 1 icon
+            float level1Width = 25f;   // Width of the Level 1 icon
             float level1Height = viewport.getWorldHeight() / 10; // Height of the Level 1 icon
 
             // Check if the user touched within the Settings icon's bounds
