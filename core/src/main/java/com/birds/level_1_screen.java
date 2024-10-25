@@ -19,8 +19,10 @@ public class level_1_screen implements Screen {
     private Texture pause_button;
     private Slingshot slingshot;
     private Pig np_1;
+    private Pig np_2;
     private Pig kp_1;
     private Pig op_1;
+    private Pig op_2;
     private Bird rb_2;
     private Bird rb_1;
     private Bird bb_1;
@@ -60,8 +62,10 @@ public class level_1_screen implements Screen {
         slingshot = new Slingshot(main.batch,assetManager);
         rb_2 = new Red_bird(assetManager, main.batch);
         np_1 = new Normal_pig(assetManager, main.batch);
+        np_2 = new Normal_pig(assetManager, main.batch);
         kp_1 = new King_pig(assetManager, main.batch);
         op_1 = new Old_pig(assetManager, main.batch);
+        op_2 = new Old_pig(assetManager, main.batch);
         bb_1 = new Black_bird(assetManager, main.batch);
         yb_1 = new Yellow_bird(assetManager, main.batch);
         wb_1 = new Wood_block(assetManager, main.batch);
@@ -104,11 +108,11 @@ public class level_1_screen implements Screen {
 
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        slingshot.getbatch().draw(slingshot.getimage(),230,220,75,250);
-        rb_1.getbatch().draw(rb_1.getimage(),260,400,50,50);
-        yb_1.getbatch().draw(yb_1.getimage(),105,220,55,55);
-        rb_2.getbatch().draw(rb_2.getimage(),170,220,50,50);
-        bb_1.getbatch().draw(bb_1.getimage(),20,220,65,80);
+        slingshot.getbatch().draw(slingshot.getimage(),230,217,75,250);
+        rb_1.getbatch().draw(rb_1.getimage(),255,400,50,50);
+        yb_1.getbatch().draw(yb_1.getimage(),105,217,55,55);
+        rb_2.getbatch().draw(rb_2.getimage(),170,217,50,50);
+        bb_1.getbatch().draw(bb_1.getimage(),20,217,65,80);
         sb_1.getbatch().draw(sb_1.getStick_h(),700,220, 80, 45);
         sb_2.getbatch().draw(sb_2.getStick_h(),780,220, 80, 45);
         sb_3.getbatch().draw(sb_3.getStick_h(),960,220, 80, 45);
@@ -124,6 +128,12 @@ public class level_1_screen implements Screen {
         wb_7.getbatch().draw(wb_7.getFull_box(),960,420, 150, 130);
         gb_1.getbatch().draw(gb_1.getFull_box(),720,550,110,110);
         gb_2.getbatch().draw(gb_2.getFull_box(),980,550,110,110);
+        kp_1.getbatch().draw(kp_1.getimage(),870,290,80,120);
+        np_1.getbatch().draw(np_1.getimage(),755,560,40,50);
+        np_2.getbatch().draw(np_2.getimage(),1015,560,40,50);
+        op_1.getbatch().draw(op_1.getimage(),740,430,70,95);
+        op_2.getbatch().draw(op_2.getimage(),1000,430,70,95);
+
 
 //        spriteBatch.draw(wood_block, 700, 220, 100, 100);
 //        spriteBatch.draw(glass_block, 800, 220, 100, 100);
