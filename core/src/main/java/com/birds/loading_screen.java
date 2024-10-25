@@ -175,6 +175,14 @@ public class loading_screen implements Screen {
         assetManager.load("happy_birds.png", Texture.class);
         assetManager.load("laughing_pig.png", Texture.class);
         assetManager.load("Settings_top.png", Texture.class);
+        assetManager.load("Wooden_Stick_Vertical.png", Texture.class);
+        assetManager.load("Wooden_Stick_Horizontal.png", Texture.class);
+        assetManager.load("Stone_Stick_Vertical.png", Texture.class);
+        assetManager.load("Stone_Stick_Horizontal.png", Texture.class);
+        assetManager.load("Glass_Stick_Vertical.png", Texture.class);
+        assetManager.load("Glass_Stick_Horizontal.png", Texture.class);
+
+
 
 
 

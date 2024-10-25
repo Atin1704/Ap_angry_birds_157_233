@@ -1,4 +1,8 @@
 package com.data;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import java.io.Serializable;
 
 public class Pig implements Serializable {
@@ -8,9 +12,18 @@ public class Pig implements Serializable {
     private double position_y;
     private double radius;
     private double velocity;
-    public Pig() {
+    private SpriteBatch spritebatch;
+    private AssetManager assetManager;
+    private Texture image;
 
+    public Pig(SpriteBatch spritebatch, AssetManager assetManager) {
+        this.spritebatch = spritebatch;
+        this.assetManager = assetManager;
     }
+    public Texture getimage(){
+        return image;
+    }
+    public SpriteBatch getbatch() {return spritebatch;}
     public double get_radius() {
         return radius;
     }
