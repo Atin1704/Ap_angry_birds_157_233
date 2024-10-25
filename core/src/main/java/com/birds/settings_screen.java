@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -19,7 +20,9 @@ public class settings_screen implements Screen {
     private Texture Volume_icon;
     private Texture Credits;
     private Texture Username;
-    private Texture Notification;
+    private Texture Notification_off;
+    private Texture Notification_on;
+    private static boolean  Notif_status=false;
     private Texture volume_bar;
     private Texture volume_bar_green;
     private Texture volume_bar_wood;
@@ -49,15 +52,21 @@ public class settings_screen implements Screen {
         Volume_icon = assetManager.get("Volume_icon.png", Texture.class);
         Credits = assetManager.get("Credits.png", Texture.class);
         Username = assetManager.get("Username.png", Texture.class);
-        Notification = assetManager.get("Notification.png", Texture.class);
+        Notification_off = assetManager.get("Notification_off.png", Texture.class);
+        Notification_on = assetManager.get("Notification_on.png", Texture.class);
+
         volume_bar = assetManager.get("volume_bar.png", Texture.class);
         volume_bar_green = assetManager.get("volume_bar_green.png", Texture.class);
         volume_bar_wood = assetManager.get("vertical_wooden_bar.png", Texture.class);
     }
 
+    private float notificationAlpha = 1f; // Starts fully opaque
+    private boolean fadeIn = false;       // Direction of the fade effect
+    private boolean fadeTransition = false; // Only activate fade upon touch
+
     @Override
     public void render(float v) {
-        input();
+        input(); // Update the input every frame
         ScreenUtils.clear(Color.BLACK);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
@@ -69,59 +78,103 @@ public class settings_screen implements Screen {
         spriteBatch.draw(exit_icon, 80, 3, worldWidth / 8, worldHeight / 12);
         spriteBatch.draw(angry_bird, 15, 72, 65, worldHeight / 5);
         spriteBatch.draw(Credits, 33, 38, worldWidth / 3, worldHeight / 9);
-        spriteBatch.draw(Notification, 33, 20, worldWidth / 3, worldHeight / 9);
+
+        // Draw Notification icon with fade effect only if transition is triggered
+        spriteBatch.setColor(1, 1, 1, notificationAlpha); // Apply alpha transparency
+        if (!Notif_status) {
+            spriteBatch.draw(Notification_off, 33, 20, worldWidth / 3, worldHeight / 9);
+        } else {
+            spriteBatch.draw(Notification_on, 33, 20, worldWidth / 3, worldHeight / 9);
+        }
+        spriteBatch.setColor(1, 1, 1, 1); // Reset color to opaque
+
         spriteBatch.draw(Username, 33, 56, worldWidth / 3, worldHeight / 9);
 
-        // Draw volume bar
+        // Volume bar rendering remains unchanged
         float volumeBarX = 20;
-        float volumeBarY = 25; // Adjusted to fit vertical growth
+        float volumeBarY = 25;
         float volumeBarWidth = worldWidth / 22;
-        float volumeBarHeight = 40; // Increased height for vertical adjustment
+        float volumeBarHeight = 40;
         spriteBatch.draw(volume_bar_wood, volumeBarX, volumeBarY, volumeBarWidth, volumeBarHeight);
-//        spriteBatch.draw(volume_bar, volumeBarX, volumeBarY, volumeBarWidth, volumeBarHeight);
 
-
-        // Draw green volume bar (its height based on volume percentage)
+        // Draw green volume bar
         float volumeGreenHeight = volumePercentage * volumeBarHeight;
         spriteBatch.draw(volume_bar_green, volumeBarX, volumeBarY, volumeBarWidth, volumeGreenHeight);
 
-        spriteBatch.draw(Volume_icon, 19, 23, 6, worldHeight / 14); // Adjusted the position of the volume icon
+        spriteBatch.draw(Volume_icon, 19, 23, 6, worldHeight / 14);
 
         spriteBatch.end();
+
+        // Adjust notificationAlpha for a fade effect only when transition is active
+        if (fadeTransition) {
+            if (fadeIn) {
+                notificationAlpha += 0.05f; // Increase alpha to make it fade in
+                if (notificationAlpha >= 1f) {
+                    fadeIn = false;
+                    fadeTransition = false; // Stop transition after reaching full opacity
+                }
+            } else {
+                notificationAlpha -= 0.05f; // Decrease alpha for fade out
+                if (notificationAlpha <= 0f) {
+                    fadeIn = true;
+                }
+            }
+        }
     }
+
+    private long lastNotificationToggleTime = 0; // Track the last toggle time as long
+    private static final float NOTIFICATION_TOGGLE_COOLDOWN = 0.3f; // 0.3 seconds cooldown
 
     private void input() {
         if (Gdx.input.isTouched()) {
-            // Get the touch position in screen coordinates and convert it to world coordinates
+            // Get the touch position and convert it to world coordinates
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-            viewport.unproject(touchPos); // Converts screen coordinates to the viewport's world coordinates (100x100 system)
+            viewport.unproject(touchPos);
 
-            float exitIconX = 80f;        // X position for Exit icon
-            float exitIconY = 3f;         // Y position for Exit icon
-            float exitIconWidth = viewport.getWorldWidth() / 8;   // Width of the Exit icon
-            float exitIconHeight = viewport.getWorldHeight() / 12; // Height of the Exit icon
+            // Check if the user is touching the exit icon
+            float exitIconX = 80f;
+            float exitIconY = 3f;
+            float exitIconWidth = viewport.getWorldWidth() / 8;
+            float exitIconHeight = viewport.getWorldHeight() / 12;
 
-            // Check if the user touched within the Exit icon's bounds
             if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
                 && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
 
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-                        if(checker){
-                            game_runner.setScreen(new pause_screen(game_runner, assetManager,1));}
-                        else{
+                        if (checker) {
+                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
+                        } else {
                             game_runner.setScreen(new main_screen(game_runner, assetManager));
                         }
                     }
-                }, 0.25f);  // Delay of 0.25 seconds
+                }, 0.25f);  // Delay of 0.25 seconds for smoother transition
             }
 
-            // Check if the user touched within the volume bar's bounds
+            // Check if the user touched the notification icon with cooldown
+            float notifX = 33;
+            float notifY = 20;
+            float notifWidth = viewport.getWorldWidth() / 3;
+            float notifHeight = viewport.getWorldHeight() / 9;
+
+            if (touchPos.x >= notifX && touchPos.x <= (notifX + notifWidth)
+                && touchPos.y >= notifY && touchPos.y <= (notifY + notifHeight)) {
+
+                // Only toggle if enough time has passed since the last toggle
+                if (TimeUtils.timeSinceMillis(lastNotificationToggleTime) > NOTIFICATION_TOGGLE_COOLDOWN * 1000) {
+                    lastNotificationToggleTime = TimeUtils.millis(); // Update the last toggle time
+                    Notif_status = !Notif_status;
+                    fadeTransition = true; // Trigger fade effect on touch
+                    fadeIn = !Notif_status; // Set fade direction based on new status
+                }
+            }
+
+            // Check if the user is touching the volume bar
             float volumeBarX = 20;
-            float volumeBarY = 10;  // Adjusted Y for the vertical bar
+            float volumeBarY = 25;  // Adjusted to the top of the bar
             float volumeBarWidth = viewport.getWorldWidth() / 22;
-            float volumeBarHeight = 40;  // Increased height for vertical volume control
+            float volumeBarHeight = 40;
 
             if (touchPos.x >= volumeBarX && touchPos.x <= (volumeBarX + volumeBarWidth)
                 && touchPos.y >= volumeBarY && touchPos.y <= (volumeBarY + volumeBarHeight)) {
@@ -131,12 +184,15 @@ public class settings_screen implements Screen {
             isDragging = false;
         }
 
-        // If the user is dragging the volume bar, update the volume percentage
+        // Smooth volume dragging adjustment
         if (isDragging) {
-            float volumeBarY = 10;
+            float volumeBarY = 25;
             float volumeBarHeight = 40;
             float mouseY = touchPos.y - volumeBarY;
-            volumePercentage = Math.max(0, Math.min(1, mouseY / volumeBarHeight)); // Clamp between 0 and 1
+            float newVolumePercentage = Math.max(0, Math.min(1, mouseY / volumeBarHeight));
+
+            // Gradually approach the new value for smoothness
+            volumePercentage += (newVolumePercentage - volumePercentage) * 0.2f;
         }
     }
 
