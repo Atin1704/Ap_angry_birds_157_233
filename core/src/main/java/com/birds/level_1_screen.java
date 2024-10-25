@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.data.*;
 
 public class level_1_screen implements Screen {
     private final AssetManager assetManager;
@@ -26,6 +27,7 @@ public class level_1_screen implements Screen {
     private Texture glass_block;
     private Texture stone_block;
     private Texture slingshot;
+    private Bird rb_1;
 
     private Main game_runner;
     private final SpriteBatch spriteBatch;
@@ -38,12 +40,13 @@ public class level_1_screen implements Screen {
         this.spriteBatch = main.batch;
         viewport = new StretchViewport(1200, 1000);
         touchPos = new Vector2();
+        rb_1 = new Red_bird(assetManager, main.batch);
     }
 
     @Override
     public void show() {
         background_image = assetManager.get("Level2_bg.png", Texture.class);
-        red_bird = assetManager.get("Red_bird.png", Texture.class);
+        //red_bird = assetManager.get("Red_bird.png", Texture.class);
         black_bird = assetManager.get("Black_bird.png", Texture.class);
         yellow_bird = assetManager.get("Yellow_bird.png", Texture.class);
         stone_block = assetManager.get("Stone_block.png", Texture.class);
@@ -66,9 +69,12 @@ public class level_1_screen implements Screen {
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
 
+
+
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
         spriteBatch.draw(slingshot, 180, 220, 75, 250);
-        spriteBatch.draw(red_bird, 210, 400, 45, 45);
+        //spriteBatch.draw(red_bird, 210, 400, 45, 45);
+        rb_1.getbatch().draw(rb_1.getimage(),210,400,45,45);
         spriteBatch.draw(yellow_bird, 110, 220, 45, 45);
         spriteBatch.draw(black_bird, 25, 220, 60, 60);
         spriteBatch.draw(wood_block, 700, 220, 100, 100);

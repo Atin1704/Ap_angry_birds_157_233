@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.birds.*;
 import java.io.Serializable;
 
-public class Yellow_bird extends Bird implements Serializable {
+public class Black_bird extends Bird implements Serializable {
     private Texture image;
-    public Yellow_bird(AssetManager assetManager, SpriteBatch spriteBatch) {
+    public Black_bird(AssetManager assetManager, SpriteBatch spriteBatch) {
         super(spriteBatch, assetManager);
-        image = assetManager.get("Yellow_bird.png", Texture.class);
+        image = assetManager.get("Black_bird.png", Texture.class);
     }
-    public Texture getImage() {
+    @Override
+    public Texture getimage() {
         return image;
     }
     static {

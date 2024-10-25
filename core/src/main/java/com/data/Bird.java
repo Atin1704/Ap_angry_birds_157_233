@@ -1,14 +1,27 @@
 package com.data;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.birds.*;
+
 import java.io.Serializable;
 public class Bird implements Serializable {
-    private double radius;
     private double velocity;
     private double impact;
     private double health;
     private double position_x;
     private double position_y;
+    private SpriteBatch spritebatch;
+    private AssetManager assetManager;
+    private Texture image;
 
-    Bird() {}
+    public Bird(SpriteBatch spritebatch, AssetManager assetManager) {
+        this.spritebatch = spritebatch;
+        this.assetManager = assetManager;
+    }
+    public Texture getimage(){
+        return image;
+    }
     public double getHealth() {
         return health;
     }
@@ -18,15 +31,13 @@ public class Bird implements Serializable {
     public double getPosition_y() {
         return position_y;
     }
-    public double getRadius() {
-        return radius;
-    }
     public double getVelocity() {
         return velocity;
     }
     public double getImpact() {
         return impact;
     }
+    public SpriteBatch getbatch() {return spritebatch;}
     public void setHealth(double health) {
         this.health = health;
     }
@@ -35,9 +46,6 @@ public class Bird implements Serializable {
     }
     public void setPosition_y(double position_y) {
         this.position_y = position_y;
-    }
-    public void setRadius(double radius) {
-        this.radius = radius;
     }
     public void setVelocity(double velocity) {
         this.velocity = velocity;

@@ -15,7 +15,7 @@
 4.Extract the zip file
 5.Open the folder in an ide (Preferred-Intellij Idea)
 6.Navigate to lwjgl3/build/src/main/java/com.birds.lwjgl3/Lwjgl3Launcher
-7.A green run icon should b eon your top right corner (for Intellij)
+7.A green run icon should be on your top right corner (for Intellij)
 8.Click on it
 9.The project will build and start running on your screen.
 
