@@ -108,7 +108,7 @@ public class loading_screen implements Screen {
     // Loading bar control variables
     private float loadingBarWidth;
     private float maxLoadingBarWidth;
-    private final float totalLoadingTime = 10.0f; // 7 seconds for the loading bar
+    private final float totalLoadingTime = 5.0f; // 7 seconds for the loading bar
     private long startTime; // Time when the loading starts
 
     public loading_screen(Main main) {
