@@ -163,7 +163,7 @@ public class level_1_screen implements Screen {
 
             if (touchPos.x >= pauseButtonX && touchPos.x <= (pauseButtonX + pauseButtonWidth)
                 && touchPos.y >= pauseButtonY && touchPos.y <= (pauseButtonY + pauseButtonHeight)) {
-
+                game_runner.click.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {

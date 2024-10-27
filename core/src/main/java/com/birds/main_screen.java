@@ -31,6 +31,7 @@ public class main_screen implements Screen {
 
     public main_screen(Main main,AssetManager assetManager) {
         this.game_runner = main;
+        game_runner.music.play();
         this.assetManager = assetManager;
         this.spriteBatch=main.batch;
         viewport = new StretchViewport(100, 100);
@@ -105,6 +106,7 @@ public class main_screen implements Screen {
             if (touchPos.x >= settingsIconX && touchPos.x <= (settingsIconX + settingsIconWidth)
                 && touchPos.y >= settingsIconY && touchPos.y <= (settingsIconY + settingsIconHeight)) {
                 // Settings icon was clicked
+                game_runner.click.play();
                 game_runner.setScreen(new settings_screen(game_runner, assetManager,false)); // Switch to the Settings screen
             }
 
@@ -112,6 +114,7 @@ public class main_screen implements Screen {
             if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
                 && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
                 // Exit icon was clicked
+                game_runner.click.play();
                 Gdx.app.exit(); // Exit the game
             }
 
@@ -119,6 +122,7 @@ public class main_screen implements Screen {
             if (touchPos.x >= savedGameIconX && touchPos.x <= (savedGameIconX + savedGameIconWidth)
                 && touchPos.y >= savedGameIconY && touchPos.y <= (savedGameIconY + savedGameIconHeight)) {
                 // Saved game icon was clicked
+                game_runner.click.play();
                 game_runner.setScreen(new saved_game_screen(game_runner, assetManager)); // Switch to the Saved game screen
             }
 
@@ -126,6 +130,7 @@ public class main_screen implements Screen {
             if (touchPos.x >= level1X && touchPos.x <= (level1X + level1Width)
                 && touchPos.y >= level1Y && touchPos.y <= (level1Y + level1Height)) {
                 // Level 1 icon was clicked
+                game_runner.click.play();
                 game_runner.setScreen(new level_1_screen(game_runner, assetManager)); // Switch to the Level 1 screen
             }
 

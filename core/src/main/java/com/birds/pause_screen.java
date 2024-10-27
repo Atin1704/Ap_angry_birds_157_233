@@ -117,6 +117,7 @@ public class pause_screen implements Screen {
 
             if (touchPos.x >= playButtonX && touchPos.x <= (playButtonX + playButtonWidth)
                 && touchPos.y >= playButtonY && touchPos.y <= (playButtonY + playButtonHeight)) {
+                game_runner.click.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
@@ -129,6 +130,7 @@ public class pause_screen implements Screen {
 
             if (touchPos.x >= rotateButtonX && touchPos.x <= (rotateButtonX + playButtonWidth)
                 && touchPos.y >= rotateButtonY && touchPos.y <= (rotateButtonY + playButtonHeight)) {
+                game_runner.click.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
@@ -141,6 +143,7 @@ public class pause_screen implements Screen {
 
             if (touchPos.x >= settingsButtonX && touchPos.x <= (settingsButtonX + playButtonWidth)
                 && touchPos.y >= settingsButtonY && touchPos.y <= (settingsButtonY + playButtonHeight)) {
+                game_runner.click.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
@@ -151,11 +154,13 @@ public class pause_screen implements Screen {
 
             if (touchPos.x >= saveButtonX && touchPos.x <= (saveButtonX + playButtonWidth)
                 && touchPos.y >= saveButtonY && touchPos.y <= (saveButtonY + playButtonHeight)) {
+                game_runner.click.play();
                 saved = true;
             }
 
             if (touchPos.x >= homeButtonX && touchPos.x <= (homeButtonX + playButtonWidth)
                 && touchPos.y >= homeButtonY && touchPos.y <= (homeButtonY + playButtonHeight)) {
+                game_runner.click.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {

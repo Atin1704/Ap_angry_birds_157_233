@@ -97,7 +97,7 @@ public class Defeat_Screen implements Screen {
             // Check if the restart button is touched
             if (touchPos.x >= restartButtonX && touchPos.x <= (restartButtonX + restartButtonWidth)
                 && touchPos.y >= restartButtonY && touchPos.y <= (restartButtonY + restartButtonHeight)) {
-
+                game_runner.click.play();
                 // Restart the current level (based on the level variable)
                 Timer.schedule(new Timer.Task() {
                     @Override
@@ -113,7 +113,7 @@ public class Defeat_Screen implements Screen {
             // Check if the main menu button is touched
             if (touchPos.x >= mainMenuButtonX && touchPos.x <= (mainMenuButtonX + mainMenuButtonWidth)
                 && touchPos.y >= mainMenuButtonY && touchPos.y <= (mainMenuButtonY + mainMenuButtonHeight)) {
-
+                game_runner.click.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {

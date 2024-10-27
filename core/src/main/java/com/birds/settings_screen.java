@@ -125,7 +125,7 @@ public class settings_screen implements Screen {
 
             if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
                 && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
-
+                game_runner.click.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
@@ -146,7 +146,7 @@ public class settings_screen implements Screen {
 
             if (touchPos.x >= notifX && touchPos.x <= (notifX + notifWidth)
                 && touchPos.y >= notifY && touchPos.y <= (notifY + notifHeight)) {
-
+                game_runner.click.play();
                 // Only toggle if enough time has passed since the last toggle
                 if (TimeUtils.timeSinceMillis(lastNotificationToggleTime) > NOTIFICATION_TOGGLE_COOLDOWN * 1000) {
                     lastNotificationToggleTime = TimeUtils.millis(); // Update the last toggle time

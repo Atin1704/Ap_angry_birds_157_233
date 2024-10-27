@@ -91,7 +91,7 @@ public class saved_game_screen implements Screen {
             // Check if the user touched within the Exit icon's bounds
             if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
                 && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
-
+                game_runner.click.play();
 
 
                 Timer.schedule(new Timer.Task() {
