@@ -158,8 +158,8 @@ public class level_1_screen implements Screen {
 
             float pauseButtonX = 1100f;
             float pauseButtonY = 920f;
-            float pauseButtonWidth = 45f;
-            float pauseButtonHeight = 45f;
+            float pauseButtonWidth = 65f;
+            float pauseButtonHeight = 65f;
 
             if (touchPos.x >= pauseButtonX && touchPos.x <= (pauseButtonX + pauseButtonWidth)
                 && touchPos.y >= pauseButtonY && touchPos.y <= (pauseButtonY + pauseButtonHeight)) {
