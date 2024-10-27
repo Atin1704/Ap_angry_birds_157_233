@@ -8,7 +8,7 @@
 
 **How to set up ,run and test the project**-
 
-**Method 1**
+**Method 1**-
 1.Download the zip file
 2.Create a folder anywhere(ideally on desktop)
 3.Move the zip file inside that folder
@@ -40,7 +40,10 @@ b)Simple extended game-https://libgdx.com/wiki/start/simple-game-extended
 
 3.[Flaticon](https://www.flaticon.com/free-icons/game-play)-For gameplay icons like home_button,save_button,etc.
 
-4.Chrome and Pinterest for background images
+4.Chrome, Pinterest and pngwing for images.
+
+Github Repository Link:-
+[https://github.com/Atin1704/Ap_angry_birds_157_233.git](url)
 
 
 
