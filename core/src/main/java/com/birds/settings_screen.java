@@ -113,45 +113,47 @@ public class settings_screen implements Screen {
 
         }
         if (Gdx.input.isTouched()) {
-            // Get the touch position and convert it to world coordinates
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos);
-
-            // Check if the user touched the exit icon
-            float exitIconX = 80f;
-            float exitIconY = 3f;
-            float exitIconWidth = viewport.getWorldWidth() / 8;
-            float exitIconHeight = viewport.getWorldHeight() / 12;
-
-            if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
-                && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        if (checker) {
-                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
-                        } else {
-                            game_runner.setScreen(new main_screen(game_runner, assetManager));
-                        }
-                    }
-                }, 0.25f);  // Delay of 0.25 seconds for smoother transition
-            }
-
-            // Check if the user touched the notification icon with cooldown
-            float notifX = 36;
-            float notifY = 14;
-            float notifWidth = 25;
-            float notifHeight = viewport.getWorldHeight() / 9;
-
-            if (touchPos.x >= notifX && touchPos.x <= (notifX + notifWidth)
-                && touchPos.y >= notifY && touchPos.y <= (notifY + notifHeight)) {
-                // Only toggle if enough time has passed since the last toggle
-                if (TimeUtils.timeSinceMillis(lastNotificationToggleTime) > NOTIFICATION_TOGGLE_COOLDOWN * 1000) {
-                    lastNotificationToggleTime = TimeUtils.millis(); // Update the last toggle time
-                    Notif_status = !Notif_status; // Toggle the notification status
-                    isNotificationTransitioning = true; // Start the transition
-                }
-            }
+            // Get the touch position and convert it to world coordinates
+//            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+//            viewport.unproject(touchPos);
+//
+//            // Check if the user touched the exit icon
+//            float exitIconX = 80f;
+//            float exitIconY = 3f;
+//            float exitIconWidth = viewport.getWorldWidth() / 8;
+//            float exitIconHeight = viewport.getWorldHeight() / 12;
+//
+//            if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
+//                && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
+//                Timer.schedule(new Timer.Task() {
+//                    @Override
+//                    public void run() {
+//                        if (checker) {
+//                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
+//                        } else {
+//                            game_runner.setScreen(new main_screen(game_runner, assetManager));
+//                        }
+//                    }
+//                }, 0.25f);  // Delay of 0.25 seconds for smoother transition
+//            }
+//
+//            // Check if the user touched the notification icon with cooldown
+//            float notifX = 36;
+//            float notifY = 14;
+//            float notifWidth = 25;
+//            float notifHeight = viewport.getWorldHeight() / 9;
+//
+//            if (touchPos.x >= notifX && touchPos.x <= (notifX + notifWidth)
+//                && touchPos.y >= notifY && touchPos.y <= (notifY + notifHeight)) {
+//                // Only toggle if enough time has passed since the last toggle
+//                if (TimeUtils.timeSinceMillis(lastNotificationToggleTime) > NOTIFICATION_TOGGLE_COOLDOWN * 1000) {
+//                    lastNotificationToggleTime = TimeUtils.millis(); // Update the last toggle time
+//                    Notif_status = !Notif_status; // Toggle the notification status
+//                    isNotificationTransitioning = true; // Start the transition
+//                }
+//            }
 
             // Check if the user is touching the volume bar
             float volumeBarX = 16;
@@ -176,6 +178,51 @@ public class settings_screen implements Screen {
 
             // Gradually approach the new value for smoothness
             volumePercentage += (newVolumePercentage - volumePercentage) * 0.2f;
+        }
+
+        if(Gdx.input.justTouched()){
+
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(touchPos);
+
+            // Check if the user touched the exit icon
+            float exitIconX = 80f;
+            float exitIconY = 3f;
+            float exitIconWidth = viewport.getWorldWidth() / 8;
+            float exitIconHeight = viewport.getWorldHeight() / 12;
+
+            if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
+                && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
+                game_runner.click.play();
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (checker) {
+                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
+                        } else {
+                            game_runner.setScreen(new main_screen(game_runner, assetManager));
+                        }
+                    }
+                }, 0.25f);  // Delay of 0.25 seconds for smoother transition
+            }
+
+            // Check if the user touched the notification icon with cooldown
+            float notifX = 36;
+            float notifY = 14;
+            float notifWidth = 25;
+            float notifHeight = viewport.getWorldHeight() / 9;
+
+            if (touchPos.x >= notifX && touchPos.x <= (notifX + notifWidth)
+                && touchPos.y >= notifY && touchPos.y <= (notifY + notifHeight)) {
+                // Only toggle if enough time has passed since the last toggle
+                game_runner.click.play();
+                if (TimeUtils.timeSinceMillis(lastNotificationToggleTime) > NOTIFICATION_TOGGLE_COOLDOWN * 1000) {
+                    lastNotificationToggleTime = TimeUtils.millis(); // Update the last toggle time
+                    Notif_status = !Notif_status; // Toggle the notification status
+                    isNotificationTransitioning = true; // Start the transition
+                }
+            }
+
         }
 
 
