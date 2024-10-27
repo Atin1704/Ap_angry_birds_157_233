@@ -109,8 +109,8 @@ public class loading_screen implements Screen {
     // Loading bar control variables
     private float loadingBarWidth;
     private float maxLoadingBarWidth;
-    private final float totalLoadingTime = 5.0f; // 7 seconds for the loading bar
-    private long startTime; // Time when the loading starts
+    private final float totalLoadingTime = 5.0f;
+    private long startTime;
 
     public loading_screen(Main main) {
         this.game_runner = main;
@@ -182,6 +182,7 @@ public class loading_screen implements Screen {
         assetManager.load("Stone_Stick_Horizontal.png", Texture.class);
         assetManager.load("Glass_Stick_Vertical.png", Texture.class);
         assetManager.load("Glass_Stick_Horizontal.png", Texture.class);
+        assetManager.load("Pause_Menu_gamesaved.png", Texture.class);
         try{
             throwing();
         }
