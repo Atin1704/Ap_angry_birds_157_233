@@ -104,7 +104,7 @@ public class pause_screen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        if (Gdx.input.isTouched() && !saved) {
+        if (Gdx.input.justTouched() && !saved) {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos);
 

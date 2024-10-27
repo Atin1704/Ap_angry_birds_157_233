@@ -76,7 +76,7 @@ public class main_screen implements Screen {
     }
 
     private void input() {
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.justTouched()) {
             // Get the touch position in screen coordinates and convert it to world coordinates
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos); // Converts screen coordinates to the viewport's world coordinates (100x100 system)
