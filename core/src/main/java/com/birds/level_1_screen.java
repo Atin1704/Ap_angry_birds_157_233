@@ -181,6 +181,23 @@ public class level_1_screen implements Screen {
             game_runner.setScreen(new Defeat_Screen(game_runner, assetManager,1));
         }
 
+        try{
+            throwing();
+        }
+        catch(CollisionCalculation e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void throwing() throws CollisionCalculation {
+        int a = 0;
+        int b = 1;
+        if(a==0){
+            b++;
+        }
+        else if(a==1){
+            throw new CollisionCalculation();
+        }
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.data.AssetNotLoaded;
 
 /** First screen of the application. Displayed after the application is created. */
 //public class loading_screen implements Screen {
@@ -181,6 +182,14 @@ public class loading_screen implements Screen {
         assetManager.load("Stone_Stick_Horizontal.png", Texture.class);
         assetManager.load("Glass_Stick_Vertical.png", Texture.class);
         assetManager.load("Glass_Stick_Horizontal.png", Texture.class);
+        try{
+            throwing();
+        }
+        catch(AssetNotLoaded e){
+            System.out.println(e.getMessage());
+        }
+
+
 
 
 
@@ -198,6 +207,17 @@ public class loading_screen implements Screen {
 
         // Set the starting time
         startTime = TimeUtils.millis();
+    }
+
+    public void throwing() throws AssetNotLoaded {
+        int a = 0;
+        int b = 1;
+        if(a==0){
+            b++;
+        }
+        else if(a==1){
+            throw new AssetNotLoaded();
+        }
     }
 
     @Override

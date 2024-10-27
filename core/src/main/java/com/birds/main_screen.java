@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.data.AssetNotLoaded;
+import com.data.LevelNotUnlocked;
 
 public class main_screen implements Screen {
     Vector2 touchPos;
@@ -132,6 +134,24 @@ public class main_screen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
 
+        }
+
+        try{
+            throwing();
+        }
+        catch(LevelNotUnlocked e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void throwing() throws LevelNotUnlocked {
+        int a = 0;
+        int b = 1;
+        if(a==0){
+            b++;
+        }
+        else if(a==1){
+            throw new LevelNotUnlocked();
         }
     }
 

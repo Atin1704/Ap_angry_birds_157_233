@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.data.AssetNotLoaded;
+import com.data.GameNotFound;
 
 public class saved_game_screen implements Screen {
     private final AssetManager assetManager;
@@ -99,6 +101,24 @@ public class saved_game_screen implements Screen {
                     }
                 }, 0.25f);  // Delay of 0.5 seconds (500ms)
             }
+        }
+
+        try{
+            throwing();
+        }
+        catch(GameNotFound e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void throwing() throws GameNotFound {
+        int a = 0;
+        int b = 1;
+        if(a==0){
+            b++;
+        }
+        else if(a==1){
+            throw new GameNotFound();
         }
     }
 
