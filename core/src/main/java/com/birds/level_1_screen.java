@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -46,7 +47,7 @@ public class level_1_screen implements Screen {
     private Block sb_4;
     private Block sb_5;
     private Block sb_6;
-
+    private Body body_bird1;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
     StretchViewport viewport;
@@ -175,7 +176,8 @@ public class level_1_screen implements Screen {
 
         // Handle "Enter" key press for victory screen
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            game_runner.setScreen(new Victory_Screen(game_runner, assetManager,1));
+            Victory_Screen v1=new Victory_Screen(game_runner, assetManager,1);
+            game_runner.setScreen(v1);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
             game_runner.setScreen(new Defeat_Screen(game_runner, assetManager,1));

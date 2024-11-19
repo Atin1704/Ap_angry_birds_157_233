@@ -9,6 +9,7 @@ public class Glass_block extends Block implements Serializable {
     private Texture full_box;
     private Texture stick_v;
     private Texture stick_h;
+    private int health=1;
     public Glass_block(AssetManager assetManager, SpriteBatch spriteBatch) {
         super(spriteBatch, assetManager);
         full_box = assetManager.get("Glass_block.png", Texture.class);

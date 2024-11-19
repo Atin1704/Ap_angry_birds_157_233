@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public class Black_bird extends Bird implements Serializable {
     private Texture image;
+    private int health=6;
     public Black_bird(AssetManager assetManager, SpriteBatch spriteBatch) {
         super(spriteBatch, assetManager);
         image = assetManager.get("Black_bird.png", Texture.class);

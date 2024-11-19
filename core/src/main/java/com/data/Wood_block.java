@@ -9,6 +9,7 @@ public class Wood_block extends Block implements Serializable {
     private Texture full_box;
     private Texture stick_v;
     private Texture stick_h;
+    private int health=2;
     public Wood_block(AssetManager assetManager, SpriteBatch spriteBatch) {
         super(spriteBatch, assetManager);
         full_box = assetManager.get("Wooden_block.png", Texture.class);
