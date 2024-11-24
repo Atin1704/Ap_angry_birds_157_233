@@ -13,6 +13,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.data.AssetNotLoaded;
 import com.data.LevelNotUnlocked;
+import java.util.logging.Logger;
+
+
 
 public class main_screen implements Screen {
     Vector2 touchPos;
@@ -130,9 +133,12 @@ public class main_screen implements Screen {
             if (touchPos.x >= level1X && touchPos.x <= (level1X + level1Width)
                 && touchPos.y >= level1Y && touchPos.y <= (level1Y + level1Height)) {
                 // Level 1 icon was clicked
+                // Switch to the Level 1 screen
                 game_runner.click.play();
+
                 game_runner.setScreen(new level_1_screen(game_runner, assetManager)); // Switch to the Level 1 screen
             }
+
 
 
         }

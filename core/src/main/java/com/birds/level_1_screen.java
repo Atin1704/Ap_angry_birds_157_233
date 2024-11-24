@@ -19,7 +19,10 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.data.*;
 
+import java.util.logging.Logger;
+
 public class level_1_screen implements Screen {
+    private static final Logger logger = Logger.getLogger(level_1_screen.class.getName());
     private final AssetManager assetManager;
     private Texture background_image;
     private Texture pause_button;
@@ -40,19 +43,20 @@ public class level_1_screen implements Screen {
     private boolean isBirdLaunched;
 
     public level_1_screen(Main main, AssetManager assetManager) {
+        logger.info("Initializing level_1_screen");
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch = main.batch;
         viewport = new StretchViewport(1200, 1000);
         touchPos = new Vector2();
-        world = new World(new Vector2(0, -9.8f), true);
+        world = new World(new Vector2(0, -35.0f), true);
         debugRenderer = new Box2DDebugRenderer();
         shapeRenderer = new ShapeRenderer();
 
         rb_1 = new Red_bird(world, 230, 217); // Place red bird on slingshot
         bb_1 = new Black_bird(world, 170, 217);
         yb_1 = new Yellow_bird(world, 105, 217);
-        slingshot = new Slingshot(main.batch, assetManager);
+        slingshot = new Slingshot(world, main.batch, assetManager, 230, 217);
         slingStart = new Vector2(230, 217);
         slingEnd = new Vector2(230, 217);
         isBirdLaunched = false;
@@ -61,7 +65,9 @@ public class level_1_screen implements Screen {
     }
 
     private void createGround() {
+        logger.info("Creating ground");
         BodyDef groundBodyDef = new BodyDef();
+        groundBodyDef.type = BodyDef.BodyType.StaticBody; // Ensure ground is a static body
         groundBodyDef.position.set(new Vector2(0, 217));
         EdgeShape groundShape = new EdgeShape();
         groundShape.set(new Vector2(0, 0), new Vector2(viewport.getWorldWidth(), 0));
@@ -73,12 +79,14 @@ public class level_1_screen implements Screen {
 
     @Override
     public void show() {
+        logger.info("Showing level_1_screen");
         background_image = assetManager.get("Level2_bg.png", Texture.class);
         pause_button = assetManager.get("Pause_icon.png", Texture.class);
     }
 
     @Override
     public void render(float v) {
+        logger.info("Rendering level_1_screen");
         input();
         world.step(1/60f, 6, 2);
         rb_1.update();
@@ -93,7 +101,7 @@ public class level_1_screen implements Screen {
         float worldHeight = viewport.getWorldHeight();
 
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        slingshot.getbatch().draw(slingshot.getimage(), 230, 217, 75, 250);
+        slingshot.render();
         rb_1.render(spriteBatch);
         yb_1.render(spriteBatch);
         bb_1.render(spriteBatch);
@@ -112,6 +120,7 @@ public class level_1_screen implements Screen {
 
     private void input() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            logger.info("ESCAPE key pressed, exiting");
             Gdx.app.exit();
         }
         // Handle touch input for pause button
@@ -126,6 +135,7 @@ public class level_1_screen implements Screen {
 
             if (touchPos.x >= pauseButtonX && touchPos.x <= (pauseButtonX + pauseButtonWidth)
                 && touchPos.y >= pauseButtonY && touchPos.y <= (pauseButtonY + pauseButtonHeight)) {
+                logger.info("Pause button clicked");
                 game_runner.click.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
@@ -138,10 +148,12 @@ public class level_1_screen implements Screen {
 
         // Handle "Enter" key press for victory screen
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            logger.info("ENTER key pressed, switching to Victory_Screen");
             Victory_Screen v1 = new Victory_Screen(game_runner, assetManager, 1);
             game_runner.setScreen(v1);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
+            logger.info("DEL key pressed, switching to Defeat_Screen");
             game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
         }
 
@@ -174,26 +186,27 @@ public class level_1_screen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        logger.info("Resizing level_1_screen");
         viewport.update(width, height, true);
     }
 
     @Override
     public void pause() {
-
+        logger.info("Pausing level_1_screen");
     }
 
     @Override
     public void resume() {
-
+        logger.info("Resuming level_1_screen");
     }
 
     @Override
     public void hide() {
-
+        logger.info("Hiding level_1_screen");
     }
 
     @Override
     public void dispose() {
-
+        logger.info("Disposing level_1_screen");
     }
 }

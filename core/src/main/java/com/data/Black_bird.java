@@ -11,8 +11,8 @@ public class Black_bird extends Bird {
         super(world, xPos, yPos);
         this.texture = new Texture("Black_bird.png");
         this.sprite = new Sprite(texture);
-        this.damage = 20.0;
-        this.speedMultiplier = 1.2;
+        this.damage = 10.0;
+        this.speedMultiplier = 1.0;
         this.xSize = texture.getWidth();
         this.ySize = texture.getHeight();
         this.sprite.setSize(xSize, ySize);
@@ -22,12 +22,12 @@ public class Black_bird extends Bird {
     @Override
     public void createBody(World world) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.DynamicBody; // Ensure bird is a dynamic body
         bodyDef.position.set(xPos, yPos);
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(xSize / 2, ySize / 2);
+        shape.setAsBox(xSize / 2, ySize / 2); // Ensure the dimensions are correctly set
 
         body.createFixture(shape, 1.0f);
         shape.dispose();

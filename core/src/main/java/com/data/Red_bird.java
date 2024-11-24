@@ -22,12 +22,12 @@ public class Red_bird extends Bird {
     @Override
     public void createBody(World world) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.DynamicBody; // Ensure bird is a dynamic body
         bodyDef.position.set(xPos, yPos);
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(xSize / 2, ySize / 2);
+        shape.setAsBox(xSize / 2, ySize / 2); // Ensure the dimensions are correctly set
 
         body.createFixture(shape, 1.0f);
         shape.dispose();

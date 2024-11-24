@@ -1,55 +1,63 @@
 package com.data;
 
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class Slingshot {
-    protected final double x_coordinate = 0.0;
-    protected final double y_coordinate = 0.0;
-    protected final double max_stretch = 0.0;
-    protected final double min_stretch = 0.0;
-    protected double angle;
-    private SpriteBatch spritebatch;
+    private SpriteBatch spriteBatch;
     private AssetManager assetManager;
     private Texture image;
+    private Sprite sprite;
+    private Body body;
+    private float xPos;
+    private float yPos;
+    private float radius;
 
-    public Slingshot(SpriteBatch spritebatch, AssetManager assetManager) {
-        this.spritebatch = spritebatch;
+    public Slingshot(World world, SpriteBatch spriteBatch, AssetManager assetManager, float xPos, float yPos) {
+        this.spriteBatch = spriteBatch;
         this.assetManager = assetManager;
-        image = assetManager.get("Slingshot.png", Texture.class);
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.image = assetManager.get("Slingshot.png", Texture.class);
+        this.sprite = new Sprite(image);
+        this.radius = Math.max(image.getWidth(), image.getHeight()) / 2f;
+        this.sprite.setSize(image.getWidth(), image.getHeight());
+        this.sprite.setPosition(xPos - radius, yPos - radius);
+        createBody(world);
     }
-    public Texture getimage(){
+
+    private void createBody(World world) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(xPos, yPos);
+        body = world.createBody(bodyDef);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius);
+
+        body.createFixture(shape, 0.0f);
+        shape.dispose();
+    }
+
+    public void render() {
+        sprite.draw(spriteBatch);
+    }
+
+    public Texture getImage() {
         return image;
     }
-    public SpriteBatch getbatch() {return spritebatch;}
 
-    public static void start(){}
+    public SpriteBatch getBatch() {
+        return spriteBatch;
+    }
 
-    public double getAngle() {
-        return angle;
-    }
-    public void setAngle(double angle) {
-        this.angle = angle;
-    }
-    public double getMax_stretch() {
-        return max_stretch;
-    }
-    public double getMin_stretch() {
-        return min_stretch;
-    }
-    public double getX_coordinate() {
-        return x_coordinate;
-    }
-    public double getY_coordinate() {
-        return y_coordinate;
-    }
-    public void Load_bird(Bird bird){
-
-    }
-    public void path() {
-        Physics_logic trajectory = new Physics_logic();
-        trajectory.track_trajectory();
+    public Body getBody() {
+        return body;
     }
 }
