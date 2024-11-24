@@ -52,27 +52,26 @@ public class level_1_screen implements Screen {
         world = new World(new Vector2(0, -35.0f), true);
         debugRenderer = new Box2DDebugRenderer();
         shapeRenderer = new ShapeRenderer();
-
-        rb_1 = new Red_bird(world, 230, 217); // Place red bird on slingshot
-        bb_1 = new Black_bird(world, 170, 217);
-        yb_1 = new Yellow_bird(world, 105, 217);
-        slingshot = new Slingshot(world, main.batch, assetManager, 230, 217);
-        slingStart = new Vector2(230, 217);
-        slingEnd = new Vector2(230, 217);
-        isBirdLaunched = false;
-
         createGround();
+        slingshot = new Slingshot(world, main.batch, assetManager, 230, 217, 50, 100);
+        rb_1 = new Red_bird(world, 230, 267, 50, 50); // Place red bird on top of slingshot
+        bb_1 = new Black_bird(world, 170, 217, 50, 50);
+        yb_1 = new Yellow_bird(world, 105, 217, 50, 50);
+        slingStart = new Vector2(230, 267);
+        slingEnd = new Vector2(230, 267);
+        isBirdLaunched = false;
     }
 
     private void createGround() {
         logger.info("Creating ground");
         BodyDef groundBodyDef = new BodyDef();
-        groundBodyDef.type = BodyDef.BodyType.StaticBody; // Ensure ground is a static body
+        groundBodyDef.type = BodyDef.BodyType.StaticBody;
         groundBodyDef.position.set(new Vector2(0, 217));
         EdgeShape groundShape = new EdgeShape();
         groundShape.set(new Vector2(0, 0), new Vector2(viewport.getWorldWidth(), 0));
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = groundShape;
+        fixtureDef.friction = 0.5f; // Add friction to the ground
         world.createBody(groundBodyDef).createFixture(fixtureDef);
         groundShape.dispose();
     }
@@ -171,7 +170,7 @@ public class level_1_screen implements Screen {
         } else if (isDragging) {
             isDragging = false;
             // Launch the bird
-            Vector2 launchVector = slingStart.cpy().sub(slingEnd).scl(5);
+            Vector2 launchVector = slingStart.cpy().sub(slingEnd).scl(10); // Increase launch speed
             rb_1.getBody().applyLinearImpulse(launchVector, rb_1.getBody().getWorldCenter(), true);
             slingEnd.set(slingStart);
             isBirdLaunched = true;

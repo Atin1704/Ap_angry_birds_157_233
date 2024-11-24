@@ -19,10 +19,13 @@ public abstract class Bird {
     protected float launchTime;
     protected boolean isLaunched;
 
-    public Bird(World world, float xPos, float yPos) {
+    public Bird(World world, float xPos, float yPos, float xSize, float ySize) {
         this.xPos = xPos;
         this.yPos = yPos;
+        this.xSize = xSize;
+        this.ySize = ySize;
         this.isLaunched = false;
+        this.speedMultiplier = 2.0; // Increase speed multiplier
         createBody(world);
     }
 
@@ -39,7 +42,6 @@ public abstract class Bird {
     public void render(SpriteBatch spriteBatch) {
         sprite.draw(spriteBatch);
     }
-
     // Getters and setters
     public Texture getTexture() {
         return texture;

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Slingshot {
@@ -17,29 +17,31 @@ public class Slingshot {
     private Body body;
     private float xPos;
     private float yPos;
-    private float radius;
+    private float width;
+    private float height;
 
-    public Slingshot(World world, SpriteBatch spriteBatch, AssetManager assetManager, float xPos, float yPos) {
+    public Slingshot(World world, SpriteBatch spriteBatch, AssetManager assetManager, float xPos, float yPos, float width, float height) {
         this.spriteBatch = spriteBatch;
         this.assetManager = assetManager;
         this.xPos = xPos;
         this.yPos = yPos;
+        this.width = width;
+        this.height = height;
         this.image = assetManager.get("Slingshot.png", Texture.class);
         this.sprite = new Sprite(image);
-        this.radius = Math.max(image.getWidth(), image.getHeight()) / 2f;
-        this.sprite.setSize(image.getWidth(), image.getHeight());
-        this.sprite.setPosition(xPos - radius, yPos - radius);
+        this.sprite.setSize(width, height);
+        this.sprite.setPosition(xPos - width / 2, yPos - height / 2);
         createBody(world);
     }
 
     private void createBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(xPos, yPos);
+        bodyDef.position.set(xPos, yPos - height / 2); // Adjust position to ensure it is above the ground
         body = world.createBody(bodyDef);
 
-        CircleShape shape = new CircleShape();
-        shape.setRadius(radius);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2, height / 2);
 
         body.createFixture(shape, 0.0f);
         shape.dispose();
