@@ -1,75 +1,131 @@
 package com.data;
-import com.badlogic.gdx.assets.AssetManager;
+
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.birds.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 
-import java.io.Serializable;
-public class Bird implements Serializable {
-    private double velocity;
-    private double impact;
-    private double health;
-    private double position_x;
-    private double position_y;
-    private SpriteBatch spritebatch;
-    private AssetManager assetManager;
-    private Texture image;
+public abstract class Bird {
+    protected Texture texture;
+    protected Body body;
+    protected Sprite sprite;
+    protected double damage;
+    protected double speedMultiplier;
+    protected float xPos;
+    protected float yPos;
+    protected float xSize;
+    protected float ySize;
+    protected float launchTime;
+    protected boolean isLaunched;
 
-    public Bird(SpriteBatch spritebatch, AssetManager assetManager) {
-        this.spritebatch = spritebatch;
-        this.assetManager = assetManager;
+    public Bird(World world, float xPos, float yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.isLaunched = false;
+        createBody(world);
     }
-    public Texture getimage(){
-        return image;
+
+    public abstract void createBody(World world);
+
+    public void update() {
+        if (body != null) {
+            xPos = body.getPosition().x;
+            yPos = body.getPosition().y;
+            sprite.setPosition(xPos - xSize / 2, yPos - ySize / 2);
+        }
     }
-    public double getHealth() {
-        return health;
+
+    public void render(SpriteBatch spriteBatch) {
+        sprite.draw(spriteBatch);
     }
-    public double getPosition_x() {
-        return position_x;
+
+    // Getters and setters
+    public Texture getTexture() {
+        return texture;
     }
-    public double getPosition_y() {
-        return position_y;
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
     }
-    public double getVelocity() {
-        return velocity;
+
+    public Body getBody() {
+        return body;
     }
-    public double getImpact() {
-        return impact;
+
+    public void setBody(Body body) {
+        this.body = body;
     }
-    public SpriteBatch getbatch() {return spritebatch;}
-    public void setHealth(double health) {
-        this.health = health;
+
+    public Sprite getSprite() {
+        return sprite;
     }
-    public void setPosition_x(double position_x) {
-        this.position_x = position_x;
+
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
     }
-    public void setPosition_y(double position_y) {
-        this.position_y = position_y;
+
+    public double getDamage() {
+        return damage;
     }
-    public void setVelocity(double velocity) {
-        this.velocity = velocity;
+
+    public void setDamage(double damage) {
+        this.damage = damage;
     }
-    public void setImpact(double impact) {
-        this.impact = impact;
+
+    public double getSpeedMultiplier() {
+        return speedMultiplier;
     }
-    public boolean Special_ab_active(){
-        return false;
+
+    public void setSpeedMultiplier(double speedMultiplier) {
+        this.speedMultiplier = speedMultiplier;
     }
-    public void hit_pig(Pig piggy){
-        Physics_logic coll = new Physics_logic();
-        coll.collision_handle();
-        coll.after_collision();
-        double res = piggy.get_resistance();
-        double h2 = piggy.get_health();
+
+    public float getXPos() {
+        return xPos;
     }
-    public void hit_block(Block block){
-        Physics_logic coll = new Physics_logic();
-        coll.collision_handle();
-        coll.after_collision();
-        double res = block.get_resistance();
-        double h2 = block.get_health();
+
+    public void setXPos(float xPos) {
+        this.xPos = xPos;
     }
-    //public static void set_value();
-    //public abstract void start();
+
+    public float getYPos() {
+        return yPos;
+    }
+
+    public void setYPos(float yPos) {
+        this.yPos = yPos;
+    }
+
+    public float getXSize() {
+        return xSize;
+    }
+
+    public void setXSize(float xSize) {
+        this.xSize = xSize;
+    }
+
+    public float getYSize() {
+        return ySize;
+    }
+
+    public void setYSize(float ySize) {
+        this.ySize = ySize;
+    }
+
+    public float getLaunchTime() {
+        return launchTime;
+    }
+
+    public void setLaunchTime(float launchTime) {
+        this.launchTime = launchTime;
+    }
+
+    public boolean isLaunched() {
+        return isLaunched;
+    }
+
+    public void setLaunched(boolean launched) {
+        isLaunched = launched;
+    }
 }

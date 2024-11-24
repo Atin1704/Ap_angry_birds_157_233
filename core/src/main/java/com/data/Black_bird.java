@@ -1,26 +1,35 @@
 package com.data;
-import com.badlogic.gdx.assets.AssetManager;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.birds.*;
-import java.io.Serializable;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
-public class Black_bird extends Bird implements Serializable {
-    private Texture image;
-    private int health=6;
-    public Black_bird(AssetManager assetManager, SpriteBatch spriteBatch) {
-        super(spriteBatch, assetManager);
-        image = assetManager.get("Black_bird.png", Texture.class);
+public class Black_bird extends Bird {
+    public Black_bird(World world, float xPos, float yPos) {
+        super(world, xPos, yPos);
+        this.texture = new Texture("Black_bird.png");
+        this.sprite = new Sprite(texture);
+        this.damage = 20.0;
+        this.speedMultiplier = 1.2;
+        this.xSize = texture.getWidth();
+        this.ySize = texture.getHeight();
+        this.sprite.setSize(xSize, ySize);
+        this.sprite.setPosition(xPos, yPos);
     }
+
     @Override
-    public Texture getimage() {
-        return image;
-    }
-    static {
-        set_value();
-    }
-    //@Override
-    public static void set_value(){
+    public void createBody(World world) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(xPos, yPos);
+        body = world.createBody(bodyDef);
 
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(xSize / 2, ySize / 2);
+
+        body.createFixture(shape, 1.0f);
+        shape.dispose();
     }
 }

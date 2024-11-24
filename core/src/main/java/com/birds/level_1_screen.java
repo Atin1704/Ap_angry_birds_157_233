@@ -7,8 +7,13 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -19,39 +24,20 @@ public class level_1_screen implements Screen {
     private Texture background_image;
     private Texture pause_button;
     private Slingshot slingshot;
-    private Pig np_1;
-    private Pig np_2;
-    private Pig kp_1;
-    private Pig op_1;
-    private Pig op_2;
-    private Bird rb_2;
-    private Bird rb_1;
-    private Bird bb_1;
-    private Bird yb_1;
-    private Block wb_1;
-    private Block wb_2;
-    private Block wb_3;
-    private Block wb_4;
-    private Block wb_5;
-    private Block wb_6;
-    private Block wb_7;
-    private Block gb_1;
-    private Block gb_2;
-    private Block gb_3;
-    private Block gb_4;
-    private Block gb_5;
-    private Block gb_6;
-    private Block sb_1;
-    private Block sb_2;
-    private Block sb_3;
-    private Block sb_4;
-    private Block sb_5;
-    private Block sb_6;
-    private Body body_bird1;
+    private Black_bird bb_1;
+    private Red_bird rb_1;
+    private Yellow_bird yb_1;
     private Main game_runner;
     private final SpriteBatch spriteBatch;
+    private World world;
+    private Box2DDebugRenderer debugRenderer;
+    private ShapeRenderer shapeRenderer;
     StretchViewport viewport;
     Vector2 touchPos;
+    private boolean isDragging;
+    private Vector2 slingStart;
+    private Vector2 slingEnd;
+    private boolean isBirdLaunched;
 
     public level_1_screen(Main main, AssetManager assetManager) {
         this.game_runner = main;
@@ -59,35 +45,30 @@ public class level_1_screen implements Screen {
         this.spriteBatch = main.batch;
         viewport = new StretchViewport(1200, 1000);
         touchPos = new Vector2();
-        rb_1 = new Red_bird(assetManager, main.batch);
-        slingshot = new Slingshot(main.batch,assetManager);
-        rb_2 = new Red_bird(assetManager, main.batch);
-        np_1 = new Normal_pig(assetManager, main.batch);
-        np_2 = new Normal_pig(assetManager, main.batch);
-        kp_1 = new King_pig(assetManager, main.batch);
-        op_1 = new Old_pig(assetManager, main.batch);
-        op_2 = new Old_pig(assetManager, main.batch);
-        bb_1 = new Black_bird(assetManager, main.batch);
-        yb_1 = new Yellow_bird(assetManager, main.batch);
-        wb_1 = new Wood_block(assetManager, main.batch);
-        wb_2 = new Wood_block(assetManager, main.batch);
-        wb_3 = new Wood_block(assetManager, main.batch);
-        wb_4 = new Wood_block(assetManager, main.batch);
-        wb_5 = new Wood_block(assetManager, main.batch);
-        wb_6 = new Wood_block(assetManager, main.batch);
-        wb_7 = new Wood_block(assetManager, main.batch);
-        gb_1 = new Glass_block(assetManager, main.batch);
-        gb_2 = new Glass_block(assetManager, main.batch);
-        gb_3 = new Glass_block(assetManager, main.batch);
-        gb_4 = new Glass_block(assetManager, main.batch);
-        gb_5 = new Glass_block(assetManager, main.batch);
-        gb_6 = new Glass_block(assetManager, main.batch);
-        sb_1 = new Stone_block(assetManager, main.batch);
-        sb_2 = new Stone_block(assetManager, main.batch);
-        sb_3 = new Stone_block(assetManager, main.batch);
-        sb_4 = new Stone_block(assetManager, main.batch);
-        sb_5 = new Stone_block(assetManager, main.batch);
-        sb_6 = new Stone_block(assetManager, main.batch);
+        world = new World(new Vector2(0, -9.8f), true);
+        debugRenderer = new Box2DDebugRenderer();
+        shapeRenderer = new ShapeRenderer();
+
+        rb_1 = new Red_bird(world, 230, 217); // Place red bird on slingshot
+        bb_1 = new Black_bird(world, 170, 217);
+        yb_1 = new Yellow_bird(world, 105, 217);
+        slingshot = new Slingshot(main.batch, assetManager);
+        slingStart = new Vector2(230, 217);
+        slingEnd = new Vector2(230, 217);
+        isBirdLaunched = false;
+
+        createGround();
+    }
+
+    private void createGround() {
+        BodyDef groundBodyDef = new BodyDef();
+        groundBodyDef.position.set(new Vector2(0, 217));
+        EdgeShape groundShape = new EdgeShape();
+        groundShape.set(new Vector2(0, 0), new Vector2(viewport.getWorldWidth(), 0));
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = groundShape;
+        world.createBody(groundBodyDef).createFixture(fixtureDef);
+        groundShape.dispose();
     }
 
     @Override
@@ -99,6 +80,11 @@ public class level_1_screen implements Screen {
     @Override
     public void render(float v) {
         input();
+        world.step(1/60f, 6, 2);
+        rb_1.update();
+        bb_1.update();
+        yb_1.update();
+
         ScreenUtils.clear(Color.BLACK);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
@@ -106,51 +92,27 @@ public class level_1_screen implements Screen {
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
 
-
-
         spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        slingshot.getbatch().draw(slingshot.getimage(),230,217,75,250);
-        rb_1.getbatch().draw(rb_1.getimage(),255,400,50,50);
-        yb_1.getbatch().draw(yb_1.getimage(),105,217,55,55);
-        rb_2.getbatch().draw(rb_2.getimage(),170,217,50,50);
-        bb_1.getbatch().draw(bb_1.getimage(),20,217,65,80);
-        sb_1.getbatch().draw(sb_1.getStick_h(),700,220, 80, 45);
-        sb_2.getbatch().draw(sb_2.getStick_h(),780,220, 80, 45);
-        sb_3.getbatch().draw(sb_3.getStick_h(),960,220, 80, 45);
-        sb_4.getbatch().draw(sb_4.getStick_h(),1040,220, 80, 45);
-        wb_1.getbatch().draw(wb_1.getStick_h(),725,265, 110, 45);
-        wb_2.getbatch().draw(wb_2.getStick_h(),835,265, 150, 25);
-        wb_3.getbatch().draw(wb_3.getStick_h(),985,265, 110, 45);
-        sb_5.getbatch().draw(sb_5.getStick_v(),767,310, 25, 110);
-        sb_6.getbatch().draw(sb_6.getStick_v(),1027,310, 25, 110);
-        wb_4.getbatch().draw(wb_4.getFull_box(),725,310, 110, 110);
-        wb_5.getbatch().draw(wb_5.getFull_box(),985,310, 110, 110);
-        wb_6.getbatch().draw(wb_6.getFull_box(),700,420, 150, 130);
-        wb_7.getbatch().draw(wb_7.getFull_box(),960,420, 150, 130);
-        gb_1.getbatch().draw(gb_1.getFull_box(),720,550,110,110);
-        gb_2.getbatch().draw(gb_2.getFull_box(),980,550,110,110);
-        kp_1.getbatch().draw(kp_1.getimage(),870,290,80,120);
-        np_1.getbatch().draw(np_1.getimage(),755,560,40,50);
-        np_2.getbatch().draw(np_2.getimage(),1015,560,40,50);
-        op_1.getbatch().draw(op_1.getimage(),740,430,70,95);
-        op_2.getbatch().draw(op_2.getimage(),1000,430,70,95);
-
-
-//        spriteBatch.draw(wood_block, 700, 220, 100, 100);
-//        spriteBatch.draw(glass_block, 800, 220, 100, 100);
-//        spriteBatch.draw(stone_block, 900, 220, 100, 100);
-//        spriteBatch.draw(glass_block, 750, 320, 100, 100);
-//        spriteBatch.draw(wood_block, 850, 320, 100, 100);
-//        spriteBatch.draw(normal_pig, 775, 325, 50, 50);
+        slingshot.getbatch().draw(slingshot.getimage(), 230, 217, 75, 250);
+        rb_1.render(spriteBatch);
+        yb_1.render(spriteBatch);
+        bb_1.render(spriteBatch);
         spriteBatch.draw(pause_button, 1080, 910, 65, 65);
 
         spriteBatch.end();
+
+        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.BROWN);
+        shapeRenderer.line(slingStart.x, slingStart.y, slingEnd.x, slingEnd.y);
+        shapeRenderer.end();
+
+        debugRenderer.render(world, viewport.getCamera().combined);
     }
 
     private void input() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-
         }
         // Handle touch input for pause button
         if (Gdx.input.justTouched()) {
@@ -176,29 +138,37 @@ public class level_1_screen implements Screen {
 
         // Handle "Enter" key press for victory screen
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            Victory_Screen v1=new Victory_Screen(game_runner, assetManager,1);
+            Victory_Screen v1 = new Victory_Screen(game_runner, assetManager, 1);
             game_runner.setScreen(v1);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
-            game_runner.setScreen(new Defeat_Screen(game_runner, assetManager,1));
+            game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
         }
 
-        try{
-            throwing();
-        }
-        catch(CollisionCalculation e){
-            System.out.println(e.getMessage());
-        }
-    }
+        // Handle slingshot dragging
+        if (Gdx.input.isTouched()) {
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(touchPos);
 
-    public void throwing() throws CollisionCalculation {
-        int a = 0;
-        int b = 1;
-        if(a==0){
-            b++;
+            if (isDragging) {
+                slingEnd.set(touchPos);
+            } else if (touchPos.dst(slingStart) < 50) {
+                isDragging = true;
+                slingEnd.set(touchPos);
+            }
+        } else if (isDragging) {
+            isDragging = false;
+            // Launch the bird
+            Vector2 launchVector = slingStart.cpy().sub(slingEnd).scl(5);
+            rb_1.getBody().applyLinearImpulse(launchVector, rb_1.getBody().getWorldCenter(), true);
+            slingEnd.set(slingStart);
+            isBirdLaunched = true;
         }
-        else if(a==1){
-            throw new CollisionCalculation();
+
+        // Prevent bird from moving until launched
+        if (!isBirdLaunched) {
+            rb_1.getBody().setTransform(slingStart, 0);
+            rb_1.getBody().setLinearVelocity(0, 0);
         }
     }
 
