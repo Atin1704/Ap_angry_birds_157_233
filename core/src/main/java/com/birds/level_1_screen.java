@@ -77,19 +77,54 @@ public class level_1_screen implements Screen {
         }, 25, 25); // Delay of 5 seconds, repeat every 5 seconds
     }
 
-    private void createGround() {
-        BodyDef groundBodyDef = new BodyDef();
-        groundBodyDef.position.set(new Vector2(600, 217));
-        Body groundBody = world.createBody(groundBodyDef);
 
-        EdgeShape groundShape = new EdgeShape();
-        groundShape.set(new Vector2(-600, 0), new Vector2(600, 0));
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = groundShape;
-        fixtureDef.friction = 0.5f;
-        groundBody.createFixture(fixtureDef);
-        groundShape.dispose();
-    }
+
+private void createGround() {
+    // Create ground
+    BodyDef groundBodyDef = new BodyDef();
+    groundBodyDef.type = BodyDef.BodyType.StaticBody;
+    groundBodyDef.position.set(new Vector2(600, 217));
+    Body groundBody = world.createBody(groundBodyDef);
+
+    EdgeShape groundShape = new EdgeShape();
+    groundShape.set(new Vector2(-600, 0), new Vector2(600, 0));
+    FixtureDef groundFixtureDef = new FixtureDef();
+    groundFixtureDef.shape = groundShape;
+    groundFixtureDef.friction = 0.5f;
+    groundFixtureDef.restitution = 0.0f; // No bouncing
+    groundBody.createFixture(groundFixtureDef);
+    groundShape.dispose();
+
+    // Create left boundary
+    BodyDef leftBoundaryDef = new BodyDef();
+    leftBoundaryDef.type = BodyDef.BodyType.StaticBody;
+    leftBoundaryDef.position.set(new Vector2(0, 500));
+    Body leftBoundary = world.createBody(leftBoundaryDef);
+
+    EdgeShape leftShape = new EdgeShape();
+    leftShape.set(new Vector2(0, -500), new Vector2(0, 500));
+    FixtureDef leftFixtureDef = new FixtureDef();
+    leftFixtureDef.shape = leftShape;
+    leftFixtureDef.friction = 0.5f;
+    leftFixtureDef.restitution = 0.0f; // No bouncing
+    leftBoundary.createFixture(leftFixtureDef);
+    leftShape.dispose();
+
+    // Create right boundary
+    BodyDef rightBoundaryDef = new BodyDef();
+    rightBoundaryDef.type = BodyDef.BodyType.StaticBody;
+    rightBoundaryDef.position.set(new Vector2(1200, 500));
+    Body rightBoundary = world.createBody(rightBoundaryDef);
+
+    EdgeShape rightShape = new EdgeShape();
+    rightShape.set(new Vector2(0, -500), new Vector2(0, 500));
+    FixtureDef rightFixtureDef = new FixtureDef();
+    rightFixtureDef.shape = rightShape;
+    rightFixtureDef.friction = 0.5f;
+    rightFixtureDef.restitution = 0.0f; // No bouncing
+    rightBoundary.createFixture(rightFixtureDef);
+    rightShape.dispose();
+}
 
     private void createBirds() {
         birds = new ArrayList<>();

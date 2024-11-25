@@ -36,7 +36,7 @@ public class King_pig extends Pig implements Serializable {
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0.1f; // Low restitution coefficient
+        fixtureDef.restitution = 0.0f; // Low restitution coefficient
         this.body.createFixture(fixtureDef);
         shape.dispose();
     }

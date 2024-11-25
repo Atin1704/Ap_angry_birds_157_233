@@ -21,7 +21,7 @@ public class Yellow_bird extends Bird {
         fixtureDef.shape = shape;
         fixtureDef.density = 1.5f;
         fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0.5f;
+        fixtureDef.restitution = 0.0f;
         this.body.createFixture(fixtureDef);
         shape.dispose();
 

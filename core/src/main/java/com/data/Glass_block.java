@@ -36,8 +36,8 @@ public class Glass_block extends Obstacle implements Serializable {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0.1f; // Low restitution coefficient
+        fixtureDef.friction = 0.9f;
+        fixtureDef.restitution = 0.0f; // Low restitution coefficient
         this.body.createFixture(fixtureDef);
         shape.dispose();
     }
