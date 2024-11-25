@@ -28,31 +28,6 @@ public abstract class Bird {
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);
         this.sprite.setOriginCenter();
-
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(xPos, yPos);
-        this.body = world.createBody(bodyDef);
-
-        CircleShape shape = new CircleShape();
-        shape.setRadius(width / 2);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0.6f;
-        this.body.createFixture(fixtureDef);
-        shape.dispose();
-
-        this.damage = 0;
-        this.speedMultiplier = 1.0;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.xSize = width;
-        this.ySize = height;
-        this.launchTime = 0;
-        this.isLaunched = false;
     }
 
     public void update() {
@@ -91,10 +66,16 @@ public abstract class Bird {
         body.applyLinearImpulse(force, body.getWorldCenter(), true);
     }
 
+    public void setIsLaunched(boolean isLaunched) {
+        this.isLaunched = isLaunched;
+    }
+
+    // Method to apply force and launch the bird
     public void launch(Vector2 force) {
-        this.isLaunched = true;
-        this.launchTime = System.currentTimeMillis();
-        applyForce(force);
+        if (!isLaunched) {
+            getBody().applyLinearImpulse(force, getBody().getWorldCenter(), true);
+            setIsLaunched(true);
+        }
     }
 
     public boolean isLaunched() {
