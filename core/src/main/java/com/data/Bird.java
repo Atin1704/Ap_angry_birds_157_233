@@ -36,6 +36,7 @@ public abstract class Bird {
             bodyPosition.x - sprite.getWidth() / 2,
             bodyPosition.y - sprite.getHeight() / 2
         );
+        sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
     }
 
     public void draw(SpriteBatch batch) {

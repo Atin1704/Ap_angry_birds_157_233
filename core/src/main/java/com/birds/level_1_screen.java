@@ -37,6 +37,8 @@ public class level_1_screen implements Screen {
     private Slingshot slingshot;
     private ArrayList<Bird> birds;
     private Bird currentBird;
+    private ArrayList<Obstacle> obstacles;
+    private ArrayList<Pig> pigs;
 
     public level_1_screen(Main main, AssetManager assetManager) {
         logger.info("Initializing level_1_screen");
@@ -57,6 +59,8 @@ public class level_1_screen implements Screen {
         createGround();
         createBirds();
         createSlingshot();
+        createObstacles();
+        createPigs();
 
         // Set the first bird to be the current bird
         if (!birds.isEmpty()) {
@@ -70,7 +74,7 @@ public class level_1_screen implements Screen {
             public void run() {
                 removeLastLaunchedBird();
             }
-        }, 5, 5); // Delay of 5 seconds, repeat every 5 seconds
+        }, 25, 25); // Delay of 5 seconds, repeat every 5 seconds
     }
 
     private void createGround() {
@@ -98,6 +102,21 @@ public class level_1_screen implements Screen {
         slingshot = new Slingshot(world, 230, 217, 50, 200);
     }
 
+    private void createObstacles() {
+        obstacles= new ArrayList<>();
+        obstacles.add(new Wood_block(world, 700, 220, 110,110));
+        obstacles.add(new Stone_block(world, 810, 220, 110,110));
+        obstacles.add(new Glass_block(world, 920, 220, 110,110));
+        obstacles.add(new Wood_block(world, 755, 330, 110,110));
+        obstacles.add(new Stone_block(world, 865, 330, 110,110));
+    }
+
+    private void createPigs(){
+        pigs = new ArrayList<>();
+        pigs.add(new King_pig(world, 775,340,70,70));
+        pigs.add(new Normal_pig(world,885,340,70,70));
+    }
+
     private void placeBirdOnSlingshot(Bird bird) {
         bird.setPosition(slingshot.getX(), slingshot.getY() + slingshot.getHeight());
     }
@@ -114,6 +133,12 @@ public class level_1_screen implements Screen {
         for (Bird bird : birds) {
             bird.update();
         }
+        for (Obstacle obstacle : obstacles){
+            obstacle.update();
+        }
+        for(Pig pig : pigs){
+            pig.update();
+        }
         slingshot.update();
 
         ScreenUtils.clear(Color.BLACK);
@@ -122,6 +147,12 @@ public class level_1_screen implements Screen {
         spriteBatch.draw(background_image, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         for (Bird bird : birds) {
             bird.draw(spriteBatch);
+        }
+        for(Obstacle obstacle : obstacles){
+            obstacle.draw(spriteBatch);
+        }
+        for(Pig pig : pigs){
+            pig.draw(spriteBatch);
         }
         slingshot.draw(spriteBatch);
         spriteBatch.end();

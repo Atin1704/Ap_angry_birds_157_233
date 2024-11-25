@@ -40,16 +40,4 @@ public class Old_pig extends Pig implements Serializable {
         this.body.createFixture(fixtureDef);
         shape.dispose();
     }
-
-    public void update() {
-        Vector2 bodyPosition = body.getPosition();
-        sprite.setPosition(
-            bodyPosition.x - sprite.getWidth() / 2,
-            bodyPosition.y - sprite.getHeight() / 2
-        );
-    }
-
-    public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
-    }
 }

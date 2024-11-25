@@ -1,6 +1,8 @@
 package com.data;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -105,6 +107,19 @@ public class Obstacle implements Serializable {
 
     public void setRadius(float radius) {
         this.radius = radius;
+    }
+
+    public void update() {
+        Vector2 bodyPosition = body.getPosition();
+        sprite.setPosition(
+            bodyPosition.x - sprite.getWidth() / 2,
+            bodyPosition.y - sprite.getHeight() / 2
+        );
+        sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
+    }
+
+    public void draw(SpriteBatch batch) {
+        sprite.draw(batch);
     }
 
 }

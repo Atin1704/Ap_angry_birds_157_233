@@ -42,15 +42,4 @@ public class Wood_block extends Obstacle implements Serializable {
         shape.dispose();
     }
 
-    public void update() {
-        Vector2 bodyPosition = body.getPosition();
-        sprite.setPosition(
-            bodyPosition.x - sprite.getWidth() / 2,
-            bodyPosition.y - sprite.getHeight() / 2
-        );
-    }
-
-    public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
-    }
 }
