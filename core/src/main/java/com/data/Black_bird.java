@@ -13,6 +13,7 @@ public class Black_bird extends Bird {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(xPos, yPos);
+
         this.body = world.createBody(bodyDef);
 
         CircleShape shape = new CircleShape();

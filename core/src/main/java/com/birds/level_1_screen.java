@@ -40,6 +40,9 @@ public class level_1_screen implements Screen {
     private ArrayList<Obstacle> obstacles;
     private ArrayList<Pig> pigs;
 
+    private boolean isDragging = false;
+    private Vector2 dragStart = new Vector2();
+
     public level_1_screen(Main main, AssetManager assetManager) {
         logger.info("Initializing level_1_screen");
         this.game_runner = main;
@@ -77,54 +80,52 @@ public class level_1_screen implements Screen {
         }, 25, 25); // Delay of 5 seconds, repeat every 5 seconds
     }
 
+    private void createGround() {
+        // Create ground
+        BodyDef groundBodyDef = new BodyDef();
+        groundBodyDef.type = BodyDef.BodyType.StaticBody;
+        groundBodyDef.position.set(new Vector2(600, 217));
+        Body groundBody = world.createBody(groundBodyDef);
 
+        EdgeShape groundShape = new EdgeShape();
+        groundShape.set(new Vector2(-600, 0), new Vector2(600, 0));
+        FixtureDef groundFixtureDef = new FixtureDef();
+        groundFixtureDef.shape = groundShape;
+        groundFixtureDef.friction = 0.5f;
+        groundFixtureDef.restitution = 0.0f; // No bouncing
+        groundBody.createFixture(groundFixtureDef);
+        groundShape.dispose();
 
-private void createGround() {
-    // Create ground
-    BodyDef groundBodyDef = new BodyDef();
-    groundBodyDef.type = BodyDef.BodyType.StaticBody;
-    groundBodyDef.position.set(new Vector2(600, 217));
-    Body groundBody = world.createBody(groundBodyDef);
+        // Create left boundary
+        BodyDef leftBoundaryDef = new BodyDef();
+        leftBoundaryDef.type = BodyDef.BodyType.StaticBody;
+        leftBoundaryDef.position.set(new Vector2(0, 500));
+        Body leftBoundary = world.createBody(leftBoundaryDef);
 
-    EdgeShape groundShape = new EdgeShape();
-    groundShape.set(new Vector2(-600, 0), new Vector2(600, 0));
-    FixtureDef groundFixtureDef = new FixtureDef();
-    groundFixtureDef.shape = groundShape;
-    groundFixtureDef.friction = 0.5f;
-    groundFixtureDef.restitution = 0.0f; // No bouncing
-    groundBody.createFixture(groundFixtureDef);
-    groundShape.dispose();
+        EdgeShape leftShape = new EdgeShape();
+        leftShape.set(new Vector2(0, -500), new Vector2(0, 500));
+        FixtureDef leftFixtureDef = new FixtureDef();
+        leftFixtureDef.shape = leftShape;
+        leftFixtureDef.friction = 0.5f;
+        leftFixtureDef.restitution = 0.0f; // No bouncing
+        leftBoundary.createFixture(leftFixtureDef);
+        leftShape.dispose();
 
-    // Create left boundary
-    BodyDef leftBoundaryDef = new BodyDef();
-    leftBoundaryDef.type = BodyDef.BodyType.StaticBody;
-    leftBoundaryDef.position.set(new Vector2(0, 500));
-    Body leftBoundary = world.createBody(leftBoundaryDef);
+        // Create right boundary
+        BodyDef rightBoundaryDef = new BodyDef();
+        rightBoundaryDef.type = BodyDef.BodyType.StaticBody;
+        rightBoundaryDef.position.set(new Vector2(1200, 500));
+        Body rightBoundary = world.createBody(rightBoundaryDef);
 
-    EdgeShape leftShape = new EdgeShape();
-    leftShape.set(new Vector2(0, -500), new Vector2(0, 500));
-    FixtureDef leftFixtureDef = new FixtureDef();
-    leftFixtureDef.shape = leftShape;
-    leftFixtureDef.friction = 0.5f;
-    leftFixtureDef.restitution = 0.0f; // No bouncing
-    leftBoundary.createFixture(leftFixtureDef);
-    leftShape.dispose();
-
-    // Create right boundary
-    BodyDef rightBoundaryDef = new BodyDef();
-    rightBoundaryDef.type = BodyDef.BodyType.StaticBody;
-    rightBoundaryDef.position.set(new Vector2(1200, 500));
-    Body rightBoundary = world.createBody(rightBoundaryDef);
-
-    EdgeShape rightShape = new EdgeShape();
-    rightShape.set(new Vector2(0, -500), new Vector2(0, 500));
-    FixtureDef rightFixtureDef = new FixtureDef();
-    rightFixtureDef.shape = rightShape;
-    rightFixtureDef.friction = 0.5f;
-    rightFixtureDef.restitution = 0.0f; // No bouncing
-    rightBoundary.createFixture(rightFixtureDef);
-    rightShape.dispose();
-}
+        EdgeShape rightShape = new EdgeShape();
+        rightShape.set(new Vector2(0, -500), new Vector2(0, 500));
+        FixtureDef rightFixtureDef = new FixtureDef();
+        rightFixtureDef.shape = rightShape;
+        rightFixtureDef.friction = 0.5f;
+        rightFixtureDef.restitution = 0.0f; // No bouncing
+        rightBoundary.createFixture(rightFixtureDef);
+        rightShape.dispose();
+    }
 
     private void createBirds() {
         birds = new ArrayList<>();
@@ -138,18 +139,18 @@ private void createGround() {
     }
 
     private void createObstacles() {
-        obstacles= new ArrayList<>();
-        obstacles.add(new Wood_block(world, 700, 270, 110,110));
-        obstacles.add(new Stone_block(world, 810, 270, 110,110));
-        obstacles.add(new Glass_block(world, 920, 270, 110,110));
-        obstacles.add(new Wood_block(world, 755, 380, 110,110));
-        obstacles.add(new Stone_block(world, 865, 380, 110,110));
+        obstacles = new ArrayList<>();
+        obstacles.add(new Wood_block(world, 700, 270, 110, 110));
+        obstacles.add(new Stone_block(world, 810, 270, 110, 110));
+        obstacles.add(new Glass_block(world, 920, 270, 110, 110));
+        obstacles.add(new Wood_block(world, 755, 380, 110, 110));
+        obstacles.add(new Stone_block(world, 865, 380, 110, 110));
     }
 
-    private void createPigs(){
+    private void createPigs() {
         pigs = new ArrayList<>();
-        pigs.add(new King_pig(world, 750,480,70,70));
-        pigs.add(new Normal_pig(world,850,480,70,70));
+        pigs.add(new King_pig(world, 750, 480, 70, 70));
+        pigs.add(new Normal_pig(world, 850, 480, 70, 70));
     }
 
     private void placeBirdOnSlingshot(Bird bird) {
@@ -164,14 +165,14 @@ private void createGround() {
     @Override
     public void render(float delta) {
         input();
-        world.step(1/60f, 6, 2);
+        world.step(1 / 60f, 6, 2);
         for (Bird bird : birds) {
             bird.update();
         }
-        for (Obstacle obstacle : obstacles){
+        for (Obstacle obstacle : obstacles) {
             obstacle.update();
         }
-        for(Pig pig : pigs){
+        for (Pig pig : pigs) {
             pig.update();
         }
         slingshot.update();
@@ -183,10 +184,10 @@ private void createGround() {
         for (Bird bird : birds) {
             bird.draw(spriteBatch);
         }
-        for(Obstacle obstacle : obstacles){
+        for (Obstacle obstacle : obstacles) {
             obstacle.draw(spriteBatch);
         }
-        for(Pig pig : pigs){
+        for (Pig pig : pigs) {
             pig.draw(spriteBatch);
         }
         slingshot.draw(spriteBatch);
@@ -194,8 +195,6 @@ private void createGround() {
 
         debugRenderer.render(world, viewport.getCamera().combined);
     }
-
-    private boolean isDragging = false;
 
     private void input() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -213,7 +212,7 @@ private void createGround() {
             float pauseButtonHeight = 65f;
 
             if (touchPos.x >= pauseButtonX && touchPos.x <= (pauseButtonX + pauseButtonWidth)
-                && touchPos.y >= pauseButtonY && touchPos.y <= (pauseButtonY + pauseButtonHeight)) {
+                    && touchPos.y >= pauseButtonY && touchPos.y <= (pauseButtonY + pauseButtonHeight)) {
                 logger.info("Pause button clicked");
                 game_runner.click.play();
                 Timer.schedule(new Timer.Task() {
@@ -235,8 +234,26 @@ private void createGround() {
             logger.info("DEL key pressed, switching to Defeat_Screen");
             game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
         }
-    }
 
+        // Handle dragging input for slingshot
+        if (Gdx.input.isTouched()) {
+            if (!isDragging) {
+                isDragging = true;
+                dragStart.set(Gdx.input.getX(), Gdx.input.getY());
+                viewport.unproject(dragStart);
+            }
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(touchPos);
+            slingshot.drag(touchPos.x, touchPos.y);
+        } else if (isDragging) {
+            isDragging = false;
+            Vector2 dragEnd = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(dragEnd);
+            Vector2 velocity = new Vector2(dragStart.x - dragEnd.x, dragStart.y - dragEnd.y).scl(5);
+            currentBird.setVelocity(velocity);
+            currentBird.setAwake(true);
+        }
+    }
 
     private void removeLastLaunchedBird() {
         if (!birds.isEmpty()) {

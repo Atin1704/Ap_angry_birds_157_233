@@ -48,6 +48,14 @@ public abstract class Bird {
         body.setTransform(x, y, body.getAngle());
     }
 
+    public void setVelocity(Vector2 velocity) {
+        body.setLinearVelocity(velocity);
+    }
+
+    public void setAwake(boolean awake) {
+        body.setAwake(awake);
+    }
+
     public float getX() {
         return sprite.getX();
     }
