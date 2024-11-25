@@ -3,15 +3,16 @@ package com.data;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 
 public abstract class Bird {
     protected Texture texture;
     protected Body body;
     protected Sprite sprite;
+    protected World world;
     protected double damage;
-    protected double speedMultiplier;
+    public double speedMultiplier;
     protected float xPos;
     protected float yPos;
     protected float xSize;
@@ -19,115 +20,79 @@ public abstract class Bird {
     protected float launchTime;
     protected boolean isLaunched;
 
-    public Bird(World world, float xPos, float yPos, float xSize, float ySize) {
+    public Bird(World world, String texturePath, float xPos, float yPos, float width, float height) {
+        this.world = world;
+        this.texture = new Texture(texturePath);
+        this.sprite = new Sprite(texture);
+        this.sprite.setSize(width, height);
+        this.sprite.setPosition(xPos, yPos);
+        this.sprite.setOriginCenter();
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(xPos, yPos);
+        this.body = world.createBody(bodyDef);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(width / 2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0.6f;
+        this.body.createFixture(fixtureDef);
+        shape.dispose();
+
+        this.damage = 0;
+        this.speedMultiplier = 1.0;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.xSize = xSize;
-        this.ySize = ySize;
+        this.xSize = width;
+        this.ySize = height;
+        this.launchTime = 0;
         this.isLaunched = false;
-        this.speedMultiplier = 2.0; // Increase speed multiplier
-        createBody(world);
     }
-
-    public abstract void createBody(World world);
 
     public void update() {
-        if (body != null) {
-            xPos = body.getPosition().x;
-            yPos = body.getPosition().y;
-            sprite.setPosition(xPos - xSize / 2, yPos - ySize / 2);
-        }
+        Vector2 bodyPosition = body.getPosition();
+        sprite.setPosition(
+            bodyPosition.x - sprite.getWidth() / 2,
+            bodyPosition.y - sprite.getHeight() / 2
+        );
     }
 
-    public void render(SpriteBatch spriteBatch) {
-        sprite.draw(spriteBatch);
-    }
-    // Getters and setters
-    public Texture getTexture() {
-        return texture;
+    public void draw(SpriteBatch batch) {
+        sprite.draw(batch);
     }
 
-    public void setTexture(Texture texture) {
-        this.texture = texture;
+    public void setPosition(float x, float y) {
+        sprite.setPosition(x, y);
+        body.setTransform(x, y, body.getAngle());
+    }
+
+    public float getX() {
+        return sprite.getX();
+    }
+
+    public float getY() {
+        return sprite.getY();
     }
 
     public Body getBody() {
         return body;
     }
 
-    public void setBody(Body body) {
-        this.body = body;
+    public void applyForce(Vector2 force) {
+        if (body.getType() != BodyDef.BodyType.DynamicBody) {
+            body.setType(BodyDef.BodyType.DynamicBody);
+        }
+        body.applyLinearImpulse(force, body.getWorldCenter(), true);
     }
 
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
-    }
-
-    public double getDamage() {
-        return damage;
-    }
-
-    public void setDamage(double damage) {
-        this.damage = damage;
-    }
-
-    public double getSpeedMultiplier() {
-        return speedMultiplier;
-    }
-
-    public void setSpeedMultiplier(double speedMultiplier) {
-        this.speedMultiplier = speedMultiplier;
-    }
-
-    public float getXPos() {
-        return xPos;
-    }
-
-    public void setXPos(float xPos) {
-        this.xPos = xPos;
-    }
-
-    public float getYPos() {
-        return yPos;
-    }
-
-    public void setYPos(float yPos) {
-        this.yPos = yPos;
-    }
-
-    public float getXSize() {
-        return xSize;
-    }
-
-    public void setXSize(float xSize) {
-        this.xSize = xSize;
-    }
-
-    public float getYSize() {
-        return ySize;
-    }
-
-    public void setYSize(float ySize) {
-        this.ySize = ySize;
-    }
-
-    public float getLaunchTime() {
-        return launchTime;
-    }
-
-    public void setLaunchTime(float launchTime) {
-        this.launchTime = launchTime;
-    }
-
-    public boolean isLaunched() {
-        return isLaunched;
-    }
-
-    public void setLaunched(boolean launched) {
-        isLaunched = launched;
+    public void launch(Vector2 force) {
+        this.isLaunched = true;
+        this.launchTime = System.currentTimeMillis();
+        applyForce(force);
     }
 }

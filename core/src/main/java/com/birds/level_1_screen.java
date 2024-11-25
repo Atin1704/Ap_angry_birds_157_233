@@ -1,3 +1,4 @@
+// level_1_screen.java
 package com.birds;
 
 import com.badlogic.gdx.Gdx;
@@ -9,11 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -26,21 +23,18 @@ public class level_1_screen implements Screen {
     private final AssetManager assetManager;
     private Texture background_image;
     private Texture pause_button;
-    private Slingshot slingshot;
-    private Black_bird bb_1;
-    private Red_bird rb_1;
-    private Yellow_bird yb_1;
+
     private Main game_runner;
     private final SpriteBatch spriteBatch;
+
+    StretchViewport viewport;
+    Vector2 touchPos;
+
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private ShapeRenderer shapeRenderer;
-    StretchViewport viewport;
-    Vector2 touchPos;
-    private boolean isDragging;
-    private Vector2 slingStart;
-    private Vector2 slingEnd;
-    private boolean isBirdLaunched;
+    private Bird redBird, yellowBird, blackBird;
+    private Slingshot slingshot;
 
     public level_1_screen(Main main, AssetManager assetManager) {
         logger.info("Initializing level_1_screen");
@@ -49,73 +43,79 @@ public class level_1_screen implements Screen {
         this.spriteBatch = main.batch;
         viewport = new StretchViewport(1200, 1000);
         touchPos = new Vector2();
-        world = new World(new Vector2(0, -35.0f), true);
+
+        world = new World(new Vector2(0, -9.8f), true);
         debugRenderer = new Box2DDebugRenderer();
         shapeRenderer = new ShapeRenderer();
+
+        // Load textures
+        background_image = new Texture("Level2_bg.png");
+        pause_button = new Texture("Pause_icon.png");
+
         createGround();
-        slingshot = new Slingshot(world, main.batch, assetManager, 230, 217, 50, 100);
-        rb_1 = new Red_bird(world, 230, 267, 50, 50); // Place red bird on top of slingshot
-        bb_1 = new Black_bird(world, 170, 217, 50, 50);
-        yb_1 = new Yellow_bird(world, 105, 217, 50, 50);
-        slingStart = new Vector2(230, 267);
-        slingEnd = new Vector2(230, 267);
-        isBirdLaunched = false;
+        createBirds();
+        createSlingshot();
     }
 
     private void createGround() {
-        logger.info("Creating ground");
         BodyDef groundBodyDef = new BodyDef();
-        groundBodyDef.type = BodyDef.BodyType.StaticBody;
-        groundBodyDef.position.set(new Vector2(0, 217));
+        groundBodyDef.position.set(new Vector2(600, 217));
+        Body groundBody = world.createBody(groundBodyDef);
+
         EdgeShape groundShape = new EdgeShape();
-        groundShape.set(new Vector2(0, 0), new Vector2(viewport.getWorldWidth(), 0));
+        groundShape.set(new Vector2(-600, 0), new Vector2(600, 0));
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = groundShape;
-        fixtureDef.friction = 0.5f; // Add friction to the ground
-        world.createBody(groundBodyDef).createFixture(fixtureDef);
+        fixtureDef.friction = 0.5f;
+        groundBody.createFixture(fixtureDef);
         groundShape.dispose();
+    }
+
+    private void createBirds() {
+        redBird = new Red_bird(world, 255, 417, 50, 50); // Adjusted yPos to place the red bird on the slingshot
+        yellowBird = new Yellow_bird(world, 130, 217, 50, 50);
+        blackBird = new Black_bird(world, 70, 217, 50, 50);
+    }
+
+    private void createSlingshot() {
+        slingshot = new Slingshot(world, 230, 217, 50, 200);
     }
 
     @Override
     public void show() {
-        logger.info("Showing level_1_screen");
-        background_image = assetManager.get("Level2_bg.png", Texture.class);
-        pause_button = assetManager.get("Pause_icon.png", Texture.class);
+
     }
 
     @Override
-    public void render(float v) {
-        logger.info("Rendering level_1_screen");
+    public void render(float delta) {
         input();
         world.step(1/60f, 6, 2);
-        rb_1.update();
-        bb_1.update();
-        yb_1.update();
+        redBird.update();
+        yellowBird.update();
+        blackBird.update();
+        slingshot.update();
 
         ScreenUtils.clear(Color.BLACK);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
-
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
-
-        spriteBatch.draw(background_image, 0, 0, worldWidth, worldHeight);
-        slingshot.render();
-        rb_1.render(spriteBatch);
-        yb_1.render(spriteBatch);
-        bb_1.render(spriteBatch);
-        spriteBatch.draw(pause_button, 1080, 910, 65, 65);
-
+        spriteBatch.draw(background_image, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+        redBird.draw(spriteBatch);
+        yellowBird.draw(spriteBatch);
+        blackBird.draw(spriteBatch);
+        slingshot.draw(spriteBatch); // Draw the slingshot sprite
         spriteBatch.end();
 
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.BROWN);
-        shapeRenderer.line(slingStart.x, slingStart.y, slingEnd.x, slingEnd.y);
+        shapeRenderer.line(slingshot.getX(), slingshot.getY() + slingshot.getHeight(), redBird.getX(), redBird.getY());
+        shapeRenderer.line(slingshot.getX() + slingshot.getWidth(), slingshot.getY() + slingshot.getHeight(), redBird.getX(), redBird.getY());
         shapeRenderer.end();
 
         debugRenderer.render(world, viewport.getCamera().combined);
     }
+
+    private boolean isDragging = false;
 
     private void input() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -156,30 +156,23 @@ public class level_1_screen implements Screen {
             game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
         }
 
-        // Handle slingshot dragging
+        // Handle sling mechanism
         if (Gdx.input.isTouched()) {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos);
 
-            if (isDragging) {
-                slingEnd.set(touchPos);
-            } else if (touchPos.dst(slingStart) < 50) {
+            if (touchPos.dst(redBird.getX(), redBird.getY()) < 50) {
+                redBird.setPosition(touchPos.x, touchPos.y);
                 isDragging = true;
-                slingEnd.set(touchPos);
             }
         } else if (isDragging) {
             isDragging = false;
-            // Launch the bird
-            Vector2 launchVector = slingStart.cpy().sub(slingEnd).scl(10); // Increase launch speed
-            rb_1.getBody().applyLinearImpulse(launchVector, rb_1.getBody().getWorldCenter(), true);
-            slingEnd.set(slingStart);
-            isBirdLaunched = true;
-        }
-
-        // Prevent bird from moving until launched
-        if (!isBirdLaunched) {
-            rb_1.getBody().setTransform(slingStart, 0);
-            rb_1.getBody().setLinearVelocity(0, 0);
+            float dx = slingshot.getX() - redBird.getX();
+            float dy = slingshot.getY() - redBird.getY();
+            float distance = (float) Math.sqrt(dx * dx + dy * dy);
+            float forceMagnitude = 10 * distance * (float) redBird.speedMultiplier;
+            Vector2 slingForce = new Vector2(forceMagnitude * (dx / distance), forceMagnitude * (dy / distance));
+            redBird.launch(slingForce);
         }
     }
 
@@ -207,5 +200,10 @@ public class level_1_screen implements Screen {
     @Override
     public void dispose() {
         logger.info("Disposing level_1_screen");
+        world.dispose();
+        debugRenderer.dispose();
+        shapeRenderer.dispose();
+        background_image.dispose();
+        pause_button.dispose();
     }
 }

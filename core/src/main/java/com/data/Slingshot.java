@@ -1,65 +1,67 @@
 package com.data;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 
 public class Slingshot {
-    private SpriteBatch spriteBatch;
-    private AssetManager assetManager;
-    private Texture image;
+    private Texture texture;
     private Sprite sprite;
     private Body body;
-    private float xPos;
-    private float yPos;
-    private float width;
-    private float height;
+    private World world;
 
-    public Slingshot(World world, SpriteBatch spriteBatch, AssetManager assetManager, float xPos, float yPos, float width, float height) {
-        this.spriteBatch = spriteBatch;
-        this.assetManager = assetManager;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.width = width;
-        this.height = height;
-        this.image = assetManager.get("Slingshot.png", Texture.class);
-        this.sprite = new Sprite(image);
+    public Slingshot(World world, float xPos, float yPos, float width, float height) {
+        this.world = world;
+        this.texture = new Texture("Slingshot.png");
+        this.sprite = new Sprite(texture);
         this.sprite.setSize(width, height);
-        this.sprite.setPosition(xPos - width / 2, yPos - height / 2);
-        createBody(world);
-    }
+        this.sprite.setPosition(xPos, yPos);
+        this.sprite.setOriginCenter();
 
-    private void createBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(xPos, yPos - height / 2); // Adjust position to ensure it is above the ground
-        body = world.createBody(bodyDef);
+        bodyDef.position.set(xPos + width / 2, yPos + height / 2);
+        this.body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2, height / 2);
 
-        body.createFixture(shape, 0.0f);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0.6f;
+        this.body.createFixture(fixtureDef);
         shape.dispose();
     }
 
-    public void render() {
-        sprite.draw(spriteBatch);
+    public void update() {
+        Vector2 bodyPosition = body.getPosition();
+        sprite.setPosition(
+            bodyPosition.x - sprite.getWidth() / 2,
+            bodyPosition.y - sprite.getHeight() / 2
+        );
     }
 
-    public Texture getImage() {
-        return image;
+    public void draw(SpriteBatch batch) {
+        sprite.draw(batch);
     }
 
-    public SpriteBatch getBatch() {
-        return spriteBatch;
+    public float getX() {
+        return sprite.getX();
     }
 
-    public Body getBody() {
-        return body;
+    public float getY() {
+        return sprite.getY();
+    }
+
+    public float getWidth() {
+        return sprite.getWidth();
+    }
+
+    public float getHeight() {
+        return sprite.getHeight();
     }
 }
