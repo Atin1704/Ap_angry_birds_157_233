@@ -33,6 +33,7 @@ public class Yellow_bird extends Bird {
         this.ySize = height;
         this.launchTime = 0;
         this.isLaunched = false;
+        this.body.setAwake(false);
     }
 }
 

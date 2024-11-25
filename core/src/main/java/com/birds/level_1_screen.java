@@ -139,17 +139,17 @@ private void createGround() {
 
     private void createObstacles() {
         obstacles= new ArrayList<>();
-        obstacles.add(new Wood_block(world, 700, 220, 110,110));
-        obstacles.add(new Stone_block(world, 810, 220, 110,110));
-        obstacles.add(new Glass_block(world, 920, 220, 110,110));
-        obstacles.add(new Wood_block(world, 755, 330, 110,110));
-        obstacles.add(new Stone_block(world, 865, 330, 110,110));
+        obstacles.add(new Wood_block(world, 700, 270, 110,110));
+        obstacles.add(new Stone_block(world, 810, 270, 110,110));
+        obstacles.add(new Glass_block(world, 920, 270, 110,110));
+        obstacles.add(new Wood_block(world, 755, 380, 110,110));
+        obstacles.add(new Stone_block(world, 865, 380, 110,110));
     }
 
     private void createPigs(){
         pigs = new ArrayList<>();
-        pigs.add(new King_pig(world, 775,340,70,70));
-        pigs.add(new Normal_pig(world,885,340,70,70));
+        pigs.add(new King_pig(world, 750,480,70,70));
+        pigs.add(new Normal_pig(world,850,480,70,70));
     }
 
     private void placeBirdOnSlingshot(Bird bird) {
@@ -191,15 +191,6 @@ private void createGround() {
         }
         slingshot.draw(spriteBatch);
         spriteBatch.end();
-
-        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.BROWN);
-        if (currentBird != null && !currentBird.isLaunched()) {
-            shapeRenderer.line(slingshot.getX(), slingshot.getY() + slingshot.getHeight(), currentBird.getX(), currentBird.getY());
-            shapeRenderer.line(slingshot.getX() + slingshot.getWidth(), slingshot.getY() + slingshot.getHeight(), currentBird.getX(), currentBird.getY());
-        }
-        shapeRenderer.end();
 
         debugRenderer.render(world, viewport.getCamera().combined);
     }
@@ -244,32 +235,8 @@ private void createGround() {
             logger.info("DEL key pressed, switching to Defeat_Screen");
             game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
         }
-
-        // Handle sling mechanism
-        if (Gdx.input.isTouched()) {
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-            viewport.unproject(touchPos);
-
-            if (currentBird != null && touchPos.dst(currentBird.getX(), currentBird.getY()) < 50) {
-                currentBird.setPosition(touchPos.x, touchPos.y);
-                isDragging = true;
-            }
-        } else if (isDragging) {
-            isDragging = false;
-            if (currentBird != null) {
-                launchBird();
-            }
-        }
     }
 
-    private void launchBird() {
-        float dx = slingshot.getX() - currentBird.getX();
-        float dy = slingshot.getY() - currentBird.getY();
-        float distance = (float) Math.sqrt(dx * dx + dy * dy);
-        float forceMagnitude = 10 * distance * (float) currentBird.speedMultiplier;
-        Vector2 slingForce = new Vector2(forceMagnitude * (dx / distance), forceMagnitude * (dy / distance));
-        currentBird.launch(slingForce);
-    }
 
     private void removeLastLaunchedBird() {
         if (!birds.isEmpty()) {

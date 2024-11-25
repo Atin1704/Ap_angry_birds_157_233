@@ -59,27 +59,4 @@ public abstract class Bird {
     public Body getBody() {
         return body;
     }
-
-    public void applyForce(Vector2 force) {
-        if (body.getType() != BodyDef.BodyType.DynamicBody) {
-            body.setType(BodyDef.BodyType.DynamicBody);
-        }
-        body.applyLinearImpulse(force, body.getWorldCenter(), true);
-    }
-
-    public void setIsLaunched(boolean isLaunched) {
-        this.isLaunched = isLaunched;
-    }
-
-    // Method to apply force and launch the bird
-    public void launch(Vector2 force) {
-        if (!isLaunched) {
-            getBody().applyLinearImpulse(force, getBody().getWorldCenter(), true);
-            setIsLaunched(true);
-        }
-    }
-
-    public boolean isLaunched() {
-        return isLaunched;
-    }
 }

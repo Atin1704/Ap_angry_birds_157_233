@@ -40,5 +40,6 @@ public class Glass_block extends Obstacle implements Serializable {
         fixtureDef.restitution = 0.0f; // Low restitution coefficient
         this.body.createFixture(fixtureDef);
         shape.dispose();
+        this.body.setAwake(false);
     }
 }

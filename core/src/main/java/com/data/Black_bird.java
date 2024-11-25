@@ -25,6 +25,7 @@ public class Black_bird extends Bird {
         fixtureDef.restitution = 0.0f;
         this.body.createFixture(fixtureDef);
         shape.dispose();
+        this.body.setAwake(false);
 
         this.damage = 80;
         this.speedMultiplier = 1.0f;
