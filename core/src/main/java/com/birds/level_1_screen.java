@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.data.*;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class level_1_screen implements Screen {
@@ -33,8 +34,9 @@ public class level_1_screen implements Screen {
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private ShapeRenderer shapeRenderer;
-    private Bird redBird, yellowBird, blackBird;
     private Slingshot slingshot;
+    private ArrayList<Bird> birds;
+    private Bird currentBird;
 
     public level_1_screen(Main main, AssetManager assetManager) {
         logger.info("Initializing level_1_screen");
@@ -55,6 +57,20 @@ public class level_1_screen implements Screen {
         createGround();
         createBirds();
         createSlingshot();
+
+        // Set the first bird to be the current bird
+        if (!birds.isEmpty()) {
+            currentBird = birds.get(birds.size() - 1);
+            placeBirdOnSlingshot(currentBird);
+        }
+
+        // Schedule a task to remove the last launched bird every 5 seconds
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                removeLastLaunchedBird();
+            }
+        }, 5, 5); // Delay of 5 seconds, repeat every 5 seconds
     }
 
     private void createGround() {
@@ -72,13 +88,18 @@ public class level_1_screen implements Screen {
     }
 
     private void createBirds() {
-        redBird = new Red_bird(world, 255, 417, 50, 50); // Adjusted yPos to place the red bird on the slingshot
-        yellowBird = new Yellow_bird(world, 130, 217, 50, 50);
-        blackBird = new Black_bird(world, 70, 217, 50, 50);
+        birds = new ArrayList<>();
+        birds.add(new Red_bird(world, 100, 217, 50, 50));
+        birds.add(new Yellow_bird(world, 150, 217, 50, 50));
+        birds.add(new Black_bird(world, 200, 217, 50, 50));
     }
 
     private void createSlingshot() {
         slingshot = new Slingshot(world, 230, 217, 50, 200);
+    }
+
+    private void placeBirdOnSlingshot(Bird bird) {
+        bird.setPosition(slingshot.getX(), slingshot.getY() + slingshot.getHeight());
     }
 
     @Override
@@ -90,27 +111,27 @@ public class level_1_screen implements Screen {
     public void render(float delta) {
         input();
         world.step(1/60f, 6, 2);
-        redBird.update();
-        yellowBird.update();
-        blackBird.update();
+        for (Bird bird : birds) {
+            bird.update();
+        }
         slingshot.update();
 
         ScreenUtils.clear(Color.BLACK);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
         spriteBatch.draw(background_image, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-        redBird.draw(spriteBatch);
-        yellowBird.draw(spriteBatch);
-        blackBird.draw(spriteBatch);
-        slingshot.draw(spriteBatch); // Draw the slingshot sprite
+        for (Bird bird : birds) {
+            bird.draw(spriteBatch);
+        }
+        slingshot.draw(spriteBatch);
         spriteBatch.end();
 
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.BROWN);
-        if (!redBird.isLaunched()) {
-            shapeRenderer.line(slingshot.getX(), slingshot.getY() + slingshot.getHeight(), redBird.getX(), redBird.getY());
-            shapeRenderer.line(slingshot.getX() + slingshot.getWidth(), slingshot.getY() + slingshot.getHeight(), redBird.getX(), redBird.getY());
+        if (currentBird != null && !currentBird.isLaunched()) {
+            shapeRenderer.line(slingshot.getX(), slingshot.getY() + slingshot.getHeight(), currentBird.getX(), currentBird.getY());
+            shapeRenderer.line(slingshot.getX() + slingshot.getWidth(), slingshot.getY() + slingshot.getHeight(), currentBird.getX(), currentBird.getY());
         }
         shapeRenderer.end();
 
@@ -163,23 +184,35 @@ public class level_1_screen implements Screen {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos);
 
-            if (touchPos.dst(redBird.getX(), redBird.getY()) < 50) {
-                redBird.setPosition(touchPos.x, touchPos.y);
+            if (currentBird != null && touchPos.dst(currentBird.getX(), currentBird.getY()) < 50) {
+                currentBird.setPosition(touchPos.x, touchPos.y);
                 isDragging = true;
             }
         } else if (isDragging) {
             isDragging = false;
-            launchBird();
+            if (currentBird != null) {
+                launchBird();
+            }
         }
     }
 
     private void launchBird() {
-        float dx = slingshot.getX() - redBird.getX();
-        float dy = slingshot.getY() - redBird.getY();
+        float dx = slingshot.getX() - currentBird.getX();
+        float dy = slingshot.getY() - currentBird.getY();
         float distance = (float) Math.sqrt(dx * dx + dy * dy);
-        float forceMagnitude = 10 * distance * (float) redBird.speedMultiplier;
+        float forceMagnitude = 10 * distance * (float) currentBird.speedMultiplier;
         Vector2 slingForce = new Vector2(forceMagnitude * (dx / distance), forceMagnitude * (dy / distance));
-        redBird.launch(slingForce);
+        currentBird.launch(slingForce);
+    }
+
+    private void removeLastLaunchedBird() {
+        if (!birds.isEmpty()) {
+            birds.remove(birds.size() - 1);
+            if (!birds.isEmpty()) {
+                currentBird = birds.get(birds.size() - 1);
+                placeBirdOnSlingshot(currentBird);
+            }
+        }
     }
 
     @Override
