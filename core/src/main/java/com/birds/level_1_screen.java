@@ -161,57 +161,62 @@ public class level_1_screen implements Screen {
     }
 
     private void placeBirdOnSlingshot(Bird bird) {
-        bird.setPosition(slingshot.getX(), slingshot.getY() + slingshot.getHeight());
-    }
+    bird.setAwake(false);
+    bird.setPosition(slingshot.getX(), slingshot.getY() + slingshot.getHeight());
+     // Ensure the bird is not awake until launched
+}
 
     @Override
     public void show() {
 
     }
 
-    @Override
-    public void render(float delta) {
-        input();
-        world.step(1 / 60f, 6, 2);
-        for (Bird bird : birds) {
-            bird.update();
-        }
-        for (Obstacle obstacle : obstacles) {
-            obstacle.update();
-        }
-        for (Pig pig : pigs) {
-            pig.update();
-        }
-        slingshot.update();
-
-        ScreenUtils.clear(Color.BLACK);
-        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
-        spriteBatch.begin();
-        spriteBatch.draw(background_image, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-        for (Bird bird : birds) {
-            bird.draw(spriteBatch);
-        }
-        for (Obstacle obstacle : obstacles) {
-            obstacle.draw(spriteBatch);
-        }
-        for (Pig pig : pigs) {
-            pig.draw(spriteBatch);
-        }
-        slingshot.draw(spriteBatch);
-
-        // Draw the arrow if dragging
-        if (isDragging) {
-            arrow_sprite.setPosition(slingshot.getX(), slingshot.getY() + slingshot.getHeight());
-            Vector2 direction = new Vector2(dragStart.x - touchPos.x, dragStart.y - touchPos.y);
-            arrow_sprite.setRotation(direction.angleDeg());
-            arrow_sprite.setSize(direction.len() / 2, arrow_sprite.getHeight());
-            arrow_sprite.draw(spriteBatch);
-        }
-
-        spriteBatch.end();
-
-        debugRenderer.render(world, viewport.getCamera().combined);
+    // level_1_screen.java
+@Override
+public void render(float delta) {
+    input();
+    world.step(1 / 60f, 6, 2);
+    for (Bird bird : birds) {
+        bird.update();
     }
+    for (Obstacle obstacle : obstacles) {
+        obstacle.update();
+    }
+    for (Pig pig : pigs) {
+        pig.update();
+    }
+    slingshot.update();
+
+    ScreenUtils.clear(Color.BLACK);
+    spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
+    spriteBatch.begin();
+    spriteBatch.draw(background_image, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+    for (Bird bird : birds) {
+        bird.draw(spriteBatch);
+    }
+    for (Obstacle obstacle : obstacles) {
+        obstacle.draw(spriteBatch);
+    }
+    for (Pig pig : pigs) {
+        pig.draw(spriteBatch);
+    }
+    slingshot.draw(spriteBatch);
+
+    // Draw the arrow if dragging
+    if (isDragging) {
+        float arrowX = slingshot.getX() + slingshot.getWidth();
+        float arrowY = slingshot.getY() + slingshot.getHeight() / 2;
+        arrow_sprite.setPosition(arrowX, arrowY);
+        Vector2 direction = new Vector2(dragStart.x - touchPos.x, dragStart.y - touchPos.y);
+        arrow_sprite.setRotation(direction.angleDeg());
+        arrow_sprite.setSize(direction.len() / 2, arrow_sprite.getHeight());
+        arrow_sprite.draw(spriteBatch);
+    }
+
+    spriteBatch.end();
+
+    debugRenderer.render(world, viewport.getCamera().combined);
+}
 
     private void input() {
     if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -254,12 +259,21 @@ public class level_1_screen implements Screen {
 
     // Handle bird selection
     if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) && birds.size() > 0 && !birds.get(0).isLaunched()) {
+        if (currentBird != null) {
+            currentBird.setPosition(currentBird.getX(), 235); // Reset current bird's position
+        }
         currentBird = birds.get(0);
         placeBirdOnSlingshot(currentBird);
     } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && birds.size() > 1 && !birds.get(1).isLaunched()) {
+        if (currentBird != null) {
+            currentBird.setPosition(currentBird.getX(), 235); // Reset current bird's position
+        }
         currentBird = birds.get(1);
         placeBirdOnSlingshot(currentBird);
     } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) && birds.size() > 2 && !birds.get(2).isLaunched()) {
+        if (currentBird != null) {
+            currentBird.setPosition(currentBird.getX(), 235); // Reset current bird's position
+        }
         currentBird = birds.get(2);
         placeBirdOnSlingshot(currentBird);
     }
