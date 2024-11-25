@@ -108,8 +108,10 @@ public class level_1_screen implements Screen {
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.BROWN);
-        shapeRenderer.line(slingshot.getX(), slingshot.getY() + slingshot.getHeight(), redBird.getX(), redBird.getY());
-        shapeRenderer.line(slingshot.getX() + slingshot.getWidth(), slingshot.getY() + slingshot.getHeight(), redBird.getX(), redBird.getY());
+        if (!redBird.isLaunched()) {
+            shapeRenderer.line(slingshot.getX(), slingshot.getY() + slingshot.getHeight(), redBird.getX(), redBird.getY());
+            shapeRenderer.line(slingshot.getX() + slingshot.getWidth(), slingshot.getY() + slingshot.getHeight(), redBird.getX(), redBird.getY());
+        }
         shapeRenderer.end();
 
         debugRenderer.render(world, viewport.getCamera().combined);
@@ -167,13 +169,17 @@ public class level_1_screen implements Screen {
             }
         } else if (isDragging) {
             isDragging = false;
-            float dx = slingshot.getX() - redBird.getX();
-            float dy = slingshot.getY() - redBird.getY();
-            float distance = (float) Math.sqrt(dx * dx + dy * dy);
-            float forceMagnitude = 10 * distance * (float) redBird.speedMultiplier;
-            Vector2 slingForce = new Vector2(forceMagnitude * (dx / distance), forceMagnitude * (dy / distance));
-            redBird.launch(slingForce);
+            launchBird();
         }
+    }
+
+    private void launchBird() {
+        float dx = slingshot.getX() - redBird.getX();
+        float dy = slingshot.getY() - redBird.getY();
+        float distance = (float) Math.sqrt(dx * dx + dy * dy);
+        float forceMagnitude = 10 * distance * (float) redBird.speedMultiplier;
+        Vector2 slingForce = new Vector2(forceMagnitude * (dx / distance), forceMagnitude * (dy / distance));
+        redBird.launch(slingForce);
     }
 
     @Override

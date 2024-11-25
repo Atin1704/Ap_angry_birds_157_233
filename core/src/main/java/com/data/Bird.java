@@ -1,3 +1,4 @@
+// Bird.java
 package com.data;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -94,5 +95,9 @@ public abstract class Bird {
         this.isLaunched = true;
         this.launchTime = System.currentTimeMillis();
         applyForce(force);
+    }
+
+    public boolean isLaunched() {
+        return isLaunched;
     }
 }
