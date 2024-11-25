@@ -178,6 +178,7 @@ public class level_1_screen implements Screen {
 @Override
 public void render(float delta) {
     input();
+
     world.step(1 / 60f, 6, 2);
     for (Bird bird : birds) {
         bird.update();
@@ -194,6 +195,7 @@ public void render(float delta) {
     spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
     spriteBatch.begin();
     spriteBatch.draw(background_image, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+    spriteBatch.draw(pause_button, 1100, 920, 65, 65);
     for (Bird bird : birds) {
         bird.draw(spriteBatch);
     }
