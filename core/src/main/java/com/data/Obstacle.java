@@ -118,6 +118,8 @@ public class Obstacle implements Serializable {
         sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
     }
 
+
+
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
     }

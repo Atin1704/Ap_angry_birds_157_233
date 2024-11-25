@@ -36,5 +36,6 @@ public class Black_bird extends Bird {
         this.ySize = height;
         this.launchTime = 0;
         this.isLaunched = false;
+        damage=60;
     }
 }

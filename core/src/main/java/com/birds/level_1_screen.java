@@ -58,6 +58,9 @@ public class level_1_screen implements Screen {
         debugRenderer = new Box2DDebugRenderer();
         shapeRenderer = new ShapeRenderer();
 
+        CollisionHandler collisionHandler = new CollisionHandler();
+        world.setContactListener(collisionHandler);
+
         // Load textures
         background_image = new Texture("Level2_bg.png");
         pause_button = new Texture("Pause_icon.png");

@@ -35,5 +35,6 @@ public class Red_bird extends Bird {
         this.launchTime = 0;
         this.isLaunched = false;
         this.body.setAwake(false);
+        damage=60;
     }
 }

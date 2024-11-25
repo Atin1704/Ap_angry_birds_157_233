@@ -18,7 +18,7 @@ public class King_pig extends Pig implements Serializable {
     public King_pig(World world, float xPos, float yPos, float width, float height) {
         super(world, "King_pig.png", xPos, yPos, width, height);
         this.image = new Texture("King_pig.png");
-        this.health = 100;
+        this.health = 30;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);

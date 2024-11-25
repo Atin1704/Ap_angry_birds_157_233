@@ -16,7 +16,7 @@ public class Normal_pig extends Pig implements Serializable {
     public Normal_pig(World world, float xPos, float yPos, float width, float height) {
         super(world, "Normal_pig.png", xPos, yPos, width, height);
         this.image = new Texture("Normal_pig.png");
-        this.health = 50;
+        this.health = 20;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);

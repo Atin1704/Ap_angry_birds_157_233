@@ -12,7 +12,7 @@ public abstract class Bird {
     protected Body body;
     protected Sprite sprite;
     protected World world;
-    protected double damage;
+    protected float damage;
     public double speedMultiplier;
     protected float xPos;
     protected float yPos;
@@ -79,5 +79,9 @@ public abstract class Bird {
 
     public Body getBody() {
         return body;
+    }
+
+    public float getDamage() {
+        return damage;
     }
 }
