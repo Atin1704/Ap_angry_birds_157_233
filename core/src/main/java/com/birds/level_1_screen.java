@@ -64,73 +64,75 @@ public class level_1_screen implements Screen {
         createSlingshot();
         createObstacles();
         createPigs();
-
-        // Set the first bird to be the current bird
-        if (!birds.isEmpty()) {
-            currentBird = birds.get(birds.size() - 1);
-            placeBirdOnSlingshot(currentBird);
-        }
-
-        // Schedule a task to remove the last launched bird every 5 seconds
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                removeLastLaunchedBird();
-            }
-        }, 25, 25); // Delay of 5 seconds, repeat every 5 seconds
     }
 
-    private void createGround() {
-        // Create ground
-        BodyDef groundBodyDef = new BodyDef();
-        groundBodyDef.type = BodyDef.BodyType.StaticBody;
-        groundBodyDef.position.set(new Vector2(600, 217));
-        Body groundBody = world.createBody(groundBodyDef);
+    // level_1_screen.java
+private void createGround() {
+    // Create ground
+    BodyDef groundBodyDef = new BodyDef();
+    groundBodyDef.type = BodyDef.BodyType.StaticBody;
+    groundBodyDef.position.set(new Vector2(600, 217));
+    Body groundBody = world.createBody(groundBodyDef);
 
-        EdgeShape groundShape = new EdgeShape();
-        groundShape.set(new Vector2(-600, 0), new Vector2(600, 0));
-        FixtureDef groundFixtureDef = new FixtureDef();
-        groundFixtureDef.shape = groundShape;
-        groundFixtureDef.friction = 0.5f;
-        groundFixtureDef.restitution = 0.0f; // No bouncing
-        groundBody.createFixture(groundFixtureDef);
-        groundShape.dispose();
+    EdgeShape groundShape = new EdgeShape();
+    groundShape.set(new Vector2(-600, 0), new Vector2(600, 0));
+    FixtureDef groundFixtureDef = new FixtureDef();
+    groundFixtureDef.shape = groundShape;
+    groundFixtureDef.friction = 0.5f;
+    groundFixtureDef.restitution = 0.0f; // No bouncing
+    groundBody.createFixture(groundFixtureDef);
+    groundShape.dispose();
 
-        // Create left boundary
-        BodyDef leftBoundaryDef = new BodyDef();
-        leftBoundaryDef.type = BodyDef.BodyType.StaticBody;
-        leftBoundaryDef.position.set(new Vector2(0, 500));
-        Body leftBoundary = world.createBody(leftBoundaryDef);
+    // Create left boundary
+    BodyDef leftBoundaryDef = new BodyDef();
+    leftBoundaryDef.type = BodyDef.BodyType.StaticBody;
+    leftBoundaryDef.position.set(new Vector2(0, 500));
+    Body leftBoundary = world.createBody(leftBoundaryDef);
 
-        EdgeShape leftShape = new EdgeShape();
-        leftShape.set(new Vector2(0, -500), new Vector2(0, 500));
-        FixtureDef leftFixtureDef = new FixtureDef();
-        leftFixtureDef.shape = leftShape;
-        leftFixtureDef.friction = 0.5f;
-        leftFixtureDef.restitution = 0.0f; // No bouncing
-        leftBoundary.createFixture(leftFixtureDef);
-        leftShape.dispose();
+    EdgeShape leftShape = new EdgeShape();
+    leftShape.set(new Vector2(0, -500), new Vector2(0, 500));
+    FixtureDef leftFixtureDef = new FixtureDef();
+    leftFixtureDef.shape = leftShape;
+    leftFixtureDef.friction = 0.5f;
+    leftFixtureDef.restitution = 0.0f; // No bouncing
+    leftBoundary.createFixture(leftFixtureDef);
+    leftShape.dispose();
 
-        // Create right boundary
-        BodyDef rightBoundaryDef = new BodyDef();
-        rightBoundaryDef.type = BodyDef.BodyType.StaticBody;
-        rightBoundaryDef.position.set(new Vector2(1200, 500));
-        Body rightBoundary = world.createBody(rightBoundaryDef);
+    // Create right boundary
+    BodyDef rightBoundaryDef = new BodyDef();
+    rightBoundaryDef.type = BodyDef.BodyType.StaticBody;
+    rightBoundaryDef.position.set(new Vector2(1200, 500));
+    Body rightBoundary = world.createBody(rightBoundaryDef);
 
-        EdgeShape rightShape = new EdgeShape();
-        rightShape.set(new Vector2(0, -500), new Vector2(0, 500));
-        FixtureDef rightFixtureDef = new FixtureDef();
-        rightFixtureDef.shape = rightShape;
-        rightFixtureDef.friction = 0.5f;
-        rightFixtureDef.restitution = 0.0f; // No bouncing
-        rightBoundary.createFixture(rightFixtureDef);
-        rightShape.dispose();
-    }
+    EdgeShape rightShape = new EdgeShape();
+    rightShape.set(new Vector2(0, -500), new Vector2(0, 500));
+    FixtureDef rightFixtureDef = new FixtureDef();
+    rightFixtureDef.shape = rightShape;
+    rightFixtureDef.friction = 0.5f;
+    rightFixtureDef.restitution = 0.0f; // No bouncing
+    rightBoundary.createFixture(rightFixtureDef);
+    rightShape.dispose();
+
+    // Create top boundary
+    BodyDef topBoundaryDef = new BodyDef();
+    topBoundaryDef.type = BodyDef.BodyType.StaticBody;
+    topBoundaryDef.position.set(new Vector2(600, 1000));
+    Body topBoundary = world.createBody(topBoundaryDef);
+
+    EdgeShape topShape = new EdgeShape();
+    topShape.set(new Vector2(-600, 0), new Vector2(600, 0));
+    FixtureDef topFixtureDef = new FixtureDef();
+    topFixtureDef.shape = topShape;
+    topFixtureDef.friction = 0.5f;
+    topFixtureDef.restitution = 0.0f; // No bouncing
+    topBoundary.createFixture(topFixtureDef);
+    topShape.dispose();
+}
 
     private void createBirds() {
         birds = new ArrayList<>();
-        birds.add(new Red_bird(world, 100, 217, 50, 50));
-        birds.add(new Yellow_bird(world, 150, 217, 50, 50));
+        birds.add(new Red_bird(world, 80, 217, 50, 50));
+        birds.add(new Yellow_bird(world, 140, 217, 50, 50));
         birds.add(new Black_bird(world, 200, 217, 50, 50));
     }
 
@@ -235,8 +237,20 @@ public class level_1_screen implements Screen {
             game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
         }
 
+        // Handle bird selection
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) && birds.size() > 0) {
+            currentBird = birds.get(0);
+            placeBirdOnSlingshot(currentBird);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && birds.size() > 1) {
+            currentBird = birds.get(1);
+            placeBirdOnSlingshot(currentBird);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) && birds.size() > 2) {
+            currentBird = birds.get(2);
+            placeBirdOnSlingshot(currentBird);
+        }
+
         // Handle dragging input for slingshot
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.isTouched() && currentBird != null && !currentBird.isLaunched()) {
             if (!isDragging) {
                 isDragging = true;
                 dragStart.set(Gdx.input.getX(), Gdx.input.getY());
@@ -252,16 +266,8 @@ public class level_1_screen implements Screen {
             Vector2 velocity = new Vector2(dragStart.x - dragEnd.x, dragStart.y - dragEnd.y).scl(5);
             currentBird.setVelocity(velocity);
             currentBird.setAwake(true);
-        }
-    }
-
-    private void removeLastLaunchedBird() {
-        if (!birds.isEmpty()) {
-            birds.remove(birds.size() - 1);
-            if (!birds.isEmpty()) {
-                currentBird = birds.get(birds.size() - 1);
-                placeBirdOnSlingshot(currentBird);
-            }
+            currentBird.setLaunched(true);
+            currentBird = null; // Allow selecting a new bird
         }
     }
 

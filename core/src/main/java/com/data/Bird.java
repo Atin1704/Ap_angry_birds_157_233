@@ -28,6 +28,7 @@ public abstract class Bird {
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);
         this.sprite.setOriginCenter();
+        this.isLaunched = false;
     }
 
     public void update() {
@@ -54,6 +55,18 @@ public abstract class Bird {
 
     public void setAwake(boolean awake) {
         body.setAwake(awake);
+    }
+
+    public void setGravityScale(float scale) {
+        body.setGravityScale(scale);
+    }
+
+    public void setLaunched(boolean launched) {
+        this.isLaunched = launched;
+    }
+
+    public boolean isLaunched() {
+        return isLaunched;
     }
 
     public float getX() {
