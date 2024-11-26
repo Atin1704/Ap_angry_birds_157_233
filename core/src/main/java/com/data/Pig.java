@@ -22,10 +22,12 @@ public class Pig implements Serializable {
     protected Sprite sprite;
     protected Body body;
     protected World world;
+    protected float initial_y;
     protected float radius;
     protected BodyRemovalManager bodyRemovalManager;
 
     public Pig(World world, BodyRemovalManager bodyRemovalManager, String texturePath, float xPos, float yPos, float width, float height) {
+        this.initial_y = yPos;
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
@@ -117,8 +119,9 @@ public class Pig implements Serializable {
         this.radius = radius;
     }
 
+    // Pig.java
     public void update() {
-        if (health <= 0) {
+        if (health <= 0 || (body != null && body.getPosition().y <= 253) || (body != null && (initial_y - body.getPosition().y) >= 120)){
             if (world != null && body != null) {
                 bodyRemovalManager.markForRemoval(body);
                 body = null; // Set body to null after marking for removal

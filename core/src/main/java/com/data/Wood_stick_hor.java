@@ -10,7 +10,6 @@ import com.birds.BodyRemovalManager;
 
 public class Wood_stick_hor extends Obstacle{
     private Texture image;
-    private int health;
 
     public Wood_stick_hor(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Wooden_Stick_Horizontal.png", xPos, yPos, width, height);

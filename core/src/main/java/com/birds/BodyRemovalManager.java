@@ -26,11 +26,13 @@ public class BodyRemovalManager {
 
     public void markForRemoval(Body body) {
         bodiesToRemove.add(body);
+        System.out.println("Body added.");
     }
 
     public void removeMarkedBodies() {
         for (Body body : bodiesToRemove) {
             world.destroyBody(body);
+            System.out.println("Successfully deleted.");
         }
         bodiesToRemove.clear();
     }

@@ -15,12 +15,11 @@ import java.io.Serializable;
 
 public class Stone_block extends Obstacle implements Serializable {
     private Texture image;
-    private int health;
 
     public Stone_block(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Stone_block.png", xPos, yPos, width, height);
         this.image = new Texture("Stone_block.png");
-        this.health = 10;
+        this.health = 20;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);

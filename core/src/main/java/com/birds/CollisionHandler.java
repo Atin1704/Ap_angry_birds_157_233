@@ -13,6 +13,11 @@ public class CollisionHandler implements ContactListener {
     private static final float BIRD_DAMAGE_MULTIPLIER = 7.5f;
     private static final float MAX_DAMAGE = 2.0f;
     private static boolean damageEnabled = true;
+    private final Body groundBody;
+
+    public CollisionHandler(Body groundBody) {
+        this.groundBody = groundBody;
+    }
 
     public void enableDamage() {
         damageEnabled = true;
@@ -39,9 +44,17 @@ public class CollisionHandler implements ContactListener {
         Object userDataB = bodyB.getUserData();
 
         if (userDataA instanceof Pig) {
-            handlePigCollision((Pig) userDataA, userDataB, bodyA, bodyB);
+            if (userDataB instanceof Obstacle) {
+                handlePigCollision((Pig) userDataA, userDataB, bodyA, bodyB);
+            }
         } else if (userDataB instanceof Pig) {
-            handlePigCollision((Pig) userDataB, userDataA, bodyB, bodyA);
+            if (userDataA instanceof Obstacle) {
+                handlePigCollision((Pig) userDataB, userDataA, bodyB, bodyA);
+            }
+        } else if (userDataA instanceof Obstacle) {
+            handleBlockCollision((Obstacle) userDataA, userDataB, bodyA, bodyB);
+        } else if (userDataB instanceof Obstacle) {
+            handleBlockCollision((Obstacle) userDataB, userDataA, bodyB, bodyA);
         }
     }
 
@@ -65,6 +78,43 @@ public class CollisionHandler implements ContactListener {
                 removePigFromWorld(pig);
             }
         }
+    }
+
+
+
+    private void handleBlockCollision(Obstacle obstacle, Object otherObject, Body obstacleBody, Body otherBody) {
+        float impactForce = calculateImpactForce(obstacleBody, otherBody);
+
+        if (impactForce < VELOCITY_THRESHOLD)
+            return;
+
+        float damage = 0;
+        if (otherObject instanceof Bird) {
+            damage = Math.min(impactForce * BIRD_DAMAGE_MULTIPLIER, MAX_DAMAGE);
+        } else if (otherObject instanceof Pig) {
+            damage = Math.min(impactForce * BLOCK_DAMAGE_MULTIPLIER, MAX_DAMAGE);
+        }
+
+        if (damage > 0) {
+            obstacle.setHealth(obstacle.getHealth() - damage);
+            if (obstacle.getHealth() <= 0) {
+                System.out.println("Obstacle Destroyed.");
+                obstacle.update(); // This will handle the removal of the obstacle
+                removeObstacleFromWorld(obstacle);
+            }
+        }
+    }
+
+    // CollisionHandler.java
+    private void removeObstacleFromWorld(Obstacle obstacle) {
+        if (obstacle.getWorld() != null && obstacle.getBody() != null) {
+            obstacle.getWorld().destroyBody(obstacle.getBody());
+        }
+        if (obstacle.getTexture() != null) {
+            obstacle.getTexture().dispose();
+        }
+        obstacle.setSprite(null);
+        obstacle.setBody(null);
     }
 
     private void removePigFromWorld(Pig pig) {

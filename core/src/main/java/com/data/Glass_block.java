@@ -15,12 +15,11 @@ import java.io.Serializable;
 
 public class Glass_block extends Obstacle implements Serializable {
     private Texture image;
-    private int health;
 
     public Glass_block(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Glass_block.png", xPos, yPos, width, height);
         this.image = new Texture("Glass_block.png");
-        this.health = 10;
+        this.health = 8;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);

@@ -44,6 +44,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
     private Bird currentBird;
     private ArrayList<Obstacle> obstacles;
     private ArrayList<Pig> pigs;
+    private Body groundBody;
 
     private boolean isDragging = false;
     private Vector2 dragStart = new Vector2();
@@ -60,7 +61,9 @@ public class level_1_screen extends Level implements Screen, Serializable {
         debugRenderer = new Box2DDebugRenderer();
         shapeRenderer = new ShapeRenderer();
 
-        CollisionHandler collisionHandler = new CollisionHandler();
+        createGround();
+
+        CollisionHandler collisionHandler = new CollisionHandler(groundBody);
         world.setContactListener(collisionHandler);
         bodyRemovalManager = new BodyRemovalManager(world);
 
@@ -71,7 +74,6 @@ public class level_1_screen extends Level implements Screen, Serializable {
         arrow_sprite = new Sprite(arrow_texture);
         arrow_sprite.setOriginCenter();
 
-        createGround();
         createBirds();
         createSlingshot();
         createObstacles();
@@ -83,7 +85,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
         BodyDef groundBodyDef = new BodyDef();
         groundBodyDef.type = BodyDef.BodyType.StaticBody;
         groundBodyDef.position.set(new Vector2(600, 217));
-        Body groundBody = world.createBody(groundBodyDef);
+        groundBody = world.createBody(groundBodyDef);
 
         EdgeShape groundShape = new EdgeShape();
         groundShape.set(new Vector2(-600, 0), new Vector2(600, 0));
@@ -164,6 +166,11 @@ public class level_1_screen extends Level implements Screen, Serializable {
         pigs = new ArrayList<>();
         pigs.add(new King_pig(world, bodyRemovalManager, 780, 480, 70,70));
         pigs.add(new Normal_pig(world,bodyRemovalManager, 850, 480, 70, 70));
+//        pigs.add(new Wood_block(world, bodyRemovalManager, 700, 270, 110, 110));
+//        pigs.add(new Stone_block(world, bodyRemovalManager, 810, 270, 110, 110));
+//        pigs.add(new Glass_block(world, bodyRemovalManager, 920, 270, 110, 110));
+//        pigs.add(new Wood_block(world, bodyRemovalManager, 755, 380, 110, 110));
+//        pigs.add(new Stone_block(world, bodyRemovalManager, 865, 380, 110, 110));
     }
 
     private void placeBirdOnSlingshot(Bird bird) {
@@ -177,6 +184,28 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
     }
 
+    // Add this method to check if all birds are launched
+    private boolean allBirdsLaunched() {
+        for (Bird bird : birds) {
+            if (!bird.isLaunched()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Update the render method
+    // Add this method to check if all pig bodies are null
+    private boolean allPigBodiesNull() {
+        for (Pig pig : pigs) {
+            if (pig.getBody() != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Update the render method
     @Override
     public void render(float delta) {
         input();
@@ -195,6 +224,15 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
         bodyRemovalManager.removeMarkedBodies();
 
+        // Check conditions for victory or defeat
+        if (allPigBodiesNull() && allBirdsLaunched()) {
+            game_runner.setScreen(new Victory_Screen(game_runner, assetManager, 1));
+        } else if (!allPigBodiesNull() && allBirdsLaunched()) {
+            game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
+        } else if (allPigBodiesNull() && !allBirdsLaunched()) {
+            game_runner.setScreen(new Victory_Screen(game_runner, assetManager, 1));
+        }
+
         ScreenUtils.clear(Color.BLACK);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
@@ -205,7 +243,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
         }
         for (Obstacle obstacle : obstacles) {
             obstacle.draw(spriteBatch);
-            if(obstacle.getHealth() > 0){
+            if (obstacle.getHealth() > 0) {
                 game_runner.font.draw(spriteBatch, "Health: " + obstacle.getHealth(), obstacle.getXPos(), obstacle.getYPos() + obstacle.getHeight() + 10);
             }
         }

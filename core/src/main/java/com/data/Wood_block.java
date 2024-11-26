@@ -15,7 +15,6 @@ import java.io.Serializable;
 
 public class Wood_block extends Obstacle implements Serializable {
     private Texture image;
-    private int health;
 
     public Wood_block(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Wooden_block.png", xPos, yPos, width, height);

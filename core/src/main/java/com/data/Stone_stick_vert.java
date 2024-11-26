@@ -10,7 +10,6 @@ import com.birds.BodyRemovalManager;
 
 public class Stone_stick_vert extends  Obstacle{
     private Texture image;
-    private int health;
 
     public Stone_stick_vert(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Stone_Stick_Vertical.png", xPos, yPos, width, height);

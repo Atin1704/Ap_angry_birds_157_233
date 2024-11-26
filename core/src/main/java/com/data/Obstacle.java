@@ -1,4 +1,7 @@
+// Pig.java
 package com.data;
+
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,16 +23,18 @@ public class Obstacle implements Serializable {
     protected Body body;
     protected World world;
     protected float radius;
-    protected BodyRemovalManager brm;
+    protected BodyRemovalManager bodyRemovalManager;
 
-    public Obstacle(World world, BodyRemovalManager brm, String texturePath, float xPos, float yPos, float width, float height) {
+    public Obstacle(World world, BodyRemovalManager bodyRemovalManager, String texturePath, float xPos, float yPos, float width, float height) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
         this.height = height;
-        this.health = 100;
+        this.world = world;
+        this.bodyRemovalManager = bodyRemovalManager;
+
         texture = new Texture(texturePath);
-        this.brm = brm;
+        sprite = new Sprite(texture);
     }
 
     public float getHealth() {
@@ -115,7 +120,7 @@ public class Obstacle implements Serializable {
     public void update() {
         if (health <= 0) {
             if (world != null && body != null) {
-                brm.markForRemoval(body);
+                bodyRemovalManager.markForRemoval(body);
                 body = null; // Set body to null after marking for removal
             }
             if (texture != null) {
@@ -139,5 +144,4 @@ public class Obstacle implements Serializable {
             sprite.draw(batch);
         }
     }
-
 }
