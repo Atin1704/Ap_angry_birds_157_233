@@ -31,7 +31,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
     private BodyRemovalManager bodyRemovalManager;
 
     private Main game_runner;
-    private final SpriteBatch spriteBatch;
+    private final  SpriteBatch spriteBatch;
 
     StretchViewport viewport;
     Vector2 touchPos;

@@ -131,82 +131,90 @@ public class pause_screen implements Screen {
     }
 
     private void input() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
+    if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        Gdx.app.exit();
+    }
+    if (Gdx.input.justTouched() && !saved) {
+        touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+        viewport.unproject(touchPos);
+
+        // Define button bounds (Play, Rotate, Settings, Save, Home)
+        float playButtonX = 435f, playButtonY = 670f, playButtonWidth = 100f, playButtonHeight = 100f;
+        float rotateButtonX = 435f, rotateButtonY = 530f;
+        float saveButtonX = 435f, saveButtonY = 390f;
+        float homeButtonX = 435f, homeButtonY = 250f;
+
+        if (touchPos.x >= playButtonX && touchPos.x <= (playButtonX + playButtonWidth)
+            && touchPos.y >= playButtonY && touchPos.y <= (playButtonY + playButtonHeight)) {
+            game_runner.click.play();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (level == 1) {
+                        game_runner.setScreen(level1);
+                    }
+                    if (level == 2) {
+                        game_runner.setScreen(level2);
+                    }
+                    if (level == 3) {
+                        game_runner.setScreen(level3);
+                    }
+                }
+            }, 0.25f);
         }
-        if (Gdx.input.justTouched() && !saved) {
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-            viewport.unproject(touchPos);
 
-            // Define button bounds (Play, Rotate, Settings, Save, Home)
-            float playButtonX = 435f, playButtonY = 670f, playButtonWidth = 100f, playButtonHeight = 100f;
-            float rotateButtonX = 435f, rotateButtonY = 530f;
-
-            float saveButtonX = 435f, saveButtonY = 390f;
-            float homeButtonX = 435f, homeButtonY = 250f;
-
-            if (touchPos.x >= playButtonX && touchPos.x <= (playButtonX + playButtonWidth)
-                && touchPos.y >= playButtonY && touchPos.y <= (playButtonY + playButtonHeight)) {
-                game_runner.click.play();
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        if (level == 1) {
-                            game_runner.setScreen(level1);
-                        }
-                        if (level == 2) {
-                            game_runner.setScreen(level2);
-                        }
-                        if (level == 3) {
-                            game_runner.setScreen(level3);
-                        }
-
+        if (touchPos.x >= rotateButtonX && touchPos.x <= (rotateButtonX + playButtonWidth)
+            && touchPos.y >= rotateButtonY && touchPos.y <= (rotateButtonY + playButtonHeight)) {
+            game_runner.click.play();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (level == 1) {
+                        game_runner.setScreen(new level_1_screen(game_runner, assetManager));
                     }
-                }, 0.25f);
-            }
-
-            if (touchPos.x >= rotateButtonX && touchPos.x <= (rotateButtonX + playButtonWidth)
-                && touchPos.y >= rotateButtonY && touchPos.y <= (rotateButtonY + playButtonHeight)) {
-                game_runner.click.play();
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        if (level == 1) {
-                            game_runner.setScreen(new level_1_screen(game_runner, assetManager));
-                        }
-                        if (level == 2) {
-                            game_runner.setScreen(new level_2_screen(game_runner, assetManager));
-                        }
-                        if (level == 3) {
-                            game_runner.setScreen(new level_3_screen(game_runner, assetManager));
-                        }
-
+                    if (level == 2) {
+                        game_runner.setScreen(new level_2_screen(game_runner, assetManager));
                     }
-                }, 0.25f);
-            }
-
-
-
-            if (touchPos.x >= saveButtonX && touchPos.x <= (saveButtonX + playButtonWidth)
-                && touchPos.y >= saveButtonY && touchPos.y <= (saveButtonY + playButtonHeight)) {
-                game_runner.click.play();
-                saved = true;
-            }
-
-            if (touchPos.x >= homeButtonX && touchPos.x <= (homeButtonX + playButtonWidth)
-                && touchPos.y >= homeButtonY && touchPos.y <= (homeButtonY + playButtonHeight)) {
-                game_runner.click.play();
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-
-                            game_runner.setScreen(new main_screen(game_runner, assetManager));
-
+                    if (level == 3) {
+                        game_runner.setScreen(new level_3_screen(game_runner, assetManager));
                     }
-                }, 0.25f);
+                }
+            }, 0.25f);
+        }
+
+        if (touchPos.x >= saveButtonX && touchPos.x <= (saveButtonX + playButtonWidth)
+            && touchPos.y >= saveButtonY && touchPos.y <= (saveButtonY + playButtonHeight)) {
+            game_runner.click.play();
+            // Upcast level_1_screen to Level and save it to the stack in Database
+            if (level == 1) {
+                Level levelToSave = level1;
+                Database.addLevel(levelToSave);
+                System.out.println("Level 1 saved");
+            } else if (level == 2) {
+                Level levelToSave = level2;
+                Database.addLevel(levelToSave);
+                System.out.println("Level 2 saved");
+            } else if (level == 3) {
+                Level levelToSave = level3;
+                Database.addLevel(levelToSave);
+                System.out.println("Level 3 saved");
             }
+            saved = true;
+        }
+
+        if (touchPos.x >= homeButtonX && touchPos.x <= (homeButtonX + playButtonWidth)
+            && touchPos.y >= homeButtonY && touchPos.y <= (homeButtonY + playButtonHeight)) {
+            game_runner.click.play();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    game_runner.setScreen(new main_screen(game_runner, assetManager));
+                }
+            }, 0.25f);
         }
     }
+}
+
 
     @Override
     public void resize(int width, int height) {

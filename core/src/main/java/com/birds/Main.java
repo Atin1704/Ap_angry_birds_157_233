@@ -25,6 +25,7 @@ public class Main extends Game {
         music.setLooping(true);
         music.setVolume(0.5f);
         click = Gdx.audio.newSound(Gdx.files.internal("Click.mp3"));
+        Database.load();
     }
 
     public void render() {
@@ -34,6 +35,7 @@ public class Main extends Game {
     public void dispose() {
         batch.dispose();
         font.dispose();
+        Database.store();
     }
 
     // Add this method to set the volume of the music

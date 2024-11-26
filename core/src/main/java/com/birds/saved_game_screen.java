@@ -72,44 +72,107 @@ public class saved_game_screen implements Screen {
 
     }
 
-
     private void input() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
+    if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        Gdx.app.exit();
+    }
+    if (Gdx.input.justTouched()) {
+        touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+        viewport.unproject(touchPos);
 
+        float exitIconX = 80f;
+        float exitIconY = 3f;
+        float exitIconWidth = viewport.getWorldWidth() / 8;
+        float exitIconHeight = viewport.getWorldHeight() / 12;
+
+        if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
+            && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
+            game_runner.click.play();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    game_runner.setScreen(new main_screen(game_runner, assetManager));
+                }
+            }, 0.25f);
         }
-        if (Gdx.input.justTouched()) {
-            // Get the touch position in screen coordinates and convert it to world coordinates
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-            viewport.unproject(touchPos); // Converts screen coordinates to the viewport's world coordinates (100x100 system)
 
-            float exitIconX = 80f;        // X position for Exit icon
-            float exitIconY = 3f;         // Y position for Exit icon
-            float exitIconWidth = viewport.getWorldWidth() / 8;   // Width of the Exit icon
-            float exitIconHeight = viewport.getWorldHeight() / 12; // Height of the Exit icon
+        float saved1X = 36f;
+        float saved1Y = 41f;
+        float saved1Width = 25f;
+        float saved1Height = viewport.getWorldHeight() / 10;
 
-            // Check if the user touched within the Exit icon's bounds
-            if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
-                && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
-                game_runner.click.play();
-
-
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        game_runner.setScreen(new main_screen(game_runner, assetManager));
+        if (touchPos.x >= saved1X && touchPos.x <= (saved1X + saved1Width)
+            && touchPos.y >= saved1Y && touchPos.y <= (saved1Y + saved1Height)) {
+            game_runner.click.play();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (!Database.getLevelStack().isEmpty()) {
+                        Level level = Database.getLevelStack().pop();
+                        if (level instanceof level_1_screen) {
+                            game_runner.setScreen((level_1_screen) level);
+                        } else if (level instanceof level_2_screen) {
+                            game_runner.setScreen((level_2_screen) level);
+                        } else if (level instanceof level_3_screen) {
+                            game_runner.setScreen((level_3_screen) level);
+                        }
                     }
-                }, 0.25f);  // Delay of 0.5 seconds (500ms)
-            }
+                }
+            }, 0.25f);
         }
 
-        try{
-            throwing();
+        float saved2X = 36f;
+        float saved2Y = 28f;
+        float saved2Width = 25f;
+        float saved2Height = viewport.getWorldHeight() / 10;
+
+        if (touchPos.x >= saved2X && touchPos.x <= (saved2X + saved2Width)
+            && touchPos.y >= saved2Y && touchPos.y <= (saved2Y + saved2Height)) {
+            game_runner.click.play();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (Database.getLevelStack().size() > 1) {
+                        Level level = Database.getLevelStack().remove(Database.getLevelStack().size() - 2);
+                        if (level instanceof level_1_screen) {
+                            game_runner.setScreen((level_1_screen) level);
+                        } else if (level instanceof level_2_screen) {
+                            game_runner.setScreen((level_2_screen) level);
+                        } else if (level instanceof level_3_screen) {
+                            game_runner.setScreen((level_3_screen) level);
+                        }
+                    }
+                }
+            }, 0.25f);
         }
-        catch(GameNotFound e){
-            System.out.println(e.getMessage());
+
+        float saved3X = 36f;
+        float saved3Y = 15f;
+        float saved3Width = 25f;
+        float saved3Height = viewport.getWorldHeight() / 10;
+
+        if (touchPos.x >= saved3X && touchPos.x <= (saved3X + saved3Width)
+            && touchPos.y >= saved3Y && touchPos.y <= (saved3Y + saved3Height)) {
+            game_runner.click.play();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (Database.getLevelStack().size() > 2) {
+                        Level level = Database.getLevelStack().remove(Database.getLevelStack().size() - 3);
+                        if (level instanceof level_1_screen) {
+                            game_runner.setScreen((level_1_screen) level);
+                        } else if (level instanceof level_2_screen) {
+                            game_runner.setScreen((level_2_screen) level);
+                        } else if (level instanceof level_3_screen) {
+                            game_runner.setScreen((level_3_screen) level);
+                        }
+                    }
+                }
+            }, 0.25f);
         }
     }
+}
+
 
     public void throwing() throws GameNotFound {
         int a = 0;
