@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class settings_screen implements Screen {
@@ -198,7 +197,7 @@ public class settings_screen implements Screen {
                     @Override
                     public void run() {
                         if (checker) {
-                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
+//                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1, currentScreen));
                         } else {
                             game_runner.setScreen(new main_screen(game_runner, assetManager));
                         }

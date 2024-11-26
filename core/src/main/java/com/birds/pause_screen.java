@@ -13,7 +13,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class pause_screen implements Screen {
-    private final AssetManager assetManager;
+    private AssetManager assetManager;
     private Texture background_image_1;
     private Texture background_image_2;
     private Texture background_image_3;
@@ -28,18 +28,48 @@ public class pause_screen implements Screen {
     private boolean scheduledRedirect = false;
 
     private Main game_runner;
-    private final SpriteBatch spriteBatch;
+    private  SpriteBatch spriteBatch;
     StretchViewport viewport;
     Vector2 touchPos;
     private int level;
+    level_1_screen level1;
+    level_2_screen level2;
+    level_3_screen level3;
 
-    public pause_screen(Main main, AssetManager assetManager, int level) {
+    public pause_screen(Main main, AssetManager assetManager, int level, level_1_screen currentScreen) {
+
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch = main.batch;
         viewport = new StretchViewport(1000, 1000);
         touchPos = new Vector2();
         this.level = level;
+        this.level1=currentScreen;
+    }
+
+    public pause_screen(Main main, AssetManager assetManager, int level, level_2_screen currentScreen) {
+
+        this.game_runner = main;
+        this.assetManager = assetManager;
+        this.spriteBatch = main.batch;
+        viewport = new StretchViewport(1000, 1000);
+        touchPos = new Vector2();
+        this.level = level;
+        this.level2=currentScreen;
+
+
+    }
+
+    public pause_screen(Main main, AssetManager assetManager, int i, level_3_screen currentScreen) {
+
+            this.game_runner = main;
+            this.assetManager = assetManager;
+            this.spriteBatch = main.batch;
+            viewport = new StretchViewport(1000, 1000);
+            touchPos = new Vector2();
+            this.level = i;
+            this.level3=currentScreen;
+
     }
 
     @Override

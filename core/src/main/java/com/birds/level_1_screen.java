@@ -49,6 +49,13 @@ public class level_1_screen extends Level implements Screen, Serializable {
     private boolean isDragging = false;
     private Vector2 dragStart = new Vector2();
 
+    // level_1_screen.java
+    private boolean allBirdsLaunchedFlag = false;
+    private boolean allBirdsLaunchedTimerStarted = false;
+    private Timer.Task allBirdsLaunchedTask;
+
+    private transient level_1_screen currentScreen;
+
     public level_1_screen(Main main, AssetManager assetManager) {
         logger.info("Initializing level_1_screen");
         this.game_runner = main;
@@ -56,6 +63,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
         this.spriteBatch = main.batch;
         viewport = new StretchViewport(1200, 1000);
         touchPos = new Vector2();
+        this.currentScreen = this;
 
         world = new World(new Vector2(0, -9.8f), true);
         debugRenderer = new Box2DDebugRenderer();
@@ -184,17 +192,33 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
     }
 
+
     // Add this method to check if all birds are launched
     private boolean allBirdsLaunched() {
+        if (allBirdsLaunchedFlag) {
+            return true;
+        }
+
         for (Bird bird : birds) {
             if (!bird.isLaunched()) {
                 return false;
             }
         }
-        return true;
+
+        if (!allBirdsLaunchedTimerStarted) {
+            allBirdsLaunchedTimerStarted = true;
+            allBirdsLaunchedTask = new Timer.Task() {
+                @Override
+                public void run() {
+                    allBirdsLaunchedFlag = true;
+                }
+            };
+            Timer.schedule(allBirdsLaunchedTask, 25);
+        }
+
+        return false;
     }
 
-    // Update the render method
     // Add this method to check if all pig bodies are null
     private boolean allPigBodiesNull() {
         for (Pig pig : pigs) {
@@ -294,7 +318,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
-                    game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
+                    game_runner.setScreen(new pause_screen(game_runner, assetManager, 1,currentScreen));
                 }
             }, 0.25f);  // Delay of 0.25 seconds
         }
