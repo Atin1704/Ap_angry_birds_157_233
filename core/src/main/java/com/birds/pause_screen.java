@@ -111,10 +111,10 @@ public class pause_screen implements Screen {
         if (!saved) {
             spriteBatch.draw(pause_menu, 100, 50, worldWidth - 200, worldHeight - 100);
             spriteBatch.draw(play_button, 435, 670, 100, 100);
-            spriteBatch.draw(rotate_button, 435, 550, 100, 100);
-            spriteBatch.draw(settings_button, 435, 430, 100, 100);
-            spriteBatch.draw(save_button, 435, 310, 100, 100);
-            spriteBatch.draw(home_button, 435, 190, 100, 100);
+            spriteBatch.draw(rotate_button, 435, 530, 100, 100);
+            spriteBatch.draw(save_button, 435, 390, 100, 100);
+            spriteBatch.draw(home_button, 435, 250, 100, 100);
+
         } else {
             spriteBatch.draw(pause_menu_gs, 100, 50, worldWidth - 200, worldHeight - 100);
             if (!scheduledRedirect) {
@@ -140,10 +140,10 @@ public class pause_screen implements Screen {
 
             // Define button bounds (Play, Rotate, Settings, Save, Home)
             float playButtonX = 435f, playButtonY = 670f, playButtonWidth = 100f, playButtonHeight = 100f;
-            float rotateButtonX = 435f, rotateButtonY = 550f;
-            float settingsButtonX = 435f, settingsButtonY = 430f;
-            float saveButtonX = 435f, saveButtonY = 310f;
-            float homeButtonX = 435f, homeButtonY = 190f;
+            float rotateButtonX = 435f, rotateButtonY = 530f;
+
+            float saveButtonX = 435f, saveButtonY = 390f;
+            float homeButtonX = 435f, homeButtonY = 250f;
 
             if (touchPos.x >= playButtonX && touchPos.x <= (playButtonX + playButtonWidth)
                 && touchPos.y >= playButtonY && touchPos.y <= (playButtonY + playButtonHeight)) {
@@ -185,16 +185,7 @@ public class pause_screen implements Screen {
                 }, 0.25f);
             }
 
-            if (touchPos.x >= settingsButtonX && touchPos.x <= (settingsButtonX + playButtonWidth)
-                && touchPos.y >= settingsButtonY && touchPos.y <= (settingsButtonY + playButtonHeight)) {
-                game_runner.click.play();
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        game_runner.setScreen(new settings_screen(game_runner, assetManager, true));
-                    }
-                }, 0.25f);
-            }
+
 
             if (touchPos.x >= saveButtonX && touchPos.x <= (saveButtonX + playButtonWidth)
                 && touchPos.y >= saveButtonY && touchPos.y <= (saveButtonY + playButtonHeight)) {
