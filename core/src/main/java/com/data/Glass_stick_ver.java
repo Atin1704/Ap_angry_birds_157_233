@@ -14,7 +14,7 @@ public class Glass_stick_ver extends Obstacle{
     public Glass_stick_ver(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm,"Glass_Stick_Vertical.png", xPos, yPos, width, height);
         this.image = new Texture("Glass_Stick_Vertical.png");
-        this.health = 10;
+        this.health = 7.5f;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);

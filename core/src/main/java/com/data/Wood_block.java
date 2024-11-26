@@ -19,7 +19,7 @@ public class Wood_block extends Obstacle implements Serializable {
     public Wood_block(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Wooden_block.png", xPos, yPos, width, height);
         this.image = new Texture("Wooden_block.png");
-        this.health = 10;
+        this.health = 20.0f;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);

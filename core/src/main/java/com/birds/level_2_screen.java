@@ -163,17 +163,30 @@ public class level_2_screen extends Level implements Screen, Serializable {
 
     private void createObstacles() {
         obstacles = new ArrayList<>();
-        obstacles.add(new Wood_block(world, bodyRemovalManager, 700, 270, 110, 110));
-        obstacles.add(new Stone_block(world, bodyRemovalManager, 810, 270, 110, 110));
-        obstacles.add(new Glass_block(world, bodyRemovalManager, 920, 270, 110, 110));
-        obstacles.add(new Wood_block(world, bodyRemovalManager, 755, 380, 110, 110));
-        obstacles.add(new Stone_block(world, bodyRemovalManager, 865, 380, 110, 110));
+        obstacles.add(new Stone_stick_hor(world, bodyRemovalManager, 740, 240, 80, 45));
+        obstacles.add(new Stone_stick_hor(world, bodyRemovalManager, 820, 240, 80, 45));
+        obstacles.add(new Stone_stick_hor(world, bodyRemovalManager, 960, 240, 80, 45));
+        obstacles.add(new Stone_stick_hor(world, bodyRemovalManager, 1040, 240, 80, 45));
+        obstacles.add(new Wood_stick_hor(world, bodyRemovalManager, 760, 286, 110, 45));
+        obstacles.add(new Wood_stick_hor(world, bodyRemovalManager, 890, 276, 150, 25));
+        obstacles.add(new Wood_stick_hor(world, bodyRemovalManager, 1020, 286, 110, 45));
+        obstacles.add(new Stone_stick_vert(world, bodyRemovalManager, 760, 364, 25, 110));
+        obstacles.add(new Stone_stick_vert(world, bodyRemovalManager, 1019, 364, 25, 110));
+        obstacles.add(new Wood_stick_ver(world, bodyRemovalManager, 720, 364, 20, 110));
+        obstacles.add(new Wood_stick_ver(world, bodyRemovalManager, 800, 364, 20, 110));
+        obstacles.add(new Wood_stick_ver(world, bodyRemovalManager, 980, 364, 20, 110));
+        obstacles.add(new Wood_stick_ver(world, bodyRemovalManager, 1060, 364, 20, 110));
+        obstacles.add(new Wood_block(world, bodyRemovalManager, 760, 484, 150, 130));
+        obstacles.add(new Wood_block(world, bodyRemovalManager, 1020, 484, 150, 130));
+        obstacles.add(new Glass_block(world, bodyRemovalManager, 760, 604, 110, 110));
+        obstacles.add(new Glass_block(world, bodyRemovalManager, 1020, 604, 110, 110));
     }
 
     private void createPigs() {
         pigs = new ArrayList<>();
-        pigs.add(new King_pig(world, bodyRemovalManager, 780, 480, 70,70));
-        pigs.add(new Normal_pig(world,bodyRemovalManager, 850, 480, 70, 70));
+        pigs.add(new King_pig(world, bodyRemovalManager, 760, 700, 90,90));
+        pigs.add(new Normal_pig(world,bodyRemovalManager, 1020, 700, 90, 90));
+        pigs.add(new Old_pig(world, bodyRemovalManager, 890, 333, 90, 90));
 //        pigs.add(new Wood_block(world, bodyRemovalManager, 700, 270, 110, 110));
 //        pigs.add(new Stone_block(world, bodyRemovalManager, 810, 270, 110, 110));
 //        pigs.add(new Glass_block(world, bodyRemovalManager, 920, 270, 110, 110));

@@ -16,7 +16,7 @@ public class Old_pig extends Pig implements Serializable {
     public Old_pig(World world, BodyRemovalManager bodyRemovalManager, float xPos, float yPos, float width, float height) {
         super(world, bodyRemovalManager, "Old_pig.png", xPos, yPos, width, height);
         this.image = new Texture("Old_pig.png");
-        this.health = 3;
+        this.health = 30.0f;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);

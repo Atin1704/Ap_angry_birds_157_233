@@ -14,7 +14,7 @@ public class Wood_stick_ver extends Obstacle{
     public Wood_stick_ver(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Wooden_Stick_Vertical.png", xPos, yPos, width, height);
         this.image = new Texture("Wooden_Stick_Vertical.png");
-        this.health = 10;
+        this.health = 8.0f;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);

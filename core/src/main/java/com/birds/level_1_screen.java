@@ -152,9 +152,9 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
     private void createBirds() {
         birds = new ArrayList<>();
-        birds.add(new Red_bird(world, 80, 217, 50, 50));
+        birds.add(new Red_bird(world, 200, 217, 50, 50));
         birds.add(new Yellow_bird(world, 140, 217, 50, 50));
-        birds.add(new Black_bird(world, 200, 217, 50, 50));
+        birds.add(new Black_bird(world, 80, 217, 50, 50));
     }
 
     private void createSlingshot() {

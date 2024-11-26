@@ -30,7 +30,7 @@ public class Black_bird extends Bird {
 
         this.body.setUserData(this);
 
-        this.damage = 40;
+        this.damage = 20.0f;
         this.speedMultiplier = 1.0f;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -38,6 +38,5 @@ public class Black_bird extends Bird {
         this.ySize = height;
         this.launchTime = 0;
         this.isLaunched = false;
-        damage=60;
     }
 }

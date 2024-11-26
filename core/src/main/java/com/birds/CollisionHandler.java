@@ -11,7 +11,7 @@ public class CollisionHandler implements ContactListener {
     private static final float VELOCITY_THRESHOLD = 1.0f;
     private static final float BLOCK_DAMAGE_MULTIPLIER = 8f;
     private static final float BIRD_DAMAGE_MULTIPLIER = 7.5f;
-    private static final float MAX_DAMAGE = 2.0f;
+    private static final float MAX_DAMAGE = 10.0f;
     private static boolean damageEnabled = true;
     private final Body groundBody;
 

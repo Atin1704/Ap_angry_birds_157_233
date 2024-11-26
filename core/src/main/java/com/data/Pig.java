@@ -121,7 +121,7 @@ public class Pig implements Serializable {
 
     // Pig.java
     public void update() {
-        if (health <= 0 || (body != null && body.getPosition().y <= 253) || (body != null && (initial_y - body.getPosition().y) >= 120)){
+        if (health <= 0 || (body != null && body.getPosition().y <= 253) || (body != null && (initial_y - body.getPosition().y) >= 200) ){
             if (world != null && body != null) {
                 bodyRemovalManager.markForRemoval(body);
                 body = null; // Set body to null after marking for removal

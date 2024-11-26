@@ -14,7 +14,7 @@ public class Stone_stick_vert extends  Obstacle{
     public Stone_stick_vert(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Stone_Stick_Vertical.png", xPos, yPos, width, height);
         this.image = new Texture("Stone_Stick_Vertical.png");
-        this.health = 10;
+        this.health = 10.0f;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);
