@@ -65,7 +65,7 @@ public class level_3_screen extends Level implements Screen, Serializable {
         touchPos = new Vector2();
         this.currentScreen = this;
 
-        world = new World(new Vector2(0, -9.8f), true);
+        world = new World(new Vector2(0, -15.0f), true);
         debugRenderer = new Box2DDebugRenderer();
         shapeRenderer = new ShapeRenderer();
 

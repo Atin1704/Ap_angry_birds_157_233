@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Red_bird extends Bird {
-    public double speedMultiplier;
+    public double speedMultiplier=2;
     public Red_bird(World world, float xPos, float yPos, float width, float height) {
         super(world, "Red_bird.png", xPos, yPos, width, height);
 
@@ -26,7 +26,7 @@ public class Red_bird extends Bird {
         this.body.createFixture(fixtureDef);
         shape.dispose();
 
-        this.damage = 15.0f;
+        this.damage = 2.00f;
         this.speedMultiplier = 1.3f;
         this.xPos = xPos;
         this.yPos = yPos;
