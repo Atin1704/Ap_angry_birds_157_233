@@ -18,8 +18,8 @@ public class Pig implements Serializable {
     protected float yPos;
     protected float width;
     protected float height;
-    protected Texture texture;
-    protected Sprite sprite;
+    protected  Texture texture;
+    protected  Sprite sprite;
     protected Body body;
     protected World world;
     protected float initial_y;

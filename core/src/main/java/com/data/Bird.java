@@ -8,9 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 public abstract class Bird {
-    protected Texture texture;
+    protected  Texture texture;
     protected Body body;
-    protected Sprite sprite;
+    protected  Sprite sprite;
     protected World world;
     protected float damage;
     public double speedMultiplier;

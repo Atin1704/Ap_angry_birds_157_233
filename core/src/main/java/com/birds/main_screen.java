@@ -13,11 +13,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.data.AssetNotLoaded;
 import com.data.LevelNotUnlocked;
+
+import java.io.Serializable;
 import java.util.logging.Logger;
 
 
 
-public class main_screen implements Screen {
+public class main_screen implements Screen, Serializable {
     Vector2 touchPos;
     private final AssetManager assetManager;
     private Texture background_image;

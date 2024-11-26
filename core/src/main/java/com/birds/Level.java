@@ -2,7 +2,9 @@ package com.birds;
 
 import com.badlogic.gdx.Screen;
 
-public class Level implements Screen {
+import java.io.Serializable;
+
+public class Level implements Screen, Serializable {
 
     @Override
     public void show() {

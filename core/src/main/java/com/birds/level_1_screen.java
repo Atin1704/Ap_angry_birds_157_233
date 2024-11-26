@@ -24,10 +24,10 @@ import java.util.logging.Logger;
 public class level_1_screen extends Level implements Screen, Serializable {
     private static final Logger logger = Logger.getLogger(level_1_screen.class.getName());
     private final AssetManager assetManager;
-    private Texture background_image;
+    private  Texture background_image;
     private Texture pause_button;
-    private Texture arrow_texture;
-    private Sprite arrow_sprite;
+    private  Texture arrow_texture;
+    private   Sprite arrow_sprite;
     private BodyRemovalManager bodyRemovalManager;
 
     private Main game_runner;
@@ -290,8 +290,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
         debugRenderer.render(world, viewport.getCamera().combined);
     }
 
-
-    private void input() {
+private void input() {
     if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
         logger.info("ESCAPE key pressed, exiting");
         Gdx.app.exit();
@@ -313,7 +312,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
-                    game_runner.setScreen(new pause_screen(game_runner, assetManager, 1,currentScreen));
+                    game_runner.setScreen(new pause_screen(game_runner, assetManager, 1, currentScreen));
                 }
             }, 0.25f);  // Delay of 0.25 seconds
         }
@@ -365,13 +364,14 @@ public class level_1_screen extends Level implements Screen, Serializable {
         isDragging = false;
         Vector2 dragEnd = new Vector2(Gdx.input.getX(), Gdx.input.getY());
         viewport.unproject(dragEnd);
-        Vector2 velocity = new Vector2(dragStart.x - dragEnd.x, dragStart.y - dragEnd.y).scl(5);
+        Vector2 velocity = new Vector2(dragStart.x - dragEnd.x, dragStart.y - dragEnd.y).scl(5 * (float) currentBird.speedMultiplier);
         currentBird.setVelocity(velocity);
         currentBird.setAwake(true);
         currentBird.setLaunched(true);
         currentBird = null; // Allow selecting a new bird
     }
 }
+
 
     @Override
     public void resize(int width, int height) {
