@@ -60,14 +60,14 @@ public class pause_screen implements Screen {
 
     }
 
-    public pause_screen(Main main, AssetManager assetManager, int i, level_3_screen currentScreen) {
+    public pause_screen(Main main, AssetManager assetManager, int level, level_3_screen currentScreen) {
 
             this.game_runner = main;
             this.assetManager = assetManager;
             this.spriteBatch = main.batch;
             viewport = new StretchViewport(1000, 1000);
             touchPos = new Vector2();
-            this.level = i;
+            this.level = level;
             this.level3=currentScreen;
 
     }
@@ -99,10 +99,10 @@ public class pause_screen implements Screen {
                 spriteBatch.draw(background_image_1, 0, 0, worldWidth, worldHeight);
                 break;
             case 2:
-                spriteBatch.draw(background_image_2, 0, 0, worldWidth, worldHeight);
+                spriteBatch.draw(background_image_1, 0, 0, worldWidth, worldHeight);
                 break;
             case 3:
-                spriteBatch.draw(background_image_3, 0, 0, worldWidth, worldHeight);
+                spriteBatch.draw(background_image_1, 0, 0, worldWidth, worldHeight);
                 break;
             default:
                 break;
@@ -152,8 +152,15 @@ public class pause_screen implements Screen {
                     @Override
                     public void run() {
                         if (level == 1) {
-                            game_runner.setScreen(new level_1_screen(game_runner, assetManager));
+                            game_runner.setScreen(level1);
                         }
+                        if (level == 2) {
+                            game_runner.setScreen(level2);
+                        }
+                        if (level == 3) {
+                            game_runner.setScreen(level3);
+                        }
+
                     }
                 }, 0.25f);
             }
@@ -167,6 +174,13 @@ public class pause_screen implements Screen {
                         if (level == 1) {
                             game_runner.setScreen(new level_1_screen(game_runner, assetManager));
                         }
+                        if (level == 2) {
+                            game_runner.setScreen(new level_2_screen(game_runner, assetManager));
+                        }
+                        if (level == 3) {
+                            game_runner.setScreen(new level_3_screen(game_runner, assetManager));
+                        }
+
                     }
                 }, 0.25f);
             }
@@ -194,9 +208,9 @@ public class pause_screen implements Screen {
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-                        if (level == 1) {
+
                             game_runner.setScreen(new main_screen(game_runner, assetManager));
-                        }
+
                     }
                 }, 0.25f);
             }
