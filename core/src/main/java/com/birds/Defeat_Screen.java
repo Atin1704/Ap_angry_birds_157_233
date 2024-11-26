@@ -105,6 +105,12 @@ public class Defeat_Screen implements Screen {
                         if (level == 1) {
                             game_runner.setScreen(new level_1_screen(game_runner, assetManager));
                         }
+                        else if (level == 2) {
+                            game_runner.setScreen(new level_2_screen(game_runner, assetManager));
+                        }
+                        else if (level == 3) {
+                            game_runner.setScreen(new level_3_screen(game_runner, assetManager));
+                        }
                         // Add more levels as needed with else-if or switch cases
                     }
                 }, 0.25f);  // Delay of 0.25 seconds

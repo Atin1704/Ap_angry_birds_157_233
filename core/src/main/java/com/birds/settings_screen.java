@@ -1,3 +1,4 @@
+// settings_screen.java
 package com.birds;
 
 import com.badlogic.gdx.Gdx;
@@ -23,7 +24,7 @@ public class settings_screen implements Screen {
     private Texture Username;
     private Texture Notification_off;
     private Texture Notification_on;
-    private static boolean  Notif_status=false;
+    private static boolean Notif_status = false;
     private Texture volume_bar;
     private Texture volume_bar_green;
     private Texture volume_bar_wood;
@@ -36,7 +37,7 @@ public class settings_screen implements Screen {
     private boolean isDragging = false; // Track if the user is dragging the volume bar
     private float volumePercentage = 0.5f; // Volume percentage (initially 50%)
 
-    public settings_screen(Main main, AssetManager assetManager,boolean checker) {
+    public settings_screen(Main main, AssetManager assetManager, boolean checker) {
         this.game_runner = main;
         this.assetManager = assetManager;
         this.spriteBatch = main.batch;
@@ -109,50 +110,46 @@ public class settings_screen implements Screen {
     private void input() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-
         }
         if (Gdx.input.isTouched()) {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos);
-            // Get the touch position and convert it to world coordinates
-//            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-//            viewport.unproject(touchPos);
-//
-//            // Check if the user touched the exit icon
-//            float exitIconX = 80f;
-//            float exitIconY = 3f;
-//            float exitIconWidth = viewport.getWorldWidth() / 8;
-//            float exitIconHeight = viewport.getWorldHeight() / 12;
-//
-//            if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
-//                && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
-//                Timer.schedule(new Timer.Task() {
-//                    @Override
-//                    public void run() {
-//                        if (checker) {
-//                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
-//                        } else {
-//                            game_runner.setScreen(new main_screen(game_runner, assetManager));
-//                        }
-//                    }
-//                }, 0.25f);  // Delay of 0.25 seconds for smoother transition
-//            }
-//
-//            // Check if the user touched the notification icon with cooldown
-//            float notifX = 36;
-//            float notifY = 14;
-//            float notifWidth = 25;
-//            float notifHeight = viewport.getWorldHeight() / 9;
-//
-//            if (touchPos.x >= notifX && touchPos.x <= (notifX + notifWidth)
-//                && touchPos.y >= notifY && touchPos.y <= (notifY + notifHeight)) {
-//                // Only toggle if enough time has passed since the last toggle
-//                if (TimeUtils.timeSinceMillis(lastNotificationToggleTime) > NOTIFICATION_TOGGLE_COOLDOWN * 1000) {
-//                    lastNotificationToggleTime = TimeUtils.millis(); // Update the last toggle time
-//                    Notif_status = !Notif_status; // Toggle the notification status
-//                    isNotificationTransitioning = true; // Start the transition
-//                }
-//            }
+
+            // Check if the user touched the exit icon
+            float exitIconX = 80f;
+            float exitIconY = 3f;
+            float exitIconWidth = viewport.getWorldWidth() / 8;
+            float exitIconHeight = viewport.getWorldHeight() / 12;
+
+            if (touchPos.x >= exitIconX && touchPos.x <= (exitIconX + exitIconWidth)
+                && touchPos.y >= exitIconY && touchPos.y <= (exitIconY + exitIconHeight)) {
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (checker) {
+                            // Do something if checker is true
+                        } else {
+                            game_runner.setScreen(new main_screen(game_runner, assetManager));
+                        }
+                    }
+                }, 0.25f);  // Delay of 0.25 seconds for smoother transition
+            }
+
+            // Check if the user touched the notification icon with cooldown
+            float notifX = 36;
+            float notifY = 14;
+            float notifWidth = 25;
+            float notifHeight = viewport.getWorldHeight() / 9;
+
+            if (touchPos.x >= notifX && touchPos.x <= (notifX + notifWidth)
+                && touchPos.y >= notifY && touchPos.y <= (notifY + notifHeight)) {
+                // Only toggle if enough time has passed since the last toggle
+                if (TimeUtils.timeSinceMillis(lastNotificationToggleTime) > NOTIFICATION_TOGGLE_COOLDOWN * 1000) {
+                    lastNotificationToggleTime = TimeUtils.millis(); // Update the last toggle time
+                    Notif_status = !Notif_status; // Toggle the notification status
+                    isNotificationTransitioning = true; // Start the transition
+                }
+            }
 
             // Check if the user is touching the volume bar
             float volumeBarX = 16;
@@ -177,10 +174,12 @@ public class settings_screen implements Screen {
 
             // Gradually approach the new value for smoothness
             volumePercentage += (newVolumePercentage - volumePercentage) * 0.2f;
+
+            // Update the volume of the music
+            game_runner.setMusicVolume(volumePercentage);
         }
 
-        if(Gdx.input.justTouched()){
-
+        if (Gdx.input.justTouched()) {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos);
 
@@ -197,7 +196,7 @@ public class settings_screen implements Screen {
                     @Override
                     public void run() {
                         if (checker) {
-//                            game_runner.setScreen(new pause_screen(game_runner, assetManager, 1, currentScreen));
+                            // Do something if checker is true
                         } else {
                             game_runner.setScreen(new main_screen(game_runner, assetManager));
                         }
@@ -221,10 +220,7 @@ public class settings_screen implements Screen {
                     isNotificationTransitioning = true; // Start the transition
                 }
             }
-
         }
-
-
     }
 
     @Override

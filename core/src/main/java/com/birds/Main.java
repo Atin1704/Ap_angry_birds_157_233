@@ -1,3 +1,4 @@
+// Main.java
 package com.birds;
 
 import com.badlogic.gdx.Game;
@@ -14,8 +15,6 @@ public class Main extends Game {
     public BitmapFont font;
     public Music music;
     public Sound click;
-
-
 
     public void create() {
         batch = new SpriteBatch();
@@ -35,5 +34,12 @@ public class Main extends Game {
     public void dispose() {
         batch.dispose();
         font.dispose();
+    }
+
+    // Add this method to set the volume of the music
+    public void setMusicVolume(float volume) {
+        if (music != null) {
+            music.setVolume(volume);
+        }
     }
 }

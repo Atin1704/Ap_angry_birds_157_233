@@ -34,7 +34,8 @@ public class main_screen implements Screen {
 
     public main_screen(Main main,AssetManager assetManager) {
         this.game_runner = main;
-//        game_runner.music.play();
+        //music is strating to play from here
+        game_runner.music.play();
         this.assetManager = assetManager;
         this.spriteBatch=main.batch;
         viewport = new StretchViewport(100, 100);
