@@ -105,6 +105,17 @@ public class main_screen implements Screen {
             float level1Width = 25f;   // Width of the Level 1 icon
             float level1Height = viewport.getWorldHeight() / 10; // Height of the Level 1 icon
 
+
+
+            float level2X = 36f;   // X position for Level 1 icon
+            float level2Y = 28f;   // Y position for Level 1 icon
+
+
+            float level3X = 36f;   // X position for Level 1 icon
+            float level3Y = 15f;   // Y position for Level 1 icon
+
+
+
             // Check if the user touched within the Settings icon's bounds
             if (touchPos.x >= settingsIconX && touchPos.x <= (settingsIconX + settingsIconWidth)
                 && touchPos.y >= settingsIconY && touchPos.y <= (settingsIconY + settingsIconHeight)) {
@@ -138,6 +149,27 @@ public class main_screen implements Screen {
 
                 game_runner.setScreen(new level_1_screen(game_runner, assetManager)); // Switch to the Level 1 screen
             }
+
+//            // Check if the user touched within the Level 1 icon's bounds
+//            if (touchPos.x >= level2X && touchPos.x <= (level2X + level1Width)
+//                && touchPos.y >= level2Y && touchPos.y <= (level2Y + level1Height)) {
+//                // Level 1 icon was clicked
+//                // Switch to the Level 1 screen
+//                game_runner.click.play();
+//
+//                game_runner.setScreen(new level_2_screen(game_runner, assetManager)); // Switch to the Level 1 screen
+//            }
+
+//            // Check if the user touched within the Level 1 icon's bounds
+//            if (touchPos.x >= level3X && touchPos.x <= (level3X + level1Width)
+//                && touchPos.y >= level3Y && touchPos.y <= (level3Y + level1Height)) {
+//                // Level 1 icon was clicked
+//                // Switch to the Level 1 screen
+//                game_runner.click.play();
+//
+//                game_runner.setScreen(new level_3_screen(game_runner, assetManager)); // Switch to the Level 1 screen
+//            }
+
 
 
 
