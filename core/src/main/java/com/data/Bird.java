@@ -29,6 +29,7 @@ public abstract class Bird {
         this.sprite.setPosition(xPos, yPos);
         this.sprite.setOriginCenter();
         this.isLaunched = false;
+
     }
 
     public void update() {

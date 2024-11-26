@@ -174,7 +174,7 @@ public class level_1_screen implements Screen {
 
     }
 
-    // level_1_screen.java
+// level_1_screen.java
 @Override
 public void render(float delta) {
     input();
@@ -204,6 +204,9 @@ public void render(float delta) {
     }
     for (Pig pig : pigs) {
         pig.draw(spriteBatch);
+        if (pig.getHealth() > 0) {
+            game_runner.font.draw(spriteBatch, "Health: " + pig.getHealth(), pig.getXPos(), pig.getYPos() + pig.getHeight() + 10);
+        }
     }
     slingshot.draw(spriteBatch);
 

@@ -26,7 +26,7 @@ public class Red_bird extends Bird {
         this.body.createFixture(fixtureDef);
         shape.dispose();
 
-        this.damage = 60;
+        this.damage = 30;
         this.speedMultiplier = 1.3f;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -35,6 +35,6 @@ public class Red_bird extends Bird {
         this.launchTime = 0;
         this.isLaunched = false;
         this.body.setAwake(false);
-        damage=60;
+        this.body.setUserData(this);
     }
 }

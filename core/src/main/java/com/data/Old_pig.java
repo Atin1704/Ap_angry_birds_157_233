@@ -40,5 +40,6 @@ public class Old_pig extends Pig implements Serializable {
         this.body.createFixture(fixtureDef);
         shape.dispose();
         this.body.setAwake(false);
+        this.body.setUserData(this);
     }
 }

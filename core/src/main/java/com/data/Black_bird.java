@@ -28,7 +28,9 @@ public class Black_bird extends Bird {
         shape.dispose();
         this.body.setAwake(false);
 
-        this.damage = 80;
+        this.body.setUserData(this);
+
+        this.damage = 40;
         this.speedMultiplier = 1.0f;
         this.xPos = xPos;
         this.yPos = yPos;

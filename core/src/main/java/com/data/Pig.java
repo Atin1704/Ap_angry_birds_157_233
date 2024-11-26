@@ -30,6 +30,7 @@ public class Pig implements Serializable {
         this.height = height;
         this.health = 100;
         texture = new Texture(texturePath);
+        sprite = new Sprite(texture);
     }
 
     public float getHealth() {
@@ -113,17 +114,24 @@ public class Pig implements Serializable {
     }
 
     public void update() {
-        Vector2 bodyPosition = body.getPosition();
-        sprite.setPosition(
-            bodyPosition.x - sprite.getWidth() / 2,
-            bodyPosition.y - sprite.getHeight() / 2
-        );
-        sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
+        if (health <= 0) {
+            world.destroyBody(body);
+            texture.dispose();
+            sprite = null;
+            body = null;
+        } else {
+            Vector2 bodyPosition = body.getPosition();
+            sprite.setPosition(
+                bodyPosition.x - sprite.getWidth() / 2,
+                bodyPosition.y - sprite.getHeight() / 2
+            );
+            sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
+        }
     }
 
     public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
+        if (sprite != null) {
+            sprite.draw(batch);
+        }
     }
-
-
 }
