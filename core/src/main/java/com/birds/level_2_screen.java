@@ -250,11 +250,11 @@ public class level_2_screen extends Level implements Screen, Serializable {
 
         // Check conditions for victory or defeat
         if (allPigBodiesNull() && allBirdsLaunched()) {
-            game_runner.setScreen(new Victory_Screen(game_runner, assetManager, 1));
+            game_runner.setScreen(new Victory_Screen(game_runner, assetManager, 2));
         } else if (!allPigBodiesNull() && allBirdsLaunched()) {
-            game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
+            game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 2));
         } else if (allPigBodiesNull() && !allBirdsLaunched()) {
-            game_runner.setScreen(new Victory_Screen(game_runner, assetManager, 1));
+            game_runner.setScreen(new Victory_Screen(game_runner, assetManager, 2));
         }
 
         ScreenUtils.clear(Color.BLACK);

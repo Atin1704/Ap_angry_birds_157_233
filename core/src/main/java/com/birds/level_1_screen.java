@@ -174,11 +174,6 @@ public class level_1_screen extends Level implements Screen, Serializable {
         pigs = new ArrayList<>();
         pigs.add(new King_pig(world, bodyRemovalManager, 780, 480, 70,70));
         pigs.add(new Normal_pig(world,bodyRemovalManager, 850, 480, 70, 70));
-//        pigs.add(new Wood_block(world, bodyRemovalManager, 700, 270, 110, 110));
-//        pigs.add(new Stone_block(world, bodyRemovalManager, 810, 270, 110, 110));
-//        pigs.add(new Glass_block(world, bodyRemovalManager, 920, 270, 110, 110));
-//        pigs.add(new Wood_block(world, bodyRemovalManager, 755, 380, 110, 110));
-//        pigs.add(new Stone_block(world, bodyRemovalManager, 865, 380, 110, 110));
     }
 
     private void placeBirdOnSlingshot(Bird bird) {
