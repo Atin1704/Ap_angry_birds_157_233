@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 public class Old_pig extends Pig implements Serializable {
     private Texture image;
-    private int health;
+
 
     public Old_pig(World world, float xPos, float yPos, float width, float height) {
         super(world, "Old_pig.png", xPos, yPos, width, height);

@@ -28,7 +28,8 @@ public class Pig implements Serializable {
         this.yPos = yPos;
         this.width = width;
         this.height = height;
-        this.health = 100;
+        this.world = world;
+
         texture = new Texture(texturePath);
         sprite = new Sprite(texture);
     }
@@ -113,19 +114,26 @@ public class Pig implements Serializable {
         this.radius = radius;
     }
 
+    // Pig.java
     public void update() {
         if (health <= 0) {
-            world.destroyBody(body);
-            texture.dispose();
+            if (world != null && body != null) {
+                world.destroyBody(body);
+            }
+            if (texture != null) {
+                texture.dispose();
+            }
             sprite = null;
             body = null;
         } else {
-            Vector2 bodyPosition = body.getPosition();
-            sprite.setPosition(
-                bodyPosition.x - sprite.getWidth() / 2,
-                bodyPosition.y - sprite.getHeight() / 2
-            );
-            sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
+            if (body != null) {
+                Vector2 bodyPosition = body.getPosition();
+                sprite.setPosition(
+                    bodyPosition.x - sprite.getWidth() / 2,
+                    bodyPosition.y - sprite.getHeight() / 2
+                );
+                sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
+            }
         }
     }
 
