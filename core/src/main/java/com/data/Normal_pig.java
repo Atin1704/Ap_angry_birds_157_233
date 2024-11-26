@@ -6,15 +6,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.birds.BodyRemovalManager;
 
 import java.io.Serializable;
 
 public class Normal_pig extends Pig implements Serializable {
     private Texture image;
 
-
-    public Normal_pig(World world, float xPos, float yPos, float width, float height) {
-        super(world, "Normal_pig.png", xPos, yPos, width, height);
+    public Normal_pig(World world, BodyRemovalManager bodyRemovalManager, float xPos, float yPos, float width, float height) {
+        super(world, bodyRemovalManager, "Normal_pig.png", xPos, yPos, width, height);
         this.image = new Texture("Normal_pig.png");
         this.health = 3;
         this.sprite = new Sprite(image);

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.birds.BodyRemovalManager;
 
 import java.io.Serializable;
 
@@ -22,13 +23,15 @@ public class Pig implements Serializable {
     protected Body body;
     protected World world;
     protected float radius;
+    protected BodyRemovalManager bodyRemovalManager;
 
-    public Pig(World world, String texturePath, float xPos, float yPos, float width, float height) {
+    public Pig(World world, BodyRemovalManager bodyRemovalManager, String texturePath, float xPos, float yPos, float width, float height) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
         this.height = height;
         this.world = world;
+        this.bodyRemovalManager = bodyRemovalManager;
 
         texture = new Texture(texturePath);
         sprite = new Sprite(texture);
@@ -114,17 +117,16 @@ public class Pig implements Serializable {
         this.radius = radius;
     }
 
-    // Pig.java
     public void update() {
         if (health <= 0) {
             if (world != null && body != null) {
-                world.destroyBody(body);
+                bodyRemovalManager.markForRemoval(body);
+                body = null; // Set body to null after marking for removal
             }
             if (texture != null) {
                 texture.dispose();
             }
             sprite = null;
-            body = null;
         } else {
             if (body != null) {
                 Vector2 bodyPosition = body.getPosition();

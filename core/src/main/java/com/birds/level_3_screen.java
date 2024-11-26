@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class level_1_screen extends Level implements Screen, Serializable {
+public class level_3_screen extends Level implements Screen, Serializable {
     private static final Logger logger = Logger.getLogger(level_1_screen.class.getName());
     private final AssetManager assetManager;
     private Texture background_image;
@@ -48,7 +48,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
     private boolean isDragging = false;
     private Vector2 dragStart = new Vector2();
 
-    public level_1_screen(Main main, AssetManager assetManager) {
+    public level_3_screen(Main main, AssetManager assetManager) {
         logger.info("Initializing level_1_screen");
         this.game_runner = main;
         this.assetManager = assetManager;
@@ -167,10 +167,10 @@ public class level_1_screen extends Level implements Screen, Serializable {
     }
 
     private void placeBirdOnSlingshot(Bird bird) {
-    bird.setAwake(false);
-    bird.setPosition(slingshot.getX(), slingshot.getY() + slingshot.getHeight());
-     // Ensure the bird is not awake until launched
-}
+        bird.setAwake(false);
+        bird.setPosition(slingshot.getX(), slingshot.getY() + slingshot.getHeight());
+        // Ensure the bird is not awake until launched
+    }
 
     @Override
     public void show() {
@@ -235,86 +235,86 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
 
     private void input() {
-    if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-        logger.info("ESCAPE key pressed, exiting");
-        Gdx.app.exit();
-    }
-    // Handle touch input for pause button
-    if (Gdx.input.justTouched()) {
-        touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-        viewport.unproject(touchPos);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            logger.info("ESCAPE key pressed, exiting");
+            Gdx.app.exit();
+        }
+        // Handle touch input for pause button
+        if (Gdx.input.justTouched()) {
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(touchPos);
 
-        float pauseButtonX = 1100f;
-        float pauseButtonY = 920f;
-        float pauseButtonWidth = 65f;
-        float pauseButtonHeight = 65f;
+            float pauseButtonX = 1100f;
+            float pauseButtonY = 920f;
+            float pauseButtonWidth = 65f;
+            float pauseButtonHeight = 65f;
 
-        if (touchPos.x >= pauseButtonX && touchPos.x <= (pauseButtonX + pauseButtonWidth)
+            if (touchPos.x >= pauseButtonX && touchPos.x <= (pauseButtonX + pauseButtonWidth)
                 && touchPos.y >= pauseButtonY && touchPos.y <= (pauseButtonY + pauseButtonHeight)) {
-            logger.info("Pause button clicked");
-            game_runner.click.play();
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
-                }
-            }, 0.25f);  // Delay of 0.25 seconds
+                logger.info("Pause button clicked");
+                game_runner.click.play();
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        game_runner.setScreen(new pause_screen(game_runner, assetManager, 1));
+                    }
+                }, 0.25f);  // Delay of 0.25 seconds
+            }
         }
-    }
 
-    // Handle "Enter" key press for victory screen
-    if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-        logger.info("ENTER key pressed, switching to Victory_Screen");
-        Victory_Screen v1 = new Victory_Screen(game_runner, assetManager, 1);
-        game_runner.setScreen(v1);
-    }
-    if (Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
-        logger.info("DEL key pressed, switching to Defeat_Screen");
-        game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
-    }
+        // Handle "Enter" key press for victory screen
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            logger.info("ENTER key pressed, switching to Victory_Screen");
+            Victory_Screen v1 = new Victory_Screen(game_runner, assetManager, 1);
+            game_runner.setScreen(v1);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
+            logger.info("DEL key pressed, switching to Defeat_Screen");
+            game_runner.setScreen(new Defeat_Screen(game_runner, assetManager, 1));
+        }
 
-    // Handle bird selection
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) && birds.size() > 0 && !birds.get(0).isLaunched()) {
-        if (currentBird != null) {
-            currentBird.setPosition(currentBird.getX(), 235); // Reset current bird's position
+        // Handle bird selection
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) && birds.size() > 0 && !birds.get(0).isLaunched()) {
+            if (currentBird != null) {
+                currentBird.setPosition(currentBird.getX(), 235); // Reset current bird's position
+            }
+            currentBird = birds.get(0);
+            placeBirdOnSlingshot(currentBird);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && birds.size() > 1 && !birds.get(1).isLaunched()) {
+            if (currentBird != null) {
+                currentBird.setPosition(currentBird.getX(), 235); // Reset current bird's position
+            }
+            currentBird = birds.get(1);
+            placeBirdOnSlingshot(currentBird);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) && birds.size() > 2 && !birds.get(2).isLaunched()) {
+            if (currentBird != null) {
+                currentBird.setPosition(currentBird.getX(), 235); // Reset current bird's position
+            }
+            currentBird = birds.get(2);
+            placeBirdOnSlingshot(currentBird);
         }
-        currentBird = birds.get(0);
-        placeBirdOnSlingshot(currentBird);
-    } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && birds.size() > 1 && !birds.get(1).isLaunched()) {
-        if (currentBird != null) {
-            currentBird.setPosition(currentBird.getX(), 235); // Reset current bird's position
-        }
-        currentBird = birds.get(1);
-        placeBirdOnSlingshot(currentBird);
-    } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) && birds.size() > 2 && !birds.get(2).isLaunched()) {
-        if (currentBird != null) {
-            currentBird.setPosition(currentBird.getX(), 235); // Reset current bird's position
-        }
-        currentBird = birds.get(2);
-        placeBirdOnSlingshot(currentBird);
-    }
 
-    // Handle dragging input for slingshot
-    if (Gdx.input.isTouched() && currentBird != null && !currentBird.isLaunched()) {
-        if (!isDragging) {
-            isDragging = true;
-            dragStart.set(Gdx.input.getX(), Gdx.input.getY());
-            viewport.unproject(dragStart);
+        // Handle dragging input for slingshot
+        if (Gdx.input.isTouched() && currentBird != null && !currentBird.isLaunched()) {
+            if (!isDragging) {
+                isDragging = true;
+                dragStart.set(Gdx.input.getX(), Gdx.input.getY());
+                viewport.unproject(dragStart);
+            }
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(touchPos);
+            slingshot.drag(touchPos.x, touchPos.y);
+        } else if (isDragging) {
+            isDragging = false;
+            Vector2 dragEnd = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(dragEnd);
+            Vector2 velocity = new Vector2(dragStart.x - dragEnd.x, dragStart.y - dragEnd.y).scl(5);
+            currentBird.setVelocity(velocity);
+            currentBird.setAwake(true);
+            currentBird.setLaunched(true);
+            currentBird = null; // Allow selecting a new bird
         }
-        touchPos.set(Gdx.input.getX(), Gdx.input.getY());
-        viewport.unproject(touchPos);
-        slingshot.drag(touchPos.x, touchPos.y);
-    } else if (isDragging) {
-        isDragging = false;
-        Vector2 dragEnd = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-        viewport.unproject(dragEnd);
-        Vector2 velocity = new Vector2(dragStart.x - dragEnd.x, dragStart.y - dragEnd.y).scl(5);
-        currentBird.setVelocity(velocity);
-        currentBird.setAwake(true);
-        currentBird.setLaunched(true);
-        currentBird = null; // Allow selecting a new bird
     }
-}
 
     @Override
     public void resize(int width, int height) {
