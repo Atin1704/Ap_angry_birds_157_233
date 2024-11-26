@@ -62,8 +62,20 @@ public class CollisionHandler implements ContactListener {
             pig.setHealth(pig.getHealth() - damage);
             if (pig.getHealth() <= 0) {
                 pig.update(); // This will handle the removal of the pig
+                removePigFromWorld(pig);
             }
         }
+    }
+
+    private void removePigFromWorld(Pig pig) {
+        if (pig.getWorld() != null && pig.getBody() != null) {
+            pig.getWorld().destroyBody(pig.getBody());
+        }
+        if (pig.getTexture() != null) {
+            pig.getTexture().dispose();
+        }
+        pig.setSprite(null);
+        pig.setBody(null);
     }
 
     private float calculateImpactForce(Body bodyA, Body bodyB) {

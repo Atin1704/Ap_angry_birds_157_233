@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.birds.BodyRemovalManager;
 
 import java.io.Serializable;
 
@@ -19,14 +20,16 @@ public class Obstacle implements Serializable {
     protected Body body;
     protected World world;
     protected float radius;
+    protected BodyRemovalManager brm;
 
-    public Obstacle(World world, String texturePath, float xPos, float yPos, float width, float height) {
+    public Obstacle(World world, BodyRemovalManager brm, String texturePath, float xPos, float yPos, float width, float height) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
         this.height = height;
         this.health = 100;
         texture = new Texture(texturePath);
+        this.brm = brm;
     }
 
     public float getHealth() {
@@ -110,18 +113,31 @@ public class Obstacle implements Serializable {
     }
 
     public void update() {
-        Vector2 bodyPosition = body.getPosition();
-        sprite.setPosition(
-            bodyPosition.x - sprite.getWidth() / 2,
-            bodyPosition.y - sprite.getHeight() / 2
-        );
-        sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
+        if (health <= 0) {
+            if (world != null && body != null) {
+                brm.markForRemoval(body);
+                body = null; // Set body to null after marking for removal
+            }
+            if (texture != null) {
+                texture.dispose();
+            }
+            sprite = null;
+        } else {
+            if (body != null) {
+                Vector2 bodyPosition = body.getPosition();
+                sprite.setPosition(
+                    bodyPosition.x - sprite.getWidth() / 2,
+                    bodyPosition.y - sprite.getHeight() / 2
+                );
+                sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
+            }
+        }
     }
 
-
-
     public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
+        if (sprite != null) {
+            sprite.draw(batch);
+        }
     }
 
 }

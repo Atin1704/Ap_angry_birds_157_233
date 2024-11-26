@@ -6,13 +6,14 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.birds.BodyRemovalManager;
 
 public class Glass_stick_ver extends Obstacle{
     private Texture image;
     private int health;
 
-    public Glass_stick_ver(World world, float xPos, float yPos, float width, float height) {
-        super(world, "Glass_Stick_Vertical.png", xPos, yPos, width, height);
+    public Glass_stick_ver(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
+        super(world, brm,"Glass_Stick_Vertical.png", xPos, yPos, width, height);
         this.image = new Texture("Glass_Stick_Vertical.png");
         this.health = 10;
         this.sprite = new Sprite(image);
@@ -36,5 +37,6 @@ public class Glass_stick_ver extends Obstacle{
         this.body.createFixture(fixtureDef);
         shape.dispose();
         this.body.setAwake(false);
+        this.body.setUserData(this);
     }
 }

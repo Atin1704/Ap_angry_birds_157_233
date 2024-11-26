@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.birds.BodyRemovalManager;
 
 import java.io.Serializable;
 
@@ -16,8 +17,8 @@ public class Wood_block extends Obstacle implements Serializable {
     private Texture image;
     private int health;
 
-    public Wood_block(World world, float xPos, float yPos, float width, float height) {
-        super(world, "Wooden_block.png", xPos, yPos, width, height);
+    public Wood_block(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
+        super(world, brm, "Wooden_block.png", xPos, yPos, width, height);
         this.image = new Texture("Wooden_block.png");
         this.health = 10;
         this.sprite = new Sprite(image);
@@ -41,6 +42,7 @@ public class Wood_block extends Obstacle implements Serializable {
         this.body.createFixture(fixtureDef);
         shape.dispose();
         this.body.setAwake(false);
+        this.body.setUserData(this);
     }
 
 }

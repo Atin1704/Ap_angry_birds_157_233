@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.birds.BodyRemovalManager;
 
 import java.io.Serializable;
 
@@ -16,8 +17,8 @@ public class Glass_block extends Obstacle implements Serializable {
     private Texture image;
     private int health;
 
-    public Glass_block(World world, float xPos, float yPos, float width, float height) {
-        super(world, "Glass_block.png", xPos, yPos, width, height);
+    public Glass_block(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
+        super(world, brm, "Glass_block.png", xPos, yPos, width, height);
         this.image = new Texture("Glass_block.png");
         this.health = 10;
         this.sprite = new Sprite(image);
@@ -41,5 +42,6 @@ public class Glass_block extends Obstacle implements Serializable {
         this.body.createFixture(fixtureDef);
         shape.dispose();
         this.body.setAwake(false);
+        this.body.setUserData(this);
     }
 }

@@ -153,11 +153,11 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
     private void createObstacles() {
         obstacles = new ArrayList<>();
-        obstacles.add(new Wood_block(world, 700, 270, 110, 110));
-        obstacles.add(new Stone_block(world, 810, 270, 110, 110));
-        obstacles.add(new Glass_block(world, 920, 270, 110, 110));
-        obstacles.add(new Wood_block(world, 755, 380, 110, 110));
-        obstacles.add(new Stone_block(world, 865, 380, 110, 110));
+        obstacles.add(new Wood_block(world, bodyRemovalManager, 700, 270, 110, 110));
+        obstacles.add(new Stone_block(world, bodyRemovalManager, 810, 270, 110, 110));
+        obstacles.add(new Glass_block(world, bodyRemovalManager, 920, 270, 110, 110));
+        obstacles.add(new Wood_block(world, bodyRemovalManager, 755, 380, 110, 110));
+        obstacles.add(new Stone_block(world, bodyRemovalManager, 865, 380, 110, 110));
     }
 
     private void createPigs() {
@@ -190,9 +190,6 @@ public class level_1_screen extends Level implements Screen, Serializable {
         }
         for (Pig pig : pigs) {
             pig.update();
-            if (pig.getHealth() <= 0) {
-                bodyRemovalManager.markForRemoval(pig.getBody());
-            }
         }
         slingshot.update();
 
@@ -208,6 +205,9 @@ public class level_1_screen extends Level implements Screen, Serializable {
         }
         for (Obstacle obstacle : obstacles) {
             obstacle.draw(spriteBatch);
+            if(obstacle.getHealth() > 0){
+                game_runner.font.draw(spriteBatch, "Health: " + obstacle.getHealth(), obstacle.getXPos(), obstacle.getYPos() + obstacle.getHeight() + 10);
+            }
         }
         for (Pig pig : pigs) {
             pig.draw(spriteBatch);
