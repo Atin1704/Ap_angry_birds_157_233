@@ -37,4 +37,39 @@ public class Red_bird extends Bird {
         this.body.setAwake(false);
         this.body.setUserData(this);
     }
+
+    public Red_bird(World world,Red_bird bird) {
+        super(world, "Red_bird.png", bird.xPos, bird.yPos,  bird.xSize, bird.ySize);
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(bird.xPos, bird.yPos);
+
+        this.body = world.createBody(bodyDef);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(bird.xSize / 2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.5f;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0.0f;
+        this.body.createFixture(fixtureDef);
+        shape.dispose();
+        this.body.setAwake(bird.isAwake);
+
+        this.body.setUserData(this);
+
+        this.damage = 10.00f;
+        this.speedMultiplier = 1.0f;
+        this.xPos = bird.getX();
+        this.yPos = bird.getY();
+        this.xSize = bird.xSize;
+        this.ySize = bird.ySize;
+        this.launchTime = 0;
+        this.isLaunched = bird.isLaunched;
+        body.setLinearVelocity(bird.linearVelocityX, bird.linearVelocityY);
+
+    }
 }
