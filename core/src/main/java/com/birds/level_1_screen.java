@@ -56,7 +56,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
     public transient StretchViewport viewport;
     public transient Vector2 touchPos;
 
-    private transient World world;
+    public transient World world;
     private transient Box2DDebugRenderer debugRenderer;
     private transient ShapeRenderer shapeRenderer;
     private transient Slingshot slingshot;
@@ -64,7 +64,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
     private transient Bird currentBird;
     public ArrayList<Obstacle> obstacles;
     public ArrayList<Pig> pigs;
-    private transient Body groundBody;
+    public transient Body groundBody;
 
     private boolean isDragging = false;
     private transient Vector2 dragStart = new Vector2();
