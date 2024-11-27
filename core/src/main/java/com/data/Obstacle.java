@@ -140,8 +140,8 @@ public class Obstacle implements Serializable {
                     bodyPosition.x - sprite.getWidth() / 2,
                     bodyPosition.y - sprite.getHeight() / 2
                 );
-                this.xPos = bodyPosition.x - sprite.getWidth() / 2;
-                this.yPos = bodyPosition.y - sprite.getHeight() / 2;
+                this.xPos = bodyPosition.x;// - sprite.getWidth() / 2;
+                this.yPos = bodyPosition.y;//- sprite.getHeight() / 2;
 
                 this.linearVelocityX = body.getLinearVelocity().x;
                 this.linearVelocityY = body.getLinearVelocity().y;

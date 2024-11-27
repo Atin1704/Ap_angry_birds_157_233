@@ -144,8 +144,8 @@ public class Pig implements Serializable {
                     bodyPosition.y - sprite.getHeight() / 2
                 );
                 sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
-                xPos=bodyPosition.x - sprite.getWidth() / 2;
-                yPos=bodyPosition.y - sprite.getHeight() / 2;
+                xPos=bodyPosition.x; /*- sprite.getWidth() / 2;*/
+                yPos=bodyPosition.y ;//- sprite.getHeight() / 2;
                 linearVelocityX=body.getLinearVelocity().x;
                 linearVelocityY=body.getLinearVelocity().y;
                 isAwake=body.isAwake();
