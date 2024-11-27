@@ -11,7 +11,7 @@ import com.birds.BodyRemovalManager;
 import java.io.Serializable;
 
 public class Stone_block extends Obstacle implements Serializable {
-    private Texture image;
+    private transient Texture image;
 
     public Stone_block(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Stone_block.png", xPos, yPos, width, height);
@@ -42,7 +42,7 @@ public class Stone_block extends Obstacle implements Serializable {
     }
 
     public Stone_block(World world, BodyRemovalManager bodyRemovalManager, Stone_block block) {
-        super(world, bodyRemovalManager, "Stone_.png", block.xPos,block.yPos, block.width, block.height);
+        super(world, bodyRemovalManager, "Stone_block.png", block.xPos,block.yPos, block.width, block.height);
         this.isSpriteNull = block.isSpriteNull;
         if(!this.isSpriteNull) {
             this.image = new Texture("Stone_block.png");
@@ -57,8 +57,8 @@ public class Stone_block extends Obstacle implements Serializable {
             bodyDef.position.set(block.xPos, block.yPos);
             this.body = world.createBody(bodyDef);
 
-            CircleShape shape = new CircleShape();
-            shape.setRadius(block.width / 2);
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(block.width / 2, block.height / 2);
 
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = shape;

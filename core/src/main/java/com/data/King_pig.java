@@ -11,7 +11,7 @@ import com.birds.BodyRemovalManager;
 import java.io.Serializable;
 
 public class King_pig extends Pig implements Serializable {
-    private Texture image;
+    private transient Texture image;
 
     public King_pig(World world, BodyRemovalManager bodyRemovalManager, float xPos, float yPos, float width, float height) {
         super(world, bodyRemovalManager, "King_pig.png", xPos, yPos, width, height);

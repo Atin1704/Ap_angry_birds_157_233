@@ -22,37 +22,37 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class level_3_screen extends Level implements Screen, Serializable {
-    private static final Logger logger = Logger.getLogger(level_1_screen.class.getName());
-    private final AssetManager assetManager;
-    private Texture background_image;
-    private Texture pause_button;
-    private Texture arrow_texture;
-    private Sprite arrow_sprite;
-    private BodyRemovalManager bodyRemovalManager;
+    private transient static final Logger logger = Logger.getLogger(level_3_screen.class.getName());
+    private transient final AssetManager assetManager;
+    private transient Texture background_image;
+    private transient Texture pause_button;
+    private transient Texture arrow_texture;
+    private transient Sprite arrow_sprite;
+    private transient BodyRemovalManager bodyRemovalManager;
 
-    private Main game_runner;
-    private final SpriteBatch spriteBatch;
+    private transient Main game_runner;
+    private transient final SpriteBatch spriteBatch;
 
-    StretchViewport viewport;
-    Vector2 touchPos;
+    public transient StretchViewport viewport;
+    public transient Vector2 touchPos;
 
-    private World world;
-    private Box2DDebugRenderer debugRenderer;
-    private ShapeRenderer shapeRenderer;
-    private Slingshot slingshot;
-    private ArrayList<Bird> birds;
-    private Bird currentBird;
-    private ArrayList<Obstacle> obstacles;
-    private ArrayList<Pig> pigs;
-    private Body groundBody;
+    private transient World world;
+    private transient Box2DDebugRenderer debugRenderer;
+    private transient ShapeRenderer shapeRenderer;
+    private transient Slingshot slingshot;
+    public ArrayList<Bird> birds;
+    private transient Bird currentBird;
+    public ArrayList<Obstacle> obstacles;
+    public ArrayList<Pig> pigs;
+    private transient Body groundBody;
 
     private boolean isDragging = false;
-    private Vector2 dragStart = new Vector2();
+    private transient Vector2 dragStart = new Vector2();
 
     // level_1_screen.java
     private boolean allBirdsLaunchedFlag = false;
     private boolean allBirdsLaunchedTimerStarted = false;
-    private Timer.Task allBirdsLaunchedTask;
+    private transient Timer.Task allBirdsLaunchedTask;
 
     private transient level_3_screen currentScreen;
 
@@ -86,6 +86,40 @@ public class level_3_screen extends Level implements Screen, Serializable {
         createSlingshot();
         createObstacles();
         createPigs();
+    }
+
+    public level_3_screen(Main main, AssetManager assetManager, level_3_screen level) {
+        logger.info("Initializing level_1_screen");
+        this.game_runner = main;
+        this.assetManager = assetManager;
+        this.spriteBatch = main.batch;
+        viewport = new StretchViewport(1200, 1000);
+        touchPos = new Vector2();
+        this.currentScreen = this;
+
+        world = new World(new Vector2(0, -15.0f), true);
+        debugRenderer = new Box2DDebugRenderer();
+        shapeRenderer = new ShapeRenderer();
+
+        createGround();
+
+        CollisionHandler collisionHandler = new CollisionHandler(groundBody);
+        world.setContactListener(collisionHandler);
+        bodyRemovalManager = new BodyRemovalManager(world);
+
+        // Load textures
+        background_image = new Texture("Level2_bg.png");
+        pause_button = new Texture("Pause_icon.png");
+        arrow_texture = new Texture("arrow.png");
+        arrow_sprite = new Sprite(arrow_texture);
+        arrow_sprite.setOriginCenter();
+
+        createBirds(level);
+        createSlingshot();
+        createObstacles(level);
+        createPigs(level);
+        this.allBirdsLaunchedFlag = level.allBirdsLaunchedFlag;
+        this.allBirdsLaunchedTimerStarted = level.allBirdsLaunchedTimerStarted;
     }
 
     private void createGround() {
@@ -150,6 +184,13 @@ public class level_3_screen extends Level implements Screen, Serializable {
         topShape.dispose();
     }
 
+    private void createBirds(level_3_screen level) {
+        birds = new ArrayList<>();
+        birds.add(new Red_bird(world, (Red_bird)level.birds.get(0)));
+        birds.add(new Yellow_bird(world, (Yellow_bird)level.birds.get(1)));
+        birds.add(new Black_bird(world, (Black_bird)level.birds.get(2)));
+    }
+
     private void createBirds() {
         birds = new ArrayList<>();
         birds.add(new Red_bird(world, 80, 217, 50, 50));
@@ -201,6 +242,41 @@ public class level_3_screen extends Level implements Screen, Serializable {
         pigs.add(new Old_pig(world,bodyRemovalManager, 870, 624, 70, 70));
         pigs.add(new Normal_pig(world,bodyRemovalManager, 840, 297, 44, 44));
     }
+
+    private void createPigs(level_3_screen level) {
+        pigs = new ArrayList<>();
+        for (Pig pig : level.pigs) {
+            if (pig instanceof Old_pig && !pig.isSpriteNull) {
+                pigs.add(new Old_pig(world, bodyRemovalManager, (Old_pig) pig));
+            } else if (pig instanceof Normal_pig && !pig.isSpriteNull) {
+                pigs.add(new Normal_pig(world, bodyRemovalManager, (Normal_pig) pig));
+            } else if (pig instanceof King_pig && !pig.isSpriteNull) {
+                pigs.add(new King_pig(world, bodyRemovalManager, (King_pig) pig));
+            }
+        }
+    }
+
+    private void createObstacles(level_3_screen level) {
+        obstacles = new ArrayList<>();
+        for (Obstacle obstacle : level.obstacles) {
+            if (obstacle instanceof Wood_block && !obstacle.isSpriteNull) {
+                obstacles.add(new Wood_block(world, bodyRemovalManager, (Wood_block) obstacle));
+            } else if (obstacle instanceof Stone_block && !obstacle.isSpriteNull) {
+                obstacles.add(new Stone_block(world, bodyRemovalManager, (Stone_block) obstacle));
+            } else if (obstacle instanceof Glass_block && !obstacle.isSpriteNull) {
+                obstacles.add(new Glass_block(world, bodyRemovalManager, (Glass_block) obstacle));
+            } else if (obstacle instanceof Wood_stick_hor && !obstacle.isSpriteNull) {
+                obstacles.add(new Wood_stick_hor(world, bodyRemovalManager, (Wood_stick_hor) obstacle));
+            } else if (obstacle instanceof Wood_stick_ver && !obstacle.isSpriteNull) {
+                obstacles.add(new Wood_stick_ver(world, bodyRemovalManager, (Wood_stick_ver) obstacle));
+            } else if (obstacle instanceof Stone_stick_hor && !obstacle.isSpriteNull) {
+                obstacles.add(new Stone_stick_hor(world, bodyRemovalManager, (Stone_stick_hor) obstacle));
+            } else if (obstacle instanceof Stone_stick_vert && !obstacle.isSpriteNull) {
+                obstacles.add(new Stone_stick_vert(world, bodyRemovalManager, (Stone_stick_vert) obstacle));
+            }
+        }
+    }
+
 
     private void placeBirdOnSlingshot(Bird bird) {
         bird.setAwake(false);

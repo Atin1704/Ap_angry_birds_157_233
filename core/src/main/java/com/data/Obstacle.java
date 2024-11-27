@@ -19,10 +19,10 @@ public class Obstacle implements Serializable {
     public float width;
     public float height;
     public float radius;
-    public boolean isSpriteNull=true;
+    public boolean isSpriteNull=false;
     public float linearVelocityX;
     public float linearVelocityY;
-    public boolean isAwake;
+    public boolean isAwake = false;
     protected transient Texture texture;
     protected transient Sprite sprite;
     protected transient Body body;

@@ -110,11 +110,11 @@ public class saved_game_screen implements Screen {
                     if (!Database.getLevelStack().isEmpty()) {
                         Level level = Database.getLevelStack().pop();
                         if (level instanceof level_1_screen) {
-                            game_runner.setScreen((level_1_screen) level);
+                            game_runner.setScreen(new level_1_screen(game_runner, assetManager, (level_1_screen) level));
                         } else if (level instanceof level_2_screen) {
-                            game_runner.setScreen((level_2_screen) level);
+                            game_runner.setScreen(new level_2_screen(game_runner, assetManager, (level_2_screen) level));
                         } else if (level instanceof level_3_screen) {
-                            game_runner.setScreen((level_3_screen) level);
+                            game_runner.setScreen(new level_3_screen(game_runner, assetManager, (level_3_screen) level));
                         }
                     }
                 }
@@ -132,16 +132,16 @@ public class saved_game_screen implements Screen {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
-                    if (Database.getLevelStack().size() > 1) {
-                        Level level = Database.getLevelStack().remove(Database.getLevelStack().size() - 2);
-                        if (level instanceof level_1_screen) {
-                            game_runner.setScreen((level_1_screen) level);
-                        } else if (level instanceof level_2_screen) {
-                            game_runner.setScreen((level_2_screen) level);
-                        } else if (level instanceof level_3_screen) {
-                            game_runner.setScreen((level_3_screen) level);
-                        }
+                if (Database.getLevelStack().size() > 1) {
+                    Level level = Database.getLevelStack().remove(Database.getLevelStack().size() - 2);
+                    if (level instanceof level_1_screen) {
+                        game_runner.setScreen(new level_1_screen(game_runner, assetManager, (level_1_screen) level));
+                    } else if (level instanceof level_2_screen) {
+                        game_runner.setScreen(new level_2_screen(game_runner, assetManager, (level_2_screen) level));
+                    } else if (level instanceof level_3_screen) {
+                        game_runner.setScreen(new level_3_screen(game_runner, assetManager, (level_3_screen) level));
                     }
+                }
                 }
             }, 0.25f);
         }
@@ -160,11 +160,11 @@ public class saved_game_screen implements Screen {
                     if (Database.getLevelStack().size() > 2) {
                         Level level = Database.getLevelStack().remove(Database.getLevelStack().size() - 3);
                         if (level instanceof level_1_screen) {
-                            game_runner.setScreen((level_1_screen) level);
+                            game_runner.setScreen(new level_1_screen(game_runner, assetManager, (level_1_screen) level));
                         } else if (level instanceof level_2_screen) {
-                            game_runner.setScreen((level_2_screen) level);
+                            game_runner.setScreen(new level_2_screen(game_runner, assetManager, (level_2_screen) level));
                         } else if (level instanceof level_3_screen) {
-                            game_runner.setScreen((level_3_screen) level);
+                            game_runner.setScreen(new level_3_screen(game_runner, assetManager, (level_3_screen) level));
                         }
                     }
                 }
