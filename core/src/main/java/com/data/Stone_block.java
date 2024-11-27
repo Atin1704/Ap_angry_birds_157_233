@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.birds.BodyRemovalManager;
 
 import java.io.Serializable;
@@ -42,6 +39,39 @@ public class Stone_block extends Obstacle implements Serializable {
         shape.dispose();
         this.body.setAwake(false);
         this.body.setUserData(this);
+    }
+
+    public Stone_block(World world, BodyRemovalManager bodyRemovalManager, Stone_block block) {
+        super(world, bodyRemovalManager, "Stone_.png", block.xPos,block.yPos, block.width, block.height);
+        this.isSpriteNull = block.isSpriteNull;
+        if(!this.isSpriteNull) {
+            this.image = new Texture("Stone_block.png");
+            this.health = block.health;
+            this.sprite = new Sprite(image);
+            this.sprite.setSize(block.width, block.height);
+            this.sprite.setPosition(block.xPos, block.yPos);
+            this.sprite.setOriginCenter();
+
+            BodyDef bodyDef = new BodyDef();
+            bodyDef.type = BodyDef.BodyType.DynamicBody;
+            bodyDef.position.set(block.xPos, block.yPos);
+            this.body = world.createBody(bodyDef);
+
+            CircleShape shape = new CircleShape();
+            shape.setRadius(block.width / 2);
+
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = shape;
+            fixtureDef.density = 1.0f;
+            fixtureDef.friction = 0.9f;
+            fixtureDef.restitution = 0.0f; // Low restitution coefficient
+            this.body.createFixture(fixtureDef);
+            shape.dispose();
+            this.body.setAwake(block.isAwake);
+            this.body.setUserData(this);
+
+        }
+
     }
 
 }
