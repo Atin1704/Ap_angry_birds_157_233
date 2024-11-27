@@ -48,7 +48,8 @@ public class Stone_stick_hor extends Obstacle implements Serializable {
             this.sprite.setSize(block.width, block.height);
             this.sprite.setPosition(block.xPos, block.yPos);
             this.sprite.setOriginCenter();
-
+            this.xPos = block.xPos;
+            this.yPos = block.yPos;
             BodyDef bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.DynamicBody;
             bodyDef.position.set(block.xPos, block.yPos);

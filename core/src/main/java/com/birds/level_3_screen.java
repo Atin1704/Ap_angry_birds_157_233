@@ -84,8 +84,10 @@ public class level_3_screen extends Level implements Screen, Serializable {
 
         createBirds();
         createSlingshot();
+
         createObstacles();
         createPigs();
+
     }
 
     public level_3_screen(Main main, AssetManager assetManager, level_3_screen level) {

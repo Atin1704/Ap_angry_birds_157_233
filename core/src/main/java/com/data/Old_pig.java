@@ -55,7 +55,8 @@ public class Old_pig extends Pig implements Serializable {
             bodyDef.type = BodyDef.BodyType.DynamicBody;
             bodyDef.position.set(pig.xPos, pig.yPos);
             this.body = world.createBody(bodyDef);
-
+            this.xPos = pig.xPos;
+            this.yPos = pig.yPos;
             CircleShape shape = new CircleShape();
             shape.setRadius(pig.width / 2);
 

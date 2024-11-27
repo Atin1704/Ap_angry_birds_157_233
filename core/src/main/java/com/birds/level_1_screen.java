@@ -104,8 +104,9 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
         createBirds();
         createSlingshot();
-        createObstacles();
         createPigs();
+        createObstacles();
+
     }
 
     public level_1_screen(Main main, AssetManager assetManager, level_1_screen level) {
@@ -136,8 +137,10 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
         createBirds(level);
         createSlingshot();
+
         createObstacles(level);
         createPigs(level);
+
         this.allBirdsLaunchedFlag = level.allBirdsLaunchedFlag;
         this.allBirdsLaunchedTimerStarted = level.allBirdsLaunchedTimerStarted;
     }
@@ -225,6 +228,11 @@ public class level_1_screen extends Level implements Screen, Serializable {
     private void createSlingshot() {
         slingshot = new Slingshot(world, 230, 217, 50, 200);
     }
+    private void createPigs() {
+        pigs = new ArrayList<>();
+        pigs.add(new King_pig(world, bodyRemovalManager, 780, 480, 70,70));
+        pigs.add(new Normal_pig(world,bodyRemovalManager, 850, 480, 70, 70));
+    }
 
     private void createObstacles() {
         obstacles = new ArrayList<>();
@@ -235,11 +243,6 @@ public class level_1_screen extends Level implements Screen, Serializable {
         obstacles.add(new Stone_block(world, bodyRemovalManager, 865, 380, 110, 110));
     }
 
-    private void createPigs() {
-        pigs = new ArrayList<>();
-        pigs.add(new King_pig(world, bodyRemovalManager, 780, 480, 70,70));
-        pigs.add(new Normal_pig(world,bodyRemovalManager, 850, 480, 70, 70));
-    }
 
     private void createPigs(level_1_screen level) {
         pigs = new ArrayList<>();

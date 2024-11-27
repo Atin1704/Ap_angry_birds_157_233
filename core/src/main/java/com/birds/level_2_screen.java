@@ -116,8 +116,10 @@ public class level_2_screen extends Level implements Screen, Serializable {
 
         createBirds(level);
         createSlingshot();
+
         createObstacles(level);
         createPigs(level);
+
         this.allBirdsLaunchedFlag = level.allBirdsLaunchedFlag;
         this.allBirdsLaunchedTimerStarted = level.allBirdsLaunchedTimerStarted;
     }

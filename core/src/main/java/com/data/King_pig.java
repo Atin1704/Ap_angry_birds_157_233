@@ -59,7 +59,8 @@ public class King_pig extends Pig implements Serializable {
 
             CircleShape shape = new CircleShape();
             shape.setRadius(pig.width / 2);
-
+            this.xPos = pig.xPos;
+            this.yPos = pig.yPos;
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = shape;
             fixtureDef.density = 1.0f;
