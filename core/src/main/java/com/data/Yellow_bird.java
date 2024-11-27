@@ -26,7 +26,7 @@ public class Yellow_bird extends Bird {
         this.body.createFixture(fixtureDef);
         shape.dispose();
 
-        this.damage = 2.00f;
+        this.damage = 6.00f;
         this.speedMultiplier = 4000.0f;
         this.xPos = xPos;
         this.yPos = yPos;

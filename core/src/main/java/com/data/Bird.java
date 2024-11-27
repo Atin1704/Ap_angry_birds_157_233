@@ -7,19 +7,25 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-public abstract class Bird {
-    protected  Texture texture;
-    protected Body body;
-    protected  Sprite sprite;
-    protected World world;
-    protected float damage;
-    public double speedMultiplier;
-    protected float xPos;
-    protected float yPos;
-    protected float xSize;
-    protected float ySize;
-    protected float launchTime;
-    protected boolean isLaunched;
+import java.io.Serializable;
+
+public abstract class Bird implements Serializable {
+    protected  transient Texture texture;
+    protected transient Body body;
+    protected  transient Sprite sprite;
+    protected transient World world;
+    protected transient float damage;
+    public  transient double  speedMultiplier;
+    protected transient float launchTime;
+    public float xPos;
+    public float yPos;
+    public float xSize;
+    public float ySize;
+    public boolean isLaunched;
+    public float linearVelocityX;
+    public float linearVelocityY;
+    public boolean isAwake;
+
 
     public Bird(World world, String texturePath, float xPos, float yPos, float width, float height) {
         this.world = world;
@@ -38,6 +44,13 @@ public abstract class Bird {
             bodyPosition.x - sprite.getWidth() / 2,
             bodyPosition.y - sprite.getHeight() / 2
         );
+        xPos=bodyPosition.x - sprite.getWidth() / 2;
+        yPos=bodyPosition.y - sprite.getHeight() / 2;
+        linearVelocityX=body.getLinearVelocity().x;
+        linearVelocityY=body.getLinearVelocity().y;
+
+
+
         sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
     }
 
@@ -56,6 +69,7 @@ public abstract class Bird {
 
     public void setAwake(boolean awake) {
         body.setAwake(awake);
+        this.isAwake=awake;
     }
 
     public void setGravityScale(float scale) {

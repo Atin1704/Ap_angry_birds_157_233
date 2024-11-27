@@ -8,7 +8,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.birds.BodyRemovalManager;
 
-public class Wood_stick_ver extends Obstacle{
+import java.io.Serializable;
+
+public class Wood_stick_ver extends Obstacle implements Serializable {
     private Texture image;
 
     public Wood_stick_ver(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {

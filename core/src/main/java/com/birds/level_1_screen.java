@@ -74,7 +74,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
     private boolean allBirdsLaunchedTimerStarted = false;
     private Timer.Task allBirdsLaunchedTask;
 
-    private transient level_1_screen currentScreen;
+    private  level_1_screen currentScreen;
 
     public level_1_screen(Main main, AssetManager assetManager) {
         logger.info("Initializing level_1_screen");

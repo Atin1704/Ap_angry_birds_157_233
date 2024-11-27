@@ -8,7 +8,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.birds.BodyRemovalManager;
 
-public class Stone_stick_vert extends  Obstacle{
+import java.io.Serializable;
+
+public class Stone_stick_vert extends  Obstacle implements Serializable {
     private Texture image;
 
     public Stone_stick_vert(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {

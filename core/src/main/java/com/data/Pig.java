@@ -13,18 +13,22 @@ import com.birds.BodyRemovalManager;
 import java.io.Serializable;
 
 public class Pig implements Serializable {
-    protected float health;
-    protected float xPos;
-    protected float yPos;
-    protected float width;
-    protected float height;
-    protected  Texture texture;
-    protected  Sprite sprite;
-    protected Body body;
-    protected World world;
-    protected float initial_y;
-    protected float radius;
-    protected BodyRemovalManager bodyRemovalManager;
+    public float health;
+    public float xPos;
+    public float yPos;
+    public float width;
+    public float height;
+    public float radius;
+    public boolean isSpriteNull=true;
+    public float linearVelocityX;
+    public float linearVelocityY;
+    public boolean isAwake;
+    public float initial_y;
+    protected  transient Texture texture;
+    protected  transient Sprite sprite;
+    protected transient Body body;
+    protected transient World world;
+    protected transient BodyRemovalManager bodyRemovalManager;
 
     public Pig(World world, BodyRemovalManager bodyRemovalManager, String texturePath, float xPos, float yPos, float width, float height) {
         this.initial_y = yPos;
@@ -122,6 +126,7 @@ public class Pig implements Serializable {
     // Pig.java
     public void update() {
         if (health <= 0 || (body != null && body.getPosition().y <= 253) || (body != null && (initial_y - body.getPosition().y) >= 200) ){
+
             if (world != null && body != null) {
                 bodyRemovalManager.markForRemoval(body);
                 body = null; // Set body to null after marking for removal
@@ -130,6 +135,7 @@ public class Pig implements Serializable {
                 texture.dispose();
             }
             sprite = null;
+            this.isSpriteNull = true;
         } else {
             if (body != null) {
                 Vector2 bodyPosition = body.getPosition();
@@ -138,6 +144,12 @@ public class Pig implements Serializable {
                     bodyPosition.y - sprite.getHeight() / 2
                 );
                 sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
+                xPos=bodyPosition.x - sprite.getWidth() / 2;
+                yPos=bodyPosition.y - sprite.getHeight() / 2;
+                linearVelocityX=body.getLinearVelocity().x;
+                linearVelocityY=body.getLinearVelocity().y;
+                isAwake=body.isAwake();
+
             }
         }
     }

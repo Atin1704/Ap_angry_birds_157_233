@@ -13,17 +13,21 @@ import com.birds.BodyRemovalManager;
 import java.io.Serializable;
 
 public class Obstacle implements Serializable {
-    protected float health;
-    protected float xPos;
-    protected float yPos;
-    protected float width;
-    protected float height;
-    protected  Texture texture;
-    protected  Sprite sprite;
-    protected Body body;
-    protected World world;
-    protected float radius;
-    protected BodyRemovalManager bodyRemovalManager;
+    public float health;
+    public float xPos;
+    public float yPos;
+    public float width;
+    public float height;
+    public float radius;
+    public boolean isSpriteNull=true;
+    public float linearVelocityX;
+    public float linearVelocityY;
+    public boolean isAwake;
+    protected transient Texture texture;
+    protected transient Sprite sprite;
+    protected transient Body body;
+    protected transient World world;
+    protected transient BodyRemovalManager bodyRemovalManager;
 
     public Obstacle(World world, BodyRemovalManager bodyRemovalManager, String texturePath, float xPos, float yPos, float width, float height) {
         this.xPos = xPos;
@@ -127,6 +131,8 @@ public class Obstacle implements Serializable {
                 texture.dispose();
             }
             sprite = null;
+            this.isSpriteNull = true;
+
         } else {
             if (body != null) {
                 Vector2 bodyPosition = body.getPosition();
@@ -134,6 +140,11 @@ public class Obstacle implements Serializable {
                     bodyPosition.x - sprite.getWidth() / 2,
                     bodyPosition.y - sprite.getHeight() / 2
                 );
+                this.xPos = bodyPosition.x - sprite.getWidth() / 2;
+                this.yPos = bodyPosition.y - sprite.getHeight() / 2;
+                this.linearVelocityX = body.getLinearVelocity().x;
+                this.linearVelocityY = body.getLinearVelocity().y;
+                isAwake=body.isAwake();
                 sprite.setRotation((float) Math.toDegrees(this.body.getAngle()));
             }
         }
