@@ -67,6 +67,7 @@ public class Wood_stick_ver extends Obstacle implements Serializable {
             this.body.setAwake(block.isAwake);
             this.body.setUserData(this);
 
+
         }
 
     }

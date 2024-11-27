@@ -69,6 +69,7 @@ public class King_pig extends Pig implements Serializable {
             shape.dispose();
             this.body.setAwake(pig.isAwake);
             this.body.setUserData(this);
+
         }
     }
 }

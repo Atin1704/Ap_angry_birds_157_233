@@ -67,6 +67,7 @@ public class Stone_stick_vert extends  Obstacle implements Serializable {
             this.body.setAwake(block.isAwake);
             this.body.setUserData(this);
 
+
         }
 
     }

@@ -70,6 +70,7 @@ public class Stone_block extends Obstacle implements Serializable {
             this.body.setAwake(block.isAwake);
             this.body.setUserData(this);
 
+
         }
 
     }

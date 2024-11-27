@@ -38,6 +38,7 @@ public class Glass_stick_hor extends Obstacle implements Serializable {
         this.body.createFixture(fixtureDef);
         shape.dispose();
         this.body.setAwake(false);
+
         this.body.setUserData(this);
     }
 }

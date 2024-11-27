@@ -63,8 +63,8 @@ public class Yellow_bird extends Bird {
 
         this.damage = 10.00f;
         this.speedMultiplier = 1.0f;
-        this.xPos = bird.getX();
-        this.yPos = bird.getY();
+        this.xPos = bird.xPos;
+        this.yPos = bird.yPos;
         this.xSize = bird.xSize;
         this.ySize = bird.ySize;
         this.launchTime = 0;

@@ -69,6 +69,7 @@ public class Wood_block extends Obstacle implements Serializable {
             this.body.setAwake(block.isAwake);
             this.body.setUserData(this);
 
+
         }
 
     }

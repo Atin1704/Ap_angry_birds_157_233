@@ -68,6 +68,8 @@ public class Glass_block extends Obstacle implements Serializable {
             this.body.createFixture(fixtureDef);
             shape.dispose();
             this.body.setAwake(block.isAwake);
+            this.body.setAwake(false);
+
             this.body.setUserData(this);
 
         }

@@ -85,11 +85,11 @@ public abstract class Bird implements Serializable {
     }
 
     public float getX() {
-        return sprite.getX();
+        return xPos;
     }
 
     public float getY() {
-        return sprite.getY();
+        return yPos;
     }
 
     public Body getBody() {
