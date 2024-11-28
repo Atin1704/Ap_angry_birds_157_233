@@ -75,4 +75,17 @@ public class Normal_pig extends Pig implements Serializable {
         }
 
     }
+
+
+    public Normal_pig( float xPos, float yPos, float width, float height,boolean a) {
+        super( xPos, yPos, width, height);
+
+        this.health = 20.0f;
+
+
+
+    }
+
+
+
 }

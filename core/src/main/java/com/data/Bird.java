@@ -16,7 +16,7 @@ public abstract class Bird implements Serializable {
     protected transient World world;
     protected transient float damage;
     public  transient double  speedMultiplier;
-    protected transient float launchTime;
+    public transient float launchTime=0;
     public float xPos;
     public float yPos;
     public float xSize;
@@ -37,6 +37,18 @@ public abstract class Bird implements Serializable {
         this.isLaunched = false;
 
     }
+
+    public Bird(  float xPos, float yPos, float width, float height) {
+
+        this.isLaunched = false;
+        this.xPos=xPos;
+        this.yPos=yPos;
+        this.xSize=width;
+        this.ySize=height;
+
+    }
+
+
 
     public void update() {
         Vector2 bodyPosition = body.getPosition();

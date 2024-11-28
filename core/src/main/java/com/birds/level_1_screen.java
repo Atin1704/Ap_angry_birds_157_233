@@ -66,12 +66,12 @@ public class level_1_screen extends Level implements Screen, Serializable {
     public ArrayList<Pig> pigs;
     public transient Body groundBody;
 
-    private boolean isDragging = false;
+    public boolean isDragging = false;
     private transient Vector2 dragStart = new Vector2();
 
     // level_1_screen.java
-    private boolean allBirdsLaunchedFlag = false;
-    private boolean allBirdsLaunchedTimerStarted = false;
+    public boolean allBirdsLaunchedFlag = false;
+    public boolean allBirdsLaunchedTimerStarted = false;
     private transient Timer.Task allBirdsLaunchedTask;
 
     private transient level_1_screen currentScreen;
@@ -144,6 +144,52 @@ public class level_1_screen extends Level implements Screen, Serializable {
         this.allBirdsLaunchedFlag = level.allBirdsLaunchedFlag;
         this.allBirdsLaunchedTimerStarted = level.allBirdsLaunchedTimerStarted;
     }
+
+    public level_1_screen(){
+
+        spriteBatch=null;
+        assetManager=null;
+
+
+
+
+        createBirds(1);
+        createObstacles(1);
+        createPigs(1);
+
+        this.allBirdsLaunchedFlag =false;
+        this.allBirdsLaunchedTimerStarted = false;
+
+
+
+    }
+
+    private void createBirds(int i) {
+        birds = new ArrayList<>();
+        birds.add(new Black_bird( 200, 217, 50, 50,false));
+        birds.add(new Black_bird( 200, 217, 50, 50,false));
+        birds.add(new Black_bird( 200, 217, 50, 50,false));
+
+    }
+    private void createObstacles(int i) {
+        obstacles = new ArrayList<>();
+        obstacles.add(new Glass_block( 920, 270, 110, 110,true));
+        obstacles.add(new Glass_block( 920, 270, 110, 110,true));
+        obstacles.add(new Glass_block( 920, 270, 110, 110,true));
+        obstacles.add(new Glass_block( 920, 270, 110, 110,true));
+        obstacles.add(new Glass_block( 920, 270, 110, 110,true));
+
+
+
+    }
+    private void createPigs(int i) {
+        pigs = new ArrayList<>();
+        pigs.add(new Normal_pig( 780, 480, 70,70,false));
+        pigs.add(new Normal_pig( 850, 480, 70, 70,false));
+
+    }
+
+
 
     private void createGround() {
         // Create ground

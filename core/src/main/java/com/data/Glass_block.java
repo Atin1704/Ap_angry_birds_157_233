@@ -76,4 +76,15 @@ public class Glass_block extends Obstacle implements Serializable {
         }
 
     }
+
+
+
+    public Glass_block( float xPos, float yPos, float width, float height,boolean a) {
+        super( xPos, yPos, width, height);
+
+        this.health = 15.0f;
+
+
+
+    }
 }

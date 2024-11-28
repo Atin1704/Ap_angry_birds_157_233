@@ -74,4 +74,20 @@ public class Black_bird extends Bird {
         body.setLinearVelocity(bird.linearVelocityX, bird.linearVelocityY);
 
     }
+
+    public Black_bird( float xPos, float yPos, float width, float height,boolean q) {
+        super(  xPos, yPos, width, height);
+
+        this.damage = 10.00f;
+        this.speedMultiplier = 1.0f;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.xSize = width;
+        this.ySize = height;
+        this.launchTime = 0;
+        this.isLaunched = false;
+    }
+
+
+
 }

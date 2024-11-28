@@ -43,6 +43,17 @@ public class Pig implements Serializable {
         sprite = new Sprite(texture);
     }
 
+
+    public Pig( float xPos, float yPos, float width, float height) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.width = width;
+        this.height = height;
+
+
+
+    }
+
     public float getHealth() {
         return health;
     }

@@ -41,6 +41,17 @@ public class Obstacle implements Serializable {
         sprite = new Sprite(texture);
     }
 
+    public Obstacle( float xPos, float yPos, float width, float height) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.width = width;
+        this.height = height;
+
+
+
+    }
+
+
     public float getHealth() {
         return health;
     }
