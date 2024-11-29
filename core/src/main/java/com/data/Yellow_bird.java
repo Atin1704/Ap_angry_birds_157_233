@@ -27,7 +27,7 @@ public class Yellow_bird extends Bird {
         shape.dispose();
 
         this.damage = 6.00f;
-        this.speedMultiplier = 4000.0f;
+        this.speedMultiplier = 5.0f;
         this.xPos = xPos;
         this.yPos = yPos;
         this.xSize = width;
@@ -69,8 +69,9 @@ public class Yellow_bird extends Bird {
         this.ySize = bird.ySize;
         this.launchTime = 0;
         this.isLaunched = bird.isLaunched;
+        this.exploded = bird.exploded;
+        this.is_special = bird.is_special;
         body.setLinearVelocity(bird.linearVelocityX, bird.linearVelocityY);
 
     }
 }
-

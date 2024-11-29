@@ -106,7 +106,7 @@ public class CollisionHandler implements ContactListener {
     }
 
     // CollisionHandler.java
-    private void removeObstacleFromWorld(Obstacle obstacle) {
+    public void removeObstacleFromWorld(Obstacle obstacle) {
         if (obstacle.getWorld() != null && obstacle.getBody() != null) {
             obstacle.getWorld().destroyBody(obstacle.getBody());
         }
@@ -117,7 +117,7 @@ public class CollisionHandler implements ContactListener {
         obstacle.setBody(null);
     }
 
-    private void removePigFromWorld(Pig pig) {
+    public void removePigFromWorld(Pig pig) {
         if (pig.getWorld() != null && pig.getBody() != null) {
             pig.getWorld().destroyBody(pig.getBody());
         }

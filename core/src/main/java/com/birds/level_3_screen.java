@@ -45,6 +45,7 @@ public class level_3_screen extends Level implements Screen, Serializable {
     public ArrayList<Obstacle> obstacles;
     public ArrayList<Pig> pigs;
     private transient Body groundBody;
+    public transient CollisionHandler collisionHandler;
 
     private boolean isDragging = false;
     private transient Vector2 dragStart = new Vector2();
@@ -71,7 +72,7 @@ public class level_3_screen extends Level implements Screen, Serializable {
 
         createGround();
 
-        CollisionHandler collisionHandler = new CollisionHandler(groundBody);
+        collisionHandler = new CollisionHandler(groundBody);
         world.setContactListener(collisionHandler);
         bodyRemovalManager = new BodyRemovalManager(world);
 
@@ -105,7 +106,7 @@ public class level_3_screen extends Level implements Screen, Serializable {
 
         createGround();
 
-        CollisionHandler collisionHandler = new CollisionHandler(groundBody);
+        collisionHandler = new CollisionHandler(groundBody);
         world.setContactListener(collisionHandler);
         bodyRemovalManager = new BodyRemovalManager(world);
 
@@ -336,6 +337,9 @@ public class level_3_screen extends Level implements Screen, Serializable {
         world.step(1 / 60f, 6, 2);
         for (Bird bird : birds) {
             bird.update();
+            if (bird.get_is_special()) {
+                bird.special_ability(obstacles, pigs, collisionHandler);
+            }
         }
         for (Obstacle obstacle : obstacles) {
             obstacle.update();
@@ -470,6 +474,21 @@ public class level_3_screen extends Level implements Screen, Serializable {
             currentBird.setAwake(true);
             currentBird.setLaunched(true);
             currentBird = null; // Allow selecting a new bird
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            for (Bird bird : birds) {
+                if (bird.isLaunched()) {
+                    bird.set_is_special(true);
+                }
+            }
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.Y)){
+            for (Bird bird : birds) {
+                if (bird.isLaunched()) {
+                    bird.set_is_special(true);
+                }
+            }
         }
     }
 

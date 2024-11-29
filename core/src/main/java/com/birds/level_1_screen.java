@@ -32,12 +32,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-    import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.data.*;
 
-    import java.io.Serializable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -73,6 +73,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
     public boolean allBirdsLaunchedFlag = false;
     public boolean allBirdsLaunchedTimerStarted = false;
     private transient Timer.Task allBirdsLaunchedTask;
+    public transient CollisionHandler collisionHandler;
 
     private transient level_1_screen currentScreen;
 
@@ -91,7 +92,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
         createGround();
 
-        CollisionHandler collisionHandler = new CollisionHandler(groundBody);
+        collisionHandler = new CollisionHandler(groundBody);
         world.setContactListener(collisionHandler);
         bodyRemovalManager = new BodyRemovalManager(world);
 
@@ -124,7 +125,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
         createGround();
 
-        CollisionHandler collisionHandler = new CollisionHandler(groundBody);
+        collisionHandler = new CollisionHandler(groundBody);
         world.setContactListener(collisionHandler);
         bodyRemovalManager = new BodyRemovalManager(world);
 
@@ -184,7 +185,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
     }
     private void createPigs(int i) {
         pigs = new ArrayList<>();
-        pigs.add(new Normal_pig( 780, 480, 70,70,false));
+        pigs.add(new Normal_pig( 760, 480, 70,70,false));
         pigs.add(new Normal_pig( 850, 480, 70, 70,false));
 
     }
@@ -387,6 +388,9 @@ public class level_1_screen extends Level implements Screen, Serializable {
         world.step(1 / 60f, 6, 2);
         for (Bird bird : birds) {
             bird.update();
+            if (bird.get_is_special()) {
+                bird.special_ability(obstacles, pigs, collisionHandler);
+            }
         }
         for (Obstacle obstacle : obstacles) {
             obstacle.update();
@@ -525,6 +529,14 @@ public class level_1_screen extends Level implements Screen, Serializable {
             currentBird.setAwake(true);
             currentBird.setLaunched(true);
             currentBird = null; // Allow selecting a new bird
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            for (Bird bird : birds) {
+                if (bird.isLaunched()) {
+                    bird.set_is_special(true);
+                }
+            }
         }
     }
 

@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
+import com.birds.CollisionHandler;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public abstract class Bird implements Serializable {
     protected  transient Texture texture;
@@ -25,6 +28,8 @@ public abstract class Bird implements Serializable {
     public float linearVelocityX;
     public float linearVelocityY;
     public boolean isAwake;
+    public boolean exploded = false;
+    public boolean is_special = false;
 
 
     public Bird(World world, String texturePath, float xPos, float yPos, float width, float height) {
@@ -48,6 +53,64 @@ public abstract class Bird implements Serializable {
 
     }
 
+    public void special_ability(ArrayList<Obstacle> obstacles, ArrayList<Pig> pigs, CollisionHandler collisionHandler){
+        if(speedMultiplier == 1.0f){
+            explode(obstacles, pigs, collisionHandler);
+        }
+        else if(speedMultiplier == 5.0f){
+            big_size();
+        }
+    }
+
+
+    public void explode(ArrayList<Obstacle> obstacles, ArrayList<Pig> pigs, CollisionHandler collisionHandler) {
+        if (speedMultiplier != 1.0f || exploded)
+            return;
+        for (Obstacle obstacle : obstacles) {
+            if (obstacle.getBody() != null && body.getPosition().dst(obstacle.getBody().getPosition()) <= 150f) {
+                obstacle.setHealth(obstacle.getHealth() - 70);
+                if (obstacle.getHealth() <= 0) {
+                    collisionHandler.removeObstacleFromWorld(obstacle);
+                }
+            }
+        }
+        for (Pig pig : pigs) {
+            if (pig.getBody() != null && body.getPosition().dst(pig.getBody().getPosition()) <= 150f) {
+                pig.setHealth(pig.getHealth() - 70);
+                if (pig.getHealth() <= 0) {
+                    collisionHandler.removePigFromWorld(pig);
+                }
+            }
+        }
+        exploded = true;
+    }
+
+    // Bird.java
+    public void big_size() {
+        if (exploded) {
+            return;
+        }
+
+        // Double the size of the sprite
+        sprite.setSize(sprite.getWidth() * 2, sprite.getHeight() * 2);
+
+        // Adjust the position of the sprite to keep it centered
+        sprite.setOriginCenter();
+        sprite.setPosition(
+            body.getPosition().x - sprite.getWidth() / 2,
+            body.getPosition().y - sprite.getHeight() / 2
+        );
+
+        // Update the body's fixture to match the new size
+        for (Fixture fixture : body.getFixtureList()) {
+            Shape shape = fixture.getShape();
+            if (shape instanceof CircleShape) {
+                ((CircleShape) shape).setRadius(sprite.getWidth() / 2);
+            }
+        }
+
+        exploded = true;
+    }
 
 
     public void update() {
@@ -71,6 +134,13 @@ public abstract class Bird implements Serializable {
         sprite.draw(batch);
     }
 
+    public void set_is_special(boolean activated) {
+        this.is_special = activated;
+    }
+
+    public boolean get_is_special() {
+        return is_special;
+    }
     public void setPosition(float x, float y) {
         sprite.setPosition(x, y);
         body.setTransform(x, y, body.getAngle());
