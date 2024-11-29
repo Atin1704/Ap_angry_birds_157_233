@@ -16,7 +16,7 @@ public class Stone_block extends Obstacle implements Serializable {
     public Stone_block(World world, BodyRemovalManager brm, float xPos, float yPos, float width, float height) {
         super(world, brm, "Stone_block.png", xPos, yPos, width, height);
         this.image = new Texture("Stone_block.png");
-        this.health = 25.0f;
+        this.health = 40.0f;
         this.sprite = new Sprite(image);
         this.sprite.setSize(width, height);
         this.sprite.setPosition(xPos, yPos);

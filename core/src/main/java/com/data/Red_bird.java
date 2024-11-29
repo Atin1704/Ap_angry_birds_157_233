@@ -27,7 +27,7 @@ public class Red_bird extends Bird {
         shape.dispose();
 
         this.damage = 8.00f;
-        this.speedMultiplier = 1.3f;
+        this.speedMultiplier = 2.0f;
         this.xPos = xPos;
         this.yPos = yPos;
         this.xSize = width;
@@ -62,7 +62,7 @@ public class Red_bird extends Bird {
         this.body.setUserData(this);
 
         this.damage = 10.00f;
-        this.speedMultiplier = 1.0f;
+        this.speedMultiplier = 2.0f;
         this.xPos = bird.xPos;
         this.yPos = bird.yPos;
         this.xSize = bird.xSize;

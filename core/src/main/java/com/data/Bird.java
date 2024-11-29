@@ -15,7 +15,7 @@ public abstract class Bird implements Serializable {
     protected  transient Sprite sprite;
     protected transient World world;
     protected transient float damage;
-    public  transient double  speedMultiplier;
+    public  transient float  speedMultiplier;
     public transient float launchTime=0;
     public float xPos;
     public float yPos;

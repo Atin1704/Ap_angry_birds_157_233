@@ -14,7 +14,7 @@ class PigTest {
         float width = 2.0f;
         float height = 2.0f;
         boolean isAwake = false;
-        float health=20.0f;
+        float health=15.0f;
         Normal_pig normalPig = new Normal_pig(xPos, yPos, width, height, isAwake);
 
         assertEquals(xPos, normalPig.getXPos());
