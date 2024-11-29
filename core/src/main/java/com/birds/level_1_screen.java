@@ -57,7 +57,6 @@ public class level_1_screen extends Level implements Screen, Serializable {
     public transient Vector2 touchPos;
 
     public transient World world;
-    private transient Box2DDebugRenderer debugRenderer;
     private transient ShapeRenderer shapeRenderer;
     private transient Slingshot slingshot;
     public ArrayList<Bird> birds;
@@ -87,7 +86,6 @@ public class level_1_screen extends Level implements Screen, Serializable {
         this.currentScreen = this;
 
         world = new World(new Vector2(0, -15.0f), true);
-        debugRenderer = new Box2DDebugRenderer();
         shapeRenderer = new ShapeRenderer();
 
         createGround();
@@ -120,7 +118,6 @@ public class level_1_screen extends Level implements Screen, Serializable {
         this.currentScreen = this;
 
         world = new World(new Vector2(0, -15.0f), true);
-        debugRenderer = new Box2DDebugRenderer();
         shapeRenderer = new ShapeRenderer();
 
         createGround();
@@ -421,15 +418,9 @@ public class level_1_screen extends Level implements Screen, Serializable {
         }
         for (Obstacle obstacle : obstacles) {
             obstacle.draw(spriteBatch);
-            if (obstacle.getHealth() > 0) {
-                game_runner.font.draw(spriteBatch, "Health: " + obstacle.getHealth(), obstacle.getXPos(), obstacle.getYPos() + obstacle.getHeight() + 10);
-            }
         }
         for (Pig pig : pigs) {
             pig.draw(spriteBatch);
-            if (pig.getHealth() > 0) {
-                game_runner.font.draw(spriteBatch, "Health: " + pig.getHealth(), pig.getXPos(), pig.getYPos() + pig.getHeight() + 10);
-            }
         }
         slingshot.draw(spriteBatch);
 
@@ -446,7 +437,6 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
         spriteBatch.end();
 
-        debugRenderer.render(world, viewport.getCamera().combined);
     }
 
 
@@ -565,7 +555,6 @@ public class level_1_screen extends Level implements Screen, Serializable {
     public void dispose() {
         logger.info("Disposing level_1_screen");
         world.dispose();
-        debugRenderer.dispose();
         shapeRenderer.dispose();
         background_image.dispose();
         pause_button.dispose();
