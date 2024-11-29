@@ -30,6 +30,20 @@
 8.The project will build for some time and then start running
 
 
+**Run Tests**-
+1.Go the test directory in source
+2.Navigate to com directory
+3. In com either open data directory or bird directory
+4. in these directories there are test present which you can run by individually clicking on the top 
+   right green play button
+5. There are 5 test files in total
+6. These steps are only valid for intellij idea
+
+
+
+
+
+
 **Sources Used**-
 
 1.Libgdx-wiki-
