@@ -259,7 +259,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
         System.out.println("Birds added");
         birds.add(new Red_bird(world, (Red_bird)level.birds.get(0)));
         System.out.println("Added Red_bird");
-        birds.add(new Yellow_bird(world, (Yellow_bird)level.birds.get(1)));
+        birds.add(new Red_bird(world, (Red_bird)level.birds.get(1)));
         System.out.println("Added Yellow_bird");
         birds.add(new Black_bird(world, (Black_bird)level.birds.get(2)));
         System.out.println("Added Black_bird");
@@ -267,9 +267,9 @@ public class level_1_screen extends Level implements Screen, Serializable {
 
     private void createBirds() {
         birds = new ArrayList<>();
-        birds.add(new Red_bird(world, 80, 217, 50, 50));
-        birds.add(new Yellow_bird(world, 140, 217, 50, 50));
-        birds.add(new Black_bird(world, 200, 217, 50, 50));
+        birds.add(new Red_bird(world, 200, 217, 50, 50));
+        birds.add(new Red_bird(world, 140, 217, 50, 50));
+        birds.add(new Black_bird(world, 80, 217, 50, 50));
     }
 
     private void createSlingshot() {
