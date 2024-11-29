@@ -21,7 +21,7 @@ public class Main extends Game {
         font = new BitmapFont();
         this.setScreen(new loading_screen(this));
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-        music = Gdx.audio.newMusic(Gdx.files.internal("Main_bg_music.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("main_bgfinal.mp3"));
         music.setLooping(true);
         music.setVolume(0.5f);
         click = Gdx.audio.newSound(Gdx.files.internal("Click.mp3"));

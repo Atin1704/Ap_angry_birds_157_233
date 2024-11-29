@@ -276,7 +276,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
     }
     private void createPigs() {
         pigs = new ArrayList<>();
-        pigs.add(new King_pig(world, bodyRemovalManager, 780, 480, 70,70));
+        pigs.add(new King_pig(world, bodyRemovalManager, 760, 480, 70,70));
         pigs.add(new Normal_pig(world,bodyRemovalManager, 850, 480, 70, 70));
     }
 
@@ -520,7 +520,7 @@ public class level_1_screen extends Level implements Screen, Serializable {
             isDragging = false;
             Vector2 dragEnd = new Vector2(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(dragEnd);
-            Vector2 velocity = new Vector2(dragStart.x - dragEnd.x, dragStart.y - dragEnd.y).scl(5);
+            Vector2 velocity = new Vector2((dragStart.x - dragEnd.x), dragStart.y - dragEnd.y).scl(5);
             currentBird.setVelocity(velocity);
             currentBird.setAwake(true);
             currentBird.setLaunched(true);
